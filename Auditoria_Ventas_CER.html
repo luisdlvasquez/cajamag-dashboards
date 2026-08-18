@@ -107,6 +107,18 @@
   .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,.25);}
   .toast.show{opacity:1;}
 
+  /* ---------- motivo de rechazo ---------- */
+  .motivo-overlay{position:fixed;inset:0;z-index:9999;background:rgba(20,30,32,.55);display:none;align-items:center;justify-content:center;padding:20px;}
+  .motivo-overlay.show{display:flex;}
+  .motivo-box{background:#fff;border-radius:16px;padding:24px;width:380px;max-width:100%;box-shadow:0 20px 50px rgba(0,0,0,.3);}
+  .motivo-box h3{margin:0 0 12px;font-size:15px;color:var(--ink);}
+  .motivo-box textarea{width:100%;box-sizing:border-box;min-height:90px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font-size:13px;font-family:inherit;resize:vertical;outline:none;}
+  .motivo-box textarea:focus{border-color:var(--bad);}
+  .motivo-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px;}
+  .motivo-actions .m-cancel{padding:9px 14px;border-radius:8px;background:var(--bg);color:var(--ink-soft);border:1.5px solid var(--line);font-weight:700;font-size:12.5px;cursor:pointer;}
+  .motivo-actions .m-confirm{padding:9px 16px;border-radius:8px;background:var(--bad);color:#fff;border:none;font-weight:700;font-size:12.5px;cursor:pointer;}
+  .motivo-actions .m-confirm:hover{background:#b83a3a;}
+
   @media (max-width:480px){
     .stats{grid-template-columns:repeat(3,1fr);}
     .stat .n{font-size:18px;}
@@ -145,6 +157,7 @@
 <div class="wrap">
   <div class="toolbar">
     <input type="text" id="auditorName" placeholder="Tu nombre (para dejar registro de quién auditó)">
+    <input type="email" id="auditorEmail" placeholder="Tu correo (para que el asesor te responda si rechazas)">
     <button class="secondary" id="btnRefresh">↻ Actualizar</button>
   </div>
 
@@ -169,6 +182,17 @@
 </div>
 
 <div class="toast" id="toast"></div>
+
+<div class="motivo-overlay" id="motivoOverlay">
+  <div class="motivo-box">
+    <h3>¿Por qué se rechaza esta venta?</h3>
+    <textarea id="motivoTexto" placeholder="Ej: falta fecha de facturación, el monto no coincide con Bitrix, negocio duplicado..."></textarea>
+    <div class="motivo-actions">
+      <button class="m-cancel" id="motivoCancelar">Cancelar</button>
+      <button class="m-confirm" id="motivoConfirmar">Rechazar y avisar al asesor</button>
+    </div>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -258,16 +282,17 @@
             var uu = Array.isArray(u) ? u[0] : u;
             if(!uu) return null;
             var nombre = [uu.NAME, uu.LAST_NAME].filter(Boolean).join(' ');
-            return nombre || null;
+            return { nombre: nombre || null, email: uu.EMAIL || null };
           })
         : Promise.resolve(null);
 
       return Promise.all([clienteP, asesorP]).then(function(res){
         var clienteNombre = res[0];
-        var asesorNombre = res[1];
+        var asesorInfo = res[1];
         var dealTitleUsable = deal.TITLE && !/^\s*\(\d+\)\s*$/.test(deal.TITLE) ? deal.TITLE : null;
         var titulo = clienteNombre || dealTitleUsable || ('Negocio #' + r.deal_id);
-        if(asesorNombre) asesor = asesorNombre;
+        if(asesorInfo && asesorInfo.nombre) asesor = asesorInfo.nombre;
+        var asesorEmail = asesorInfo && asesorInfo.email ? asesorInfo.email : null;
 
         return fetch(ENRICH_FN, {
           method: 'POST',
@@ -275,7 +300,7 @@
           body: JSON.stringify({
             password: sessionPassword, id: r.id, titulo: titulo, monto: monto,
             etapa: etapa, pipeline: pipeline, asesor: asesor, asesor_id: asesorId,
-            company_id: companyId, contact_id: contactId
+            asesor_email: asesorEmail, company_id: companyId, contact_id: contactId
           })
         });
       });
@@ -304,6 +329,12 @@
     var el = document.getElementById('auditorName');
     var v = (el.value||'').trim();
     try{ if(v) sessionStorage.setItem('cer_auditor_nombre', v); }catch(e){}
+    return v || null;
+  }
+  function auditorEmail(){
+    var el = document.getElementById('auditorEmail');
+    var v = (el.value||'').trim();
+    try{ if(v) sessionStorage.setItem('cer_auditor_email', v); }catch(e){}
     return v || null;
   }
 
@@ -360,7 +391,11 @@
         var card = btn.closest('.card');
         var id = card.getAttribute('data-id');
         var accion = btn.getAttribute('data-accion');
-        actuar(id, accion, card);
+        if(accion === 'rechazado'){
+          abrirMotivoModal(id, card);
+        } else {
+          actuar(id, accion, card);
+        }
       });
     });
 
@@ -377,24 +412,57 @@
     else el.textContent = 'hace ' + Math.round(secs/60) + ' min';
   }
 
-  function actuar(id, accion, cardEl){
+  var motivoState = { id: null, card: null };
+  function abrirMotivoModal(id, card){
+    motivoState.id = id;
+    motivoState.card = card;
+    document.getElementById('motivoTexto').value = '';
+    document.getElementById('motivoOverlay').classList.add('show');
+    setTimeout(function(){ document.getElementById('motivoTexto').focus(); }, 50);
+  }
+  function cerrarMotivoModal(){
+    document.getElementById('motivoOverlay').classList.remove('show');
+    motivoState.id = null;
+    motivoState.card = null;
+  }
+  document.getElementById('motivoCancelar').addEventListener('click', cerrarMotivoModal);
+  document.getElementById('motivoConfirmar').addEventListener('click', function(){
+    var motivo = (document.getElementById('motivoTexto').value || '').trim();
+    if(!motivo){
+      document.getElementById('motivoTexto').focus();
+      return;
+    }
+    var id = motivoState.id, card = motivoState.card;
+    cerrarMotivoModal();
+    actuar(id, 'rechazado', card, motivo);
+  });
+
+  function actuar(id, accion, cardEl, motivo){
     var nombre = auditorName();
     if(!nombre){
       showToast('Escribe tu nombre arriba antes de auditar.');
+      return;
+    }
+    var correo = auditorEmail();
+    if(accion === 'rechazado' && !correo){
+      showToast('Escribe tu correo arriba antes de rechazar (para que el asesor te pueda responder).');
       return;
     }
     cardEl.style.opacity = '0.5';
     fetch(AUDIT_FN, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ id: id, accion: accion, password: sessionPassword, auditado_por: nombre })
+      body: JSON.stringify({
+        id: id, accion: accion, password: sessionPassword, auditado_por: nombre,
+        auditor_email: correo || null, motivo_rechazo: motivo || null
+      })
     }).then(function(r){ return r.json(); }).then(function(resp){
       if(resp.error){
         showToast('Error: ' + resp.error);
         cardEl.style.opacity = '1';
         return;
       }
-      showToast(accion === 'aprobado' ? 'Venta aprobada ✔' : 'Venta rechazada');
+      showToast(accion === 'aprobado' ? 'Venta aprobada ✔' : 'Venta rechazada — se avisó al asesor por correo');
       cargar();
       cargarAprobadasHoy();
     }).catch(function(e){
@@ -452,6 +520,8 @@
     try{
       var savedName = sessionStorage.getItem('cer_auditor_nombre');
       if(savedName) document.getElementById('auditorName').value = savedName;
+      var savedEmail = sessionStorage.getItem('cer_auditor_email');
+      if(savedEmail) document.getElementById('auditorEmail').value = savedEmail;
     }catch(e){}
     wireTabs();
     document.getElementById('btnRefresh').addEventListener('click', function(){ cargar(); cargarAprobadasHoy(); });
