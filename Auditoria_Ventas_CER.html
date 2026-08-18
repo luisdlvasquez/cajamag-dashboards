@@ -128,7 +128,73 @@
   var SUPA_URL = 'https://nzmnzmnozbeqttofbmlf.supabase.co';
   var SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56bW56bW5vemJlcXR0b2ZibWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2NTAzMjQsImV4cCI6MjA5NTIyNjMyNH0.r3hrXsazoJK_xUWTsskEgjQ40Xhg60_0YaGvWs1VXP8';
   var AUDIT_FN = SUPA_URL + '/functions/v1/bitrix-audit';
+  var ENRICH_FN = SUPA_URL + '/functions/v1/bitrix-enrich';
+  // Bitrix bloquea las llamadas que vienen de servidores en la nube, asi que el
+  // enriquecimiento (traer titulo/monto/cliente/asesor reales) se hace aqui, desde
+  // el navegador de quien audita, que si tiene acceso a la red de Bitrix.
+  var BITRIX_REST_URL = 'https://bitrix.cajamag.com.co/rest/24371/jptcd95wxx2lruif/';
   var refreshTimer = null;
+  var enriching = {}; // evita enriquecer la misma fila dos veces en paralelo
+
+  function bitrixCall(method, params){
+    var qs = new URLSearchParams(params || {}).toString();
+    return fetch(BITRIX_REST_URL + method + '.json' + (qs ? '?' + qs : ''))
+      .then(function(r){ return r.json(); })
+      .then(function(d){ return d && d.result ? d.result : null; })
+      .catch(function(){ return null; });
+  }
+
+  function enrichRow(r){
+    if(enriching[r.id]) return Promise.resolve();
+    if(!r.deal_id || !/^\d+$/.test(String(r.deal_id))) return Promise.resolve(); // filas de prueba, no son negocios reales
+    if(r.titulo) return Promise.resolve(); // ya viene con datos (formato de prueba/legado)
+    enriching[r.id] = true;
+
+    return bitrixCall('crm.deal.get', { ID: r.deal_id }).then(function(deal){
+      if(!deal) return;
+      var monto = deal.OPPORTUNITY != null ? Number(deal.OPPORTUNITY) : null;
+      var etapa = deal.STAGE_ID || null;
+      var pipeline = deal.CATEGORY_ID || null;
+      var companyId = (deal.COMPANY_ID && deal.COMPANY_ID !== '0') ? deal.COMPANY_ID : null;
+      var contactId = (deal.CONTACT_ID && deal.CONTACT_ID !== '0') ? deal.CONTACT_ID : null;
+      var asesorId = deal.ASSIGNED_BY_ID || null;
+      var asesor = asesorId ? ('Asesor #' + asesorId) : null;
+
+      var clienteP = companyId
+        ? bitrixCall('crm.company.get', { ID: companyId }).then(function(c){ return c && c.TITLE ? c.TITLE : null; })
+        : (contactId
+            ? bitrixCall('crm.contact.get', { ID: contactId }).then(function(c){ return c ? [c.NAME, c.LAST_NAME].filter(Boolean).join(' ') : null; })
+            : Promise.resolve(null));
+
+      var asesorP = asesorId
+        ? bitrixCall('user.get', { ID: asesorId }).then(function(u){
+            var uu = Array.isArray(u) ? u[0] : u;
+            if(!uu) return null;
+            var nombre = [uu.NAME, uu.LAST_NAME].filter(Boolean).join(' ');
+            return nombre || null;
+          })
+        : Promise.resolve(null);
+
+      return Promise.all([clienteP, asesorP]).then(function(res){
+        var clienteNombre = res[0];
+        var asesorNombre = res[1];
+        var dealTitleUsable = deal.TITLE && !/^\s*\(\d+\)\s*$/.test(deal.TITLE) ? deal.TITLE : null;
+        var titulo = clienteNombre || dealTitleUsable || ('Negocio #' + r.deal_id);
+        if(asesorNombre) asesor = asesorNombre;
+
+        return fetch(ENRICH_FN, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            password: sessionPassword, id: r.id, titulo: titulo, monto: monto,
+            etapa: etapa, pipeline: pipeline, asesor: asesor, asesor_id: asesorId,
+            company_id: companyId, contact_id: contactId
+          })
+        });
+      });
+    }).catch(function(e){ console.error('enriquecimiento fallo', r.id, e); })
+      .then(function(){ enriching[r.id] = false; });
+  }
 
   function fmtMonto(n){ if(n==null) return '—'; return '$'+Math.round(n).toLocaleString('es-CO'); }
   function fmtFecha(iso){
@@ -218,7 +284,21 @@
     fetch(SUPA_URL + '/rest/v1/bitrix_eventos?estado_auditoria=eq.pendiente&order=creado_en.desc&limit=200', {
       headers: { apikey: SUPA_ANON, Authorization: 'Bearer ' + SUPA_ANON }
     }).then(function(r){ return r.json(); }).then(function(rows){
-      render(Array.isArray(rows) ? rows : []);
+      rows = Array.isArray(rows) ? rows : [];
+      render(rows);
+
+      // Las filas que llegan crudas del webhook de Bitrix (sin titulo) se
+      // enriquecen aqui mismo, desde el navegador, y luego se refresca la vista.
+      var pendientesDeEnriquecer = rows.filter(function(r){ return !r.titulo && r.deal_id && /^\d+$/.test(String(r.deal_id)); });
+      if(pendientesDeEnriquecer.length){
+        Promise.all(pendientesDeEnriquecer.map(enrichRow)).then(function(){
+          fetch(SUPA_URL + '/rest/v1/bitrix_eventos?estado_auditoria=eq.pendiente&order=creado_en.desc&limit=200', {
+            headers: { apikey: SUPA_ANON, Authorization: 'Bearer ' + SUPA_ANON }
+          }).then(function(r){ return r.json(); }).then(function(rows2){
+            render(Array.isArray(rows2) ? rows2 : []);
+          }).catch(function(){});
+        });
+      }
     }).catch(function(e){
       console.error('error cargando auditoria', e);
     });
