@@ -332,7 +332,7 @@ function renderRanking(periodKey){
     const p = Math.max(0,Math.min(r.cumpl||0,100));
     return `<div class="r-row">
       <div class="r-pos">#${i+4}</div>
-      <div class="r-name"><div class="n">${r.asesor}</div><div class="z">${r.zona}</div></div>
+      <div class="r-name"><div class="n">${r.asesor}</div><div class="z">${r.zona || 'Sin zona asignada'}</div></div>
       <div class="r-val">${money(r.total)}</div>
       <div class="r-bar-wrap"><div class="r-bar" style="width:${p}%;background:${pctColor(r.cumpl)}"></div></div>
       <div class="r-pct" style="color:${pctColor(r.cumpl)}">${r.cumpl!=null?r.cumpl.toFixed(1)+'%':'—'}</div>
@@ -376,7 +376,7 @@ function renderVentasCategoria(periodKey){
     const pi = t>0 ? Math.max(0,100-pe) : 0;
     return `<div class="vc-row">
       <div class="r-pos">#${i+1}</div>
-      <div class="r-name"><div class="n">${r.asesor}</div><div class="z">${r.zona}</div></div>
+      <div class="r-name"><div class="n">${r.asesor}</div><div class="z">${r.zona || 'Sin zona asignada'}</div></div>
       <div class="vc-bar-wrap"><div class="vc-seg vc-emp" style="width:${pe}%"></div><div class="vc-seg vc-ind" style="width:${pi}%"></div></div>
       <div class="vc-valcol"><div class="vc-val">${money(r.total)}</div><div class="vc-val-sub">sin IVA ${money(r.sin_iva)}</div></div>
     </div>`;
