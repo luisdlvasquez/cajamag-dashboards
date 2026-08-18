@@ -474,7 +474,7 @@
   function cargarAprobadasHoy(){
     var hoy = new Date();
     var inicio = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate()).toISOString();
-    fetch(SUPA_URL + '/rest/v1/bitrix_eventos?estado_auditoria=eq.aprobado&auditado_en=gte.' + encodeURIComponent(inicio) + '&select=id', {
+    fetch(SUPA_URL + '/rest/v1/bitrix_eventos?estado_auditoria=eq.aprobado&evento=neq.backfill_historico&auditado_en=gte.' + encodeURIComponent(inicio) + '&select=id', {
       headers: { apikey: SUPA_ANON, Authorization: 'Bearer ' + SUPA_ANON, Prefer: 'count=exact' }
     }).then(function(r){ return r.json(); }).then(function(rows){
       document.getElementById('statAprobadasHoy').textContent = Array.isArray(rows) ? rows.length : 0;

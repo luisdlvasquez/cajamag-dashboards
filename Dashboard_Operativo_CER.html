@@ -577,7 +577,7 @@ document.getElementById('btnHcaPdf').addEventListener('click', ()=>{
   function fmtMonto(n){ if(n==null) return ''; return '$'+Math.round(n).toLocaleString('es-CO'); }
   function fmtHora(iso){ try{ var d=new Date(iso); return d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); }catch(e){return '';} }
   function load(){
-    fetch(SUPA_URL+'/rest/v1/bitrix_eventos?estado_auditoria=eq.aprobado&order=creado_en.desc&limit=15', {
+    fetch(SUPA_URL+'/rest/v1/bitrix_eventos?estado_auditoria=eq.aprobado&evento=neq.backfill_historico&order=creado_en.desc&limit=15', {
       headers: { apikey: SUPA_KEY, Authorization: 'Bearer '+SUPA_KEY }
     }).then(function(r){ return r.json(); }).then(function(rows){
       var el = document.getElementById('cer-live-feed-list');
