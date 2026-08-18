@@ -183,6 +183,21 @@
   }
   var sessionPassword = null;
 
+  // ---------------- App config (debe existir ANTES del auto-unlock de abajo,
+  // que puede llamar a initApp()/cargar() de forma sincrona en el mismo tick) ----------------
+  var SUPA_URL = 'https://nzmnzmnozbeqttofbmlf.supabase.co';
+  var SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56bW56bW5vemJlcXR0b2ZibWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2NTAzMjQsImV4cCI6MjA5NTIyNjMyNH0.r3hrXsazoJK_xUWTsskEgjQ40Xhg60_0YaGvWs1VXP8';
+  var AUDIT_FN = SUPA_URL + '/functions/v1/bitrix-audit';
+  var ENRICH_FN = SUPA_URL + '/functions/v1/bitrix-enrich';
+  // Bitrix bloquea las llamadas que vienen de servidores en la nube, asi que el
+  // enriquecimiento (traer titulo/monto/cliente/asesor reales) se hace aqui, desde
+  // el navegador de quien audita, que si tiene acceso a la red de Bitrix.
+  var BITRIX_REST_URL = 'https://bitrix.cajamag.com.co/rest/24371/jptcd95wxx2lruif/';
+  var refreshTimer = null;
+  var clockTimer = null;
+  var lastUpdateTs = null;
+  var enriching = {}; // evita enriquecer la misma fila dos veces en paralelo
+
   function tryUnlock(){
     var pw = document.getElementById('gate-pw').value;
     if(simpleHash(pw) === HASH){
@@ -208,19 +223,6 @@
   }catch(e){}
 
   // ---------------- App ----------------
-  var SUPA_URL = 'https://nzmnzmnozbeqttofbmlf.supabase.co';
-  var SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56bW56bW5vemJlcXR0b2ZibWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2NTAzMjQsImV4cCI6MjA5NTIyNjMyNH0.r3hrXsazoJK_xUWTsskEgjQ40Xhg60_0YaGvWs1VXP8';
-  var AUDIT_FN = SUPA_URL + '/functions/v1/bitrix-audit';
-  var ENRICH_FN = SUPA_URL + '/functions/v1/bitrix-enrich';
-  // Bitrix bloquea las llamadas que vienen de servidores en la nube, asi que el
-  // enriquecimiento (traer titulo/monto/cliente/asesor reales) se hace aqui, desde
-  // el navegador de quien audita, que si tiene acceso a la red de Bitrix.
-  var BITRIX_REST_URL = 'https://bitrix.cajamag.com.co/rest/24371/jptcd95wxx2lruif/';
-  var refreshTimer = null;
-  var clockTimer = null;
-  var lastUpdateTs = null;
-  var enriching = {}; // evita enriquecer la misma fila dos veces en paralelo
-
   function bitrixCall(method, params){
     var qs = new URLSearchParams(params || {}).toString();
     return fetch(BITRIX_REST_URL + method + '.json' + (qs ? '?' + qs : ''))
