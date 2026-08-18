@@ -189,7 +189,7 @@
       sessionPassword = pw;
       try{ sessionStorage.setItem('cer_auditoria_pw', pw); }catch(e){}
       document.getElementById('gate-overlay').style.display = 'none';
-      document.getElementById('gate-content').style.display = '';
+      document.getElementById('gate-content').style.display = 'block';
       initApp();
     } else {
       document.getElementById('gate-err').style.display = 'block';
@@ -202,7 +202,7 @@
     if(saved && simpleHash(saved) === HASH){
       sessionPassword = saved;
       document.getElementById('gate-overlay').style.display = 'none';
-      document.getElementById('gate-content').style.display = '';
+      document.getElementById('gate-content').style.display = 'block';
       initApp();
     }
   }catch(e){}
