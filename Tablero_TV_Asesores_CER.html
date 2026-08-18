@@ -605,5 +605,59 @@ window.addEventListener('DOMContentLoaded', ()=>{
   restart(D.meses[D.meses.length - 1]);
 });
 </script>
+
+<!-- CER-LIVE-FEED-WIDGET v2 -->
+<div id="cer-live-feed" style="position:fixed;right:16px;bottom:16px;z-index:9998;width:300px;max-width:88vw;font-family:'Montserrat',system-ui,sans-serif;">
+  <div style="background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.18);border:1px solid #e2e5e8;overflow:hidden;">
+    <div id="cer-live-feed-header" style="background:#00685E;color:#fff;padding:8px 12px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
+      <span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:#4CD964;display:inline-block;animation:cerpulse 1.5s infinite;"></span>EN VIVO — Ventas cerradas hoy</span>
+      <span id="cer-live-feed-toggle">▾</span>
+    </div>
+    <div id="cer-live-feed-list" style="max-height:220px;overflow-y:auto;font-size:12px;">
+      <div style="padding:10px 12px;color:#98a2ac;">Cargando…</div>
+    </div>
+  </div>
+</div>
+<style>@keyframes cerpulse{0%{opacity:1}50%{opacity:.3}100%{opacity:1}}</style>
+<script>
+(function(){
+  var SUPA_URL = 'https://nzmnzmnozbeqttofbmlf.supabase.co';
+  var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56bW56bW5vemJlcXR0b2ZibWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2NTAzMjQsImV4cCI6MjA5NTIyNjMyNH0.r3hrXsazoJK_xUWTsskEgjQ40Xhg60_0YaGvWs1VXP8';
+  function fmtMonto(n){ if(n==null) return ''; return '$'+Math.round(n).toLocaleString('es-CO'); }
+  function fmtHora(iso){ try{ var d=new Date(iso); return d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); }catch(e){return '';} }
+  function load(){
+    fetch(SUPA_URL+'/rest/v1/bitrix_eventos?estado_auditoria=eq.aprobado&order=creado_en.desc&limit=15', {
+      headers: { apikey: SUPA_KEY, Authorization: 'Bearer '+SUPA_KEY }
+    }).then(function(r){ return r.json(); }).then(function(rows){
+      var el = document.getElementById('cer-live-feed-list');
+      if(!el) return;
+      if(!Array.isArray(rows) || !rows.length){ el.innerHTML = '<div style="padding:10px 12px;color:#98a2ac;">Sin ventas confirmadas todavia.</div>'; return; }
+      el.innerHTML = rows.map(function(r){
+        return '<div style="padding:8px 12px;border-top:1px solid #eef0f2;">'
+          + '<div style="font-weight:700;color:#004d45;">'+(r.titulo||('Negocio '+r.deal_id))+'</div>'
+          + '<div style="color:#5B6770;">'+(r.asesor||'—')+' · '+fmtMonto(r.monto)+' · '+fmtHora(r.creado_en)+'</div>'
+          + '</div>';
+      }).join('');
+    }).catch(function(e){ console.error('live feed error', e); });
+  }
+  var collapsed = false;
+  function wire(){
+    var hdr = document.getElementById('cer-live-feed-header');
+    var list = document.getElementById('cer-live-feed-list');
+    var tgl = document.getElementById('cer-live-feed-toggle');
+    if(hdr){
+      hdr.addEventListener('click', function(){
+        collapsed = !collapsed;
+        list.style.display = collapsed ? 'none' : '';
+        tgl.textContent = collapsed ? '▸' : '▾';
+      });
+    }
+  }
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', wire); } else { wire(); }
+  load();
+  setInterval(load, 30000);
+})();
+</script>
+<!-- /CER-LIVE-FEED-WIDGET v2 -->
 </body>
 </html>
