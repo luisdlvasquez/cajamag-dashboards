@@ -764,7 +764,25 @@ function renderEmpresas(cat, periodKey){
 function tamRowHtml(label, counts){
   return `<div class="rl">${label}</div>` + TAM_ORDER.map(t=>`<div class="cell">${counts[t]||0}</div>`).join('');
 }
-const CADENCIA_NORMA = {Grande:'1 gestión/mes', Mediana:'1 gestión/mes', Pequeña:'cada 60 días', Micro:'1 vez en el contrato'};
+const CADENCIA_NORMA = {Grande:'1 gestión/mes', Mediana:'1 gestión/mes', Pequeña:'cada 2 meses', Micro:'1 vez en el contrato'};
+// Semaforo de "Empresas Atendidas" (cumplimiento % de la norma de
+// cadencia por tamaño, a peticion de Luis 25-ago-2026): 90-100% verde,
+// 60-89% amarillo, 30-59% naranja, <30% rojo.
+function atendidasColor(pct){
+  if(pct>=90) return 'var(--ok)';
+  if(pct>=60) return 'var(--warn)';
+  if(pct>=30) return 'var(--naranja)';
+  return 'var(--bad)';
+}
+// Semaforo inverso para "Empresas por Atender" (cuenta absoluta de
+// empresas atrasadas, no porcentaje): 0 verde, 1-3 amarillo, 4-7
+// naranja, 8+ rojo.
+function faltanColor(n){
+  if(n<=0) return 'var(--ok)';
+  if(n<=3) return 'var(--warn)';
+  if(n<=7) return 'var(--naranja)';
+  return 'var(--bad)';
+}
 function renderEmpresasAsesorGroup(group, idx, total){
   const cards = group.map(a=>{
     const det = (D.empresas.detalle_por_asesor && D.empresas.detalle_por_asesor[a.name]) || {};
@@ -777,11 +795,6 @@ function renderEmpresasAsesorGroup(group, idx, total){
     const top3list = det.top3_potenciales || [];
     const top3 = top3list.length ? top3list.map(e=>`<li>${escapeHtml(e.nombre||'—')} <span style="opacity:.55">(${e.tam})</span></li>`).join('') : '<li style="opacity:.55">Sin oportunidades pendientes</li>';
 
-    // Atendidas ESTE MES por tamaño, en cuadritos (mismo estilo que las cajas
-    // de tamaño de la pantalla de Empresas general).
-    const atendidasMes = det.atendidas_mes_by_tam || {};
-    const atendidasMesTotal = det.atendidas_mes_total ?? 0;
-
     // Ritmo diario de este asesor: empresas distintas atendidas por dia
     // habil, en dos variantes (gestiones en general vs. solo visitas
     // presenciales), como mini-tabla compacta (prom/min/max).
@@ -793,20 +806,32 @@ function renderEmpresasAsesorGroup(group, idx, total){
       ${ritmoHeader}${ritmoRow('📞 Gest.', ds)}${ritmoRow('🚶 Visita', dsv)}
     </div>`;
 
-    // Cadencia de visitas segun la directriz del contrato (cuantas empresas,
-    // de las que YA gestiona este asesor, estan al dia vs atrasadas segun su
-    // tamaño). Es un corte "a hoy" (dias desde la ultima gestion), no un
-    // conteo del mes, porque la norma de pequeña/micro excede el mes.
+    // Empresas Atendidas / Por Atender segun la directriz del contrato
+    // (cuantas empresas, de las que tiene asignadas este asesor, ya
+    // cumplieron su norma de cadencia vs cuantas faltan, segun su tamaño).
+    // Es un corte "a hoy" (dias desde la ultima gestion), no un conteo del
+    // mes, porque la norma de pequeña/micro excede el mes.
     const cad = det.cadencia || {};
-    const cadBoxes = TAM_ORDER.map(t=>{
+    const atendidasBoxes = TAM_ORDER.map(t=>{
       const c = cad[t] || {cumple:0, atrasada:0, asignadas:0};
-      const color = c.atrasada>0 ? 'var(--bad)' : 'var(--ok)';
+      const pct = c.asignadas ? Math.round((c.cumple/c.asignadas)*100) : 0;
+      const color = atendidasColor(pct);
       return `<div class="tam-box">
         <div class="tam-ico">${TAM_ICON[t]}</div>
-        <div class="tam-v" style="color:${color}">${c.atrasada}/${c.asignadas}</div>
-        <div class="tam-l">${t} atrasadas</div>
+        <div class="tam-v" style="color:${color}">${c.cumple}/${c.asignadas}</div>
+        <div class="tam-l">${t} (${pct}%)</div>
       </div>`;
     }).join('');
+    const faltanBoxes = TAM_ORDER.map(t=>{
+      const c = cad[t] || {cumple:0, atrasada:0, asignadas:0};
+      const color = faltanColor(c.atrasada);
+      return `<div class="tam-box">
+        <div class="tam-ico">${TAM_ICON[t]}</div>
+        <div class="tam-v" style="color:${color}">${c.atrasada}</div>
+        <div class="tam-l">${t}</div>
+      </div>`;
+    }).join('');
+    const faltanTotal = TAM_ORDER.reduce((s,t)=> s + ((cad[t]||{}).atrasada||0), 0);
 
     // Empresas marcadas "Empresa ilocalizable" EN GESTIONES DE ESTE MES
     // (no es el estado historico del contrato completo).
@@ -821,14 +846,14 @@ function renderEmpresasAsesorGroup(group, idx, total){
       <div class="emp2-tbl">${tbl}</div>
       <div class="emp2-gest"><b>${det.total_gestiones ?? 0}</b> gestiones acumuladas del contrato &nbsp;·&nbsp; *pendiente = contactada solo en contrato anterior</div>
 
-      <div class="tag">📅 Atendidas ESTE MES por tamaño (${atendidasMesTotal})</div>
-      ${tamBoxesHtml(atendidasMes, 'var(--ok)')}
+      <div class="tag">✅ Empresas Atendidas — Grande/Mediana ${CADENCIA_NORMA.Grande} · Pequeña ${CADENCIA_NORMA.Pequeña} · Micro ${CADENCIA_NORMA.Micro} (a hoy)</div>
+      <div class="tam-boxes">${atendidasBoxes}</div>
+
+      <div class="tag">🕐 Empresas por Atender (${faltanTotal})</div>
+      <div class="tam-boxes">${faltanBoxes}</div>
 
       <div class="tag">⏱️ Ritmo diario (este mes)</div>
       ${ritmoCards}
-
-      <div class="tag">📏 Cadencia — Grande ${CADENCIA_NORMA.Grande} · Mediana ${CADENCIA_NORMA.Mediana} · Pequeña ${CADENCIA_NORMA.Pequeña} · Micro ${CADENCIA_NORMA.Micro} (a hoy)</div>
-      <div class="tam-boxes">${cadBoxes}</div>
 
       <div class="tag">🚫 Ilocalizables — mes: <b>${ilocMes.total}</b>${ilocMes.total?` (${ilocNombres})`:''} &nbsp;|&nbsp; contrato: <b>${det.ilocalizadas_total ?? 0}</b></div>
 
