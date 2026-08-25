@@ -419,12 +419,13 @@ function pctColor(p){
 function money(v){ if(v===null||v===undefined) return '—'; return '$' + Math.round(v).toLocaleString('es-CO'); }
 function gestColor(p){
   // Semaforo especifico de las pantallas de Gestion Comercial (distinto del
-  // semaforo general de ventas): azul >100%, verde 90-100%, naranja 60-90%,
-  // rojo <60%.
+  // semaforo general de ventas), a peticion de Luis (25-ago-2026): azul >100%,
+  // verde 90-100%, amarillo 60-90%, naranja 30-60%, rojo <30%.
   if(p===null||p===undefined) return '#a8b0ae';
   if(p>100) return 'var(--optimo)';
   if(p>=90) return 'var(--ok)';
-  if(p>=60) return 'var(--naranja)';
+  if(p>=60) return 'var(--warn)';
+  if(p>=30) return 'var(--naranja)';
   return 'var(--bad)';
 }
 function gaugeStyle(pct, size, colorFn){
