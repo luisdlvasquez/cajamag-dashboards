@@ -1395,77 +1395,62 @@ async function requestWakeLock(){
     }
   }catch(e){ /* no soportado o denegado: seguimos con el audio-loop */ }
 }
-/* Musica ambiente/relajante para la pausa activa: en vez de un timbre corto,
-   suena de fondo MIENTRAS dura la pausa (se detiene cuando esta termina).
-   Es un pad suave hecho con osciladores en un acorde abierto (sin la
-   aspereza de un tono puro), con un filtro paso-bajo y un LFO lento que
-   mueve el brillo del sonido para que no se sienta estatico ni repetitivo. */
-let pausaActivaAmbientCtx = null;
-let pausaActivaAmbientNodes = null;
+/* Timbre de aviso para la pausa activa (26-ago-2026, a pedido de Luis): antes
+   sonaba una musica ambiente de fondo durante TODA la pausa; ahora en vez de
+   eso suena un timbre tipo "atencion clientes" de almacen (motivo de
+   campanas, tono sine sin aspereza) fuerte de volumen pero no estridente,
+   SOLO durante los primeros ~10 segundos de la pausa. El resto de la pausa
+   queda en silencio (la imagen/overlay se mantiene en pantalla igual). */
+let pausaActivaChimeCtx = null;
+let pausaActivaChimeTimer = null;
+function playChimeNote(ctx, master, freq, startTime, duration, gain){
+  const osc = ctx.createOscillator();
+  osc.type = 'sine';
+  osc.frequency.value = freq;
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0, startTime);
+  g.gain.linearRampToValueAtTime(gain, startTime + 0.015); // ataque rapido tipo campana
+  g.gain.exponentialRampToValueAtTime(0.0001, startTime + duration); // caida suave
+  osc.connect(g).connect(master);
+  osc.start(startTime);
+  osc.stop(startTime + duration + 0.05);
+}
 function startPausaActivaAmbient(){
-  if(pausaActivaAmbientCtx) return; // ya esta sonando
+  if(pausaActivaChimeCtx) return; // ya esta sonando
   try{
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     const master = ctx.createGain();
-    master.gain.setValueAtTime(0, ctx.currentTime);
-    master.gain.linearRampToValueAtTime(0.05, ctx.currentTime + 2.5); // fade-in suave
-    const filter = ctx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 900;
-    filter.Q.value = 0.5;
-    master.connect(filter).connect(ctx.destination);
+    master.gain.value = 1;
+    master.connect(ctx.destination);
+    const now = ctx.currentTime;
 
-    // Acorde abierto y calido (Do mayor con la novena), cada nota con su
-    // propio oscilador suave (triangular, no sine puro, para dar cuerpo).
-    const freqs = [130.81, 196.00, 261.63, 329.63, 392.00]; // C3 G3 C4 E4 G4
-    const oscs = freqs.map((f,i)=>{
-      const osc = ctx.createOscillator();
-      osc.type = 'triangle';
-      osc.frequency.value = f;
-      osc.detune.value = (i%2===0 ? -4 : 4); // detune leve para que respire
-      const g = ctx.createGain();
-      g.gain.value = 1/freqs.length;
-      osc.connect(g).connect(master);
-      osc.start();
-      return {osc, gain:g};
-    });
+    // Motivo de 4 notas tipo timbre de almacen (sol-mi-do-mi), volumen fuerte
+    // (0.4) pero timbre sine puro y suave para que avise sin aturdir. Se
+    // repite 4 veces con un pequeño espacio entre pasadas, cubriendo los
+    // primeros ~10 segundos de la pausa; despues queda en silencio.
+    const notas = [783.99, 659.25, 523.25, 659.25]; // G5, E5, C5, E5
+    const pasadas = 4;
+    const espacioEntrePasadas = 2.5; // segundos
+    for(let r=0; r<pasadas; r++){
+      const base = now + r*espacioEntrePasadas;
+      notas.forEach((f,i)=>{ playChimeNote(ctx, master, f, base + i*0.32, 0.55, 0.4); });
+    }
 
-    // LFO lento que mueve el filtro (como una respiracion), evita que el
-    // pad se sienta plano/repetitivo mientras dura la pausa.
-    const lfo = ctx.createOscillator();
-    lfo.type = 'sine';
-    lfo.frequency.value = 0.06; // un ciclo cada ~17s
-    const lfoGain = ctx.createGain();
-    lfoGain.gain.value = 300;
-    lfo.connect(lfoGain).connect(filter.frequency);
-    lfo.start();
-
-    pausaActivaAmbientCtx = ctx;
-    pausaActivaAmbientNodes = {master, oscs, lfo};
+    pausaActivaChimeCtx = ctx;
+    // Cierra el AudioContext despues de que termino de sonar (~10s), no lo
+    // deja abierto sin necesidad por el resto de la pausa.
+    pausaActivaChimeTimer = setTimeout(()=>{
+      try{ ctx.close(); }catch(e){}
+      pausaActivaChimeCtx = null;
+    }, (pasadas*espacioEntrePasadas*1000) + 800);
   }catch(e){}
 }
 function stopPausaActivaAmbient(){
-  if(!pausaActivaAmbientCtx) return;
-  const ctx = pausaActivaAmbientCtx;
-  const nodes = pausaActivaAmbientNodes;
-  try{
-    if(nodes && nodes.master){
-      nodes.master.gain.cancelScheduledValues(ctx.currentTime);
-      nodes.master.gain.setValueAtTime(nodes.master.gain.value, ctx.currentTime);
-      nodes.master.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.5); // fade-out suave
-    }
-    setTimeout(()=>{
-      try{
-        if(nodes){
-          nodes.oscs.forEach(o=>{ try{ o.osc.stop(); }catch(e){} });
-          try{ nodes.lfo.stop(); }catch(e){}
-        }
-        ctx.close();
-      }catch(e){}
-    }, 1700);
-  }catch(e){}
-  pausaActivaAmbientCtx = null;
-  pausaActivaAmbientNodes = null;
+  if(pausaActivaChimeTimer){ clearTimeout(pausaActivaChimeTimer); pausaActivaChimeTimer = null; }
+  if(pausaActivaChimeCtx){
+    try{ pausaActivaChimeCtx.close(); }catch(e){}
+    pausaActivaChimeCtx = null;
+  }
 }
 function startAntiSleepAudio(){
   const a = document.createElement('audio');
@@ -1573,6 +1558,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
   setInterval(()=>location.reload(), 30*60*1000);
 });
 </script>
+
 
 <!-- CER-WEBHOOK-ENRICH v1 -->
 <script>
