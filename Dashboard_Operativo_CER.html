@@ -228,17 +228,17 @@
 
       <div class="grid2">
         <div class="card">
-          <div class="card-title"><span><span class="dot"></span>Cumplimiento vs. meta contractual — Ventas (por asesor)</span></div>
-          <div class="table-scroll">
-          <table><thead><tr><th>Asesor</th><th>Meses activo</th><th>Ejecutado</th><th>Meta a la fecha</th><th>% Cumpl.</th></tr></thead><tbody id="tblResumenVentasMeta"></tbody></table>
-          </div>
+          <div class="card-title"><span><span class="dot"></span>Ejecución de Ventas (equipo)</span></div>
+          <div class="kpi-grid" id="resumenVentasEquipo"></div>
         </div>
         <div class="card">
-          <div class="card-title"><span><span class="dot"></span>Cumplimiento vs. meta contractual — Gestiones (por asesor)</span></div>
-          <div class="table-scroll">
-          <table><thead><tr><th>Asesor</th><th>Meses activo</th><th>% Cumpl. gestión</th><th>Estado</th></tr></thead><tbody id="tblResumenGestionMeta"></tbody></table>
-          </div>
+          <div class="card-title"><span><span class="dot"></span>Ejecución de Empresas (equipo)</span></div>
+          <div class="kpi-grid" id="resumenEmpresasEquipo"></div>
         </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span><span class="dot"></span>Ejecución de Gestión (equipo) — por frente de contrato</span></div>
+        <div class="kpi-grid" id="resumenGestionEquipo"></div>
       </div>
     </section>
 
@@ -278,6 +278,12 @@
           <div class="card">
             <div class="card-title"><span><span class="dot"></span>Medios de contacto utilizados (equipo, volumen)</span></div>
             <div class="chart-box sm"><canvas id="chGestionMedios"></canvas></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title"><span><span class="dot"></span>Actividad del equipo — meses activos</span></div>
+          <div class="table-scroll">
+          <table><thead><tr><th>Asesor</th><th>Estado</th><th>Meses activo</th><th>Desde</th><th>Hasta</th></tr></thead><tbody id="tblGestionActividadAsesor"></tbody></table>
           </div>
         </div>
       </div>
@@ -413,6 +419,13 @@
       </div>
 
       <div class="kpi-grid" id="ventasKpis"></div>
+
+      <div class="card">
+        <div class="card-title"><span><span class="dot"></span>Ejecución vs. meta — Ventas (por asesor)</span></div>
+        <div class="table-scroll">
+        <table><thead><tr><th>Asesor</th><th>Meses activo</th><th>Ejecutado</th><th>Meta a la fecha</th><th>% Ejecución</th></tr></thead><tbody id="tblVentasEjecucionAsesor"></tbody></table>
+        </div>
+      </div>
 
       <div class="card">
         <div class="card-title"><span><span class="dot"></span>Tendencia mensual (según filtro)</span></div>
@@ -592,13 +605,45 @@ document.getElementById('healthStrip').innerHTML = healthItems.map(h=>`
 `).join('');
 
 // ================= RESUMEN =================
+const mesesTendencia = ventasD.tendencia.map(t=>t.mes);
+const rangoTendencia = mesesTendencia.length? (mesesTendencia[0]+'-'+mesesTendencia[mesesTendencia.length-1]) : '';
+const acumEjecutadoEq = ventasD.tendencia.reduce((s,t)=>s+t.ventas,0);
+const acumMetaEq = ventasD.tendencia.reduce((s,t)=>s+t.meta,0);
+const pctAcumEquipo = acumMetaEq>0 ? (acumEjecutadoEq/acumMetaEq*100) : 0;
 document.getElementById('resumenKpis').innerHTML = `
-  <div class="kpi"><div class="kv">${contractAvgPct.toFixed(0)}%</div><div class="kl">Cumplimiento contractual (Gestión)</div></div>
-  <div class="kpi acc"><div class="kv">${fmtM(ventasD.total_ejecutado_5m)}</div><div class="kl">Ventas ejecutadas mar-jul</div></div>
-  <div class="kpi"><div class="kv">${fmtM(ventasD.meta_ejecutado_5m)}</div><div class="kl">Meta proyectada mar-jul (${ventasD.cumpl_ejecutado_5m_pct}% cumplido)</div></div>
+  <div class="kpi"><div class="kv">${contractAvgPct.toFixed(0)}%</div><div class="kl">Ejecución contractual (Gestión)</div></div>
+  <div class="kpi acc"><div class="kv">${fmtM(acumEjecutadoEq)}</div><div class="kl">Ventas ejecutadas ${rangoTendencia}</div></div>
+  <div class="kpi"><div class="kv">${fmtM(acumMetaEq)}</div><div class="kl">Meta acumulada ${rangoTendencia} (${pctAcumEquipo.toFixed(0)}% ejecutado)</div></div>
   <div class="kpi"><div class="kv">${DATA.empresas_agg.per_counts['Contactada - contrato actual']||0}</div><div class="kl">Empresas contactadas (contrato actual)</div></div>
   <div class="kpi bad"><div class="kv">${DATA.empresas_agg.per_counts['No contactada']||0}</div><div class="kl">Empresas no contactadas</div></div>
 `;
+
+// ---- Ejecución a nivel de EQUIPO (reemplaza las 2 tablas por-asesor que salieron de Resumen) ----
+const mesActualTendEq = ventasD.tendencia[ventasD.tendencia.length-1];
+const pctMesEquipo = mesActualTendEq.meta>0 ? (mesActualTendEq.ventas/mesActualTendEq.meta*100) : 0;
+document.getElementById('resumenVentasEquipo').innerHTML = `
+  <div class="kpi"><div class="kv">${fmtM(mesActualTendEq.ventas)}</div><div class="kl">Ejecutado ${mesActualTendEq.mes}${mesActualTendEq.parcial?' (parcial)':''}</div></div>
+  <div class="kpi"><div class="kv">${pctMesEquipo.toFixed(0)}%</div><div class="kl">% Ejecución del mes</div></div>
+  <div class="kpi acc"><div class="kv">${fmtM(acumEjecutadoEq)}</div><div class="kl">Ejecutado acumulado (${rangoTendencia})</div></div>
+  <div class="kpi"><div class="kv">${pctAcumEquipo.toFixed(0)}%</div><div class="kl">% Ejecución acumulada</div></div>
+`;
+
+const totalEmpEquipo = DATA.empresas_agg.total;
+const contactadasEquipo = DATA.empresas_agg.per_counts['Contactada - contrato actual']||0;
+const noContactadasEquipo = DATA.empresas_agg.per_counts['No contactada']||0;
+document.getElementById('resumenEmpresasEquipo').innerHTML = `
+  <div class="kpi"><div class="kv">${fmtN(totalEmpEquipo)}</div><div class="kl">Empresas en el padrón</div></div>
+  <div class="kpi acc"><div class="kv">${totalEmpEquipo?((contactadasEquipo/totalEmpEquipo)*100).toFixed(0):0}%</div><div class="kl">% Contactadas (contrato actual)</div></div>
+  <div class="kpi bad"><div class="kv">${fmtN(noContactadasEquipo)}</div><div class="kl">Sin contactar</div></div>
+`;
+
+document.getElementById('resumenGestionEquipo').innerHTML = contract.categories.map(cat=>{
+  const inds = cat.indicators.filter(i=>!i.pending);
+  let real=0, expected=0;
+  inds.forEach(i=>{ real += i.real; expected += i.meta_6m*contract.elapsed_fraction; });
+  const pct = expected>0 ? Math.min(real/expected,1.5)*100 : 0;
+  return `<div class="kpi"><div class="kv">${pct.toFixed(0)}%</div><div class="kl">${cat.name} — % ejecución</div></div>`;
+}).join('');
 new Chart(document.getElementById('chResumenTendencia'),{
   type:'bar', data:{ labels: ventasD.tendencia.map(t=>t.mes),
     datasets:[
@@ -1306,19 +1351,23 @@ document.getElementById('btnHcaPdf').addEventListener('click', ()=>{
     const pct = r.meta_acumulada_5m>0 ? (r.total_acumulado/r.meta_acumulada_5m*100) : null;
     return {name:a.name, meses:a.meses_activos||r.meses_activos, real:r.total_acumulado, meta:r.meta_acumulada_5m, pct};
   }).filter(Boolean).sort((a,b)=>(b.pct||0)-(a.pct||0));
-  document.getElementById('tblResumenVentasMeta').innerHTML = rowsVen.map(r=>{
+  const tblVenEj = document.getElementById('tblVentasEjecucionAsesor');
+  if (tblVenEj) tblVenEj.innerHTML = rowsVen.map(r=>{
     const cls = r.pct!=null? statusClass(r.pct):'na';
     return `<tr><td>${r.name}</td><td>${r.meses}</td><td>${fmt(r.real)}</td><td>${fmt(r.meta)}</td><td><span class="badge ${cls||'ok'}">${r.pct!=null?r.pct.toFixed(0)+'%':'—'}</span></td></tr>`;
   }).join('');
 
-  const rowsGes = advisorsFull.slice().sort((a,b)=>b.accumulated.global_pct-a.accumulated.global_pct).map(a=>{
-    const pct = a.accumulated.global_pct*100;
-    return {name:a.name, meses:a.meses_activos, pct, active:a.active};
+  // Gestion > Equipo: solo Estado + Meses activo + rango Desde/Hasta (sin %, a pedido de Luis)
+  const rowsGesAct = advisorsFull.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(a=>{
+    const meses = (a.active_months||[]).slice().sort();
+    const desde = meses.length? (ventasD.mes_labels && ventasD.mes_labels[meses[0]] || meses[0]) : '—';
+    const hasta = meses.length? (ventasD.mes_labels && ventasD.mes_labels[meses[meses.length-1]] || meses[meses.length-1]) : '—';
+    return {name:a.name, active:a.active, mesesN:a.meses_activos, desde, hasta};
   });
-  document.getElementById('tblResumenGestionMeta').innerHTML = rowsGes.map(r=>{
-    const cls = statusClass(r.pct);
-    return `<tr><td>${r.name}</td><td>${r.meses}</td><td><span class="badge ${cls||'ok'}">${r.pct.toFixed(0)}%</span></td><td><span class="badge ${r.active===false?'off':'on'}">${r.active===false?'Inactivo':'Activo'}</span></td></tr>`;
-  }).join('');
+  const tblGesAct = document.getElementById('tblGestionActividadAsesor');
+  if (tblGesAct) tblGesAct.innerHTML = rowsGesAct.map(r=>`
+    <tr><td>${r.name}</td><td><span class="badge ${r.active===false?'off':'on'}">${r.active===false?'Inactivo':'Activo'}</span></td><td>${r.mesesN}</td><td>${r.desde}</td><td>${r.hasta}</td></tr>
+  `).join('');
 })();
 
 // ================= ÚLTIMOS HECHOS =================
