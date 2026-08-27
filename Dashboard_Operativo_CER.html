@@ -507,7 +507,7 @@
 
       <div class="card">
         <div class="card-title"><span><span class="dot"></span>📞 Medios de contacto</span></div>
-        <div class="section-desc">Volumen real por canal, desde la bitácora de gestiones. Solo "Visitas presenciales" tiene meta individual definida en el contrato; los otros 4 muestran una referencia de equipo (meta del equipo repartida entre asesores activos), no una meta oficial por asesor.</div>
+        <div class="section-desc">Real vs. meta mensual por canal, según la zona del asesor (Call Center / Santa Marta / Ciénaga / Fundación) — la misma meta que ya se ve en el Tablero TV.</div>
         <div class="hca-ind-grid" id="hcaMediosGrid"></div>
       </div>
 
@@ -1543,13 +1543,21 @@ function renderHistoria(){
       <div class="hi-meta">${d.real} / ${d.meta} meta</div></div>`;
   }).join('');
 
-  // ---- Medios de contacto (real desde bitácora de gestiones; meta individual solo existe para Visitas presenciales) ----
+  // ---- Medios de contacto (real desde bitácora de gestiones + meta individual real, misma
+  // regla que el Tablero TV: CANAL_TARGETS por zona del asesor, confirmada por Luis 25-ago-2026) ----
   const MEDIO_RAW_TO_OFICIAL = {'Llamada':'Llamadas','WhatsApp':'WhatsApp','Correo electrónico':'Correos','Visita presencial':'Visitas presenciales','Reunión virtual':'Reunión virtual'};
   const rawGesAsesor = (DATA.gestiones.raw_gestiones||[]).filter(r=>r.asesor===name && (hcaPeriod==='ACC' || (r.fecha||'').slice(0,7)===hcaPeriod));
   const medioRealAsesor = {};
   rawGesAsesor.forEach(r=>{ const k = MEDIO_RAW_TO_OFICIAL[r.medio]; if(k) medioRealAsesor[k] = (medioRealAsesor[k]||0)+1; });
   const medioCatContrato = (contract.categories.find(c=>c.name==='Medios de contacto')||{indicators:[]}).indicators;
-  const nActivosMedios = activeAdvisors.length || 1;
+  const CANAL_TARGETS = {
+    'Llamadas': {'Call Center':300,'Santa Marta':100,'Ciénaga':70,'Fundación':60},
+    'WhatsApp': {'Call Center':400,'Santa Marta':120,'Ciénaga':90,'Fundación':70},
+    'Correos': {'Call Center':150,'Santa Marta':70,'Ciénaga':50,'Fundación':40},
+    'Reunión virtual': {'Call Center':4,'Santa Marta':3,'Ciénaga':2,'Fundación':2},
+  };
+  function zonaEnMes(ym){ const md = a.months[ym]; return (md && md.perfil) || a.current_profile || 'Sin zona'; }
+  const mesesMedios = hcaPeriod==='ACC' ? (a.active_months||[]) : (a.months[hcaPeriod] ? [hcaPeriod] : []);
   document.getElementById('hcaMediosGrid').innerHTML = medioCatContrato.map(mi=>{
     const real = medioRealAsesor[mi.name]||0;
     const dVis = periodData ? periodData.indicators['Visitas presenciales'] : null;
@@ -1559,9 +1567,16 @@ function renderHistoria(){
         <div class="hi-track"><div class="hi-fill ${fillCls}" style="width:${Math.min(pct,100)}%"></div></div>
         <div class="hi-meta">${dVis.real} / ${dVis.meta} meta</div></div>`;
     }
-    const refEquipo = hcaPeriod==='ACC' ? (mi.meta_6m*contract.elapsed_fraction/nActivosMedios) : (mi.meta_6m/6/nActivosMedios);
+    const tgt = CANAL_TARGETS[mi.name];
+    const meta = tgt ? mesesMedios.reduce((s,ym)=> s + (tgt[zonaEnMes(ym)] || 0), 0) : 0;
+    if (meta>0){
+      const pct = real/meta*100, cls = statusClass(pct), fillCls = cls===''?'ok':cls;
+      return `<div class="hca-ind-card"><div class="hi-top"><span class="hi-name">${mi.name}</span><span class="hi-pct">${pct.toFixed(0)}%</span></div>
+        <div class="hi-track"><div class="hi-fill ${fillCls}" style="width:${Math.min(pct,100)}%"></div></div>
+        <div class="hi-meta">${real} / ${meta} meta</div></div>`;
+    }
     return `<div class="hca-ind-card"><div class="hi-top"><span class="hi-name">${mi.name}</span><span class="hi-pct" style="color:#9AA1B0;">${real}</span></div>
-      <div class="hi-meta">Referencia de equipo ≈ ${refEquipo.toFixed(0)} (no hay meta individual oficial para este medio)</div></div>`;
+      <div class="hi-meta">Sin meta aplicable (zona sin meta definida en este periodo)</div></div>`;
   }).join('');
 
   // ---- Ventas (recalculadas desde transacciones por asesor + periodo) ----
