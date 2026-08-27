@@ -240,6 +240,14 @@
         <div class="card-title"><span><span class="dot"></span>Ejecución de Gestión (equipo) — por frente de contrato</span></div>
         <div class="kpi-grid" id="resumenGestionEquipo"></div>
       </div>
+
+      <div class="card">
+        <div class="card-title"><span><span class="dot"></span>Ejecución vs. meta — Ventas (por asesor)</span></div>
+        <div class="section-desc">La meta de cada asesor está prorrateada según sus propios meses activos — no se mide igual a quien lleva 6 meses que a quien lleva 2.</div>
+        <div class="table-scroll">
+        <table><thead><tr><th>Asesor</th><th>Desde</th><th>Hasta</th><th>Meses activo</th><th>Ejecutado</th><th>Meta a la fecha</th><th>% Ejecución</th></tr></thead><tbody id="tblResumenVentasEjecucion"></tbody></table>
+        </div>
+      </div>
     </section>
 
     <!-- ===================== GESTIÓN ===================== -->
@@ -430,13 +438,6 @@
       </div>
 
       <div class="kpi-grid" id="ventasKpis"></div>
-
-      <div class="card">
-        <div class="card-title"><span><span class="dot"></span>Ejecución vs. meta — Ventas (por asesor)</span></div>
-        <div class="table-scroll">
-        <table><thead><tr><th>Asesor</th><th>Meses activo</th><th>Ejecutado</th><th>Meta a la fecha</th><th>% Ejecución</th></tr></thead><tbody id="tblVentasEjecucionAsesor"></tbody></table>
-        </div>
-      </div>
 
       <div class="card">
         <div class="card-title"><span><span class="dot"></span>Tendencia mensual (según filtro)</span></div>
@@ -1702,16 +1703,24 @@ document.getElementById('btnHcaPdf').addEventListener('click', ()=>{
 
 // ================= RESUMEN: cumplimiento vs metas contractuales =================
 (function(){
+  const gesLblVen = DATA.gestiones.month_labels || {};
   const rowsVen = advisorsFull.map(a=>{
     const r = ventasRankByName[a.name];
-    if (!r || !r.meta_acumulada_5m) return null;
-    const pct = r.meta_acumulada_5m>0 ? (r.total_acumulado/r.meta_acumulada_5m*100) : null;
-    return {name:a.name, meses:a.meses_activos||r.meses_activos, real:r.total_acumulado, meta:r.meta_acumulada_5m, pct};
+    const mesesN = a.meses_activos || (r ? r.meses_activos : 0) || 0;
+    if (!mesesN) return null;
+    const tasaMensual = (r && r.meta_acumulada_5m && r.meses_activos) ? (r.meta_acumulada_5m/r.meses_activos) : 21000000;
+    const meta = tasaMensual * mesesN;
+    const real = r ? (r.total_acumulado||0) : 0;
+    const pct = meta>0 ? (real/meta*100) : null;
+    const mesesArr = (a.active_months||[]).slice().sort();
+    const desde = mesesArr.length? (gesLblVen[mesesArr[0]] || mesesArr[0]) : '—';
+    const hasta = mesesArr.length? (gesLblVen[mesesArr[mesesArr.length-1]] || mesesArr[mesesArr.length-1]) : '—';
+    return {name:a.name, mesesN, desde, hasta, real, meta, pct};
   }).filter(Boolean).sort((a,b)=>(b.pct||0)-(a.pct||0));
-  const tblVenEj = document.getElementById('tblVentasEjecucionAsesor');
+  const tblVenEj = document.getElementById('tblResumenVentasEjecucion');
   if (tblVenEj) tblVenEj.innerHTML = rowsVen.map(r=>{
     const cls = r.pct!=null? statusClass(r.pct):'na';
-    return `<tr><td>${r.name}</td><td>${r.meses}</td><td>${fmt(r.real)}</td><td>${fmt(r.meta)}</td><td><span class="badge ${cls||'ok'}">${r.pct!=null?r.pct.toFixed(0)+'%':'—'}</span></td></tr>`;
+    return `<tr><td>${r.name}</td><td>${r.desde}</td><td>${r.hasta}</td><td>${r.mesesN}</td><td>${fmt(r.real)}</td><td>${fmt(r.meta)}</td><td><span class="badge ${cls||'ok'}">${r.pct!=null?r.pct.toFixed(0)+'%':'—'}</span></td></tr>`;
   }).join('');
 
   // Gestion > Equipo: solo Estado + Meses activo + rango Desde/Hasta (sin %, a pedido de Luis)
