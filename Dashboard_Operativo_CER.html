@@ -338,6 +338,7 @@
       <div class="filters">
         <div class="filter-group"><label>Buscar</label><input type="text" id="fEmpBuscar" placeholder="Nombre o NIT..."></div>
         <div class="filter-group"><label>Estado de contacto</label><select id="fEmpPer"><option value="">Todos</option></select></div>
+        <div class="filter-group"><label>Estado</label><select id="fEmpEstado"><option value="">Todos</option></select></div>
         <div class="filter-group"><label>Tamaño</label><select id="fEmpTam"><option value="">Todos</option></select></div>
         <div class="filter-group"><label>Estado afiliación</label><select id="fEmpEst"><option value="">Todos</option></select></div>
         <div class="filter-group"><label>Asesor</label><select id="fEmpAse"><option value="">Todos</option></select></div>
@@ -380,44 +381,12 @@
       <div class="card">
         <div class="card-title">
           <span><span class="dot"></span>Detalle de empresas (según filtro)</span>
+          <button class="filter-clear" id="btnExportEmp">⬇ Exportar a Excel</button>
         </div>
         <div class="summary-strip" id="empSummaryStrip"></div>
         <div class="table-scroll">
-        <table><thead><tr><th>Empresa</th><th>NIT</th><th>Tamaño</th><th>Asesor</th><th>Equipo</th><th>Estado contacto</th><th>Dificultad</th><th>Ilocalizable</th><th>Última gestión</th><th>Gestiones</th></tr></thead><tbody id="tblEmpresas"></tbody></table>
+        <table><thead><tr><th>Empresa</th><th>NIT</th><th>Tamaño</th><th>Asesor</th><th>Equipo</th><th>Estado contacto</th><th>Dificultad</th><th>Estado</th><th>Última gestión</th><th>Gestiones</th></tr></thead><tbody id="tblEmpresas"></tbody></table>
         </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span><span class="dot"></span>Oportunidad — para visitar por primera vez (según filtro)</span></div>
-        <div class="section-desc">Empresas "No contactada" dentro del filtro de arriba, priorizadas por tamaño (Grande primero).</div>
-        <div class="table-scroll">
-        <table><thead><tr><th>Empresa</th><th>NIT</th><th>Tamaño</th><th>Asesor</th><th>Equipo</th><th>Sector</th></tr></thead><tbody id="tblEmpOportunidad"></tbody></table>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span><span class="dot"></span>Empresas ilocalizables — por contrato (aproximado)</span></div>
-        <div class="section-desc">Aproximación: "ilocalizable" no guarda de qué contrato es, así que se cruza contra el estado de contacto histórico. Sirve para investigar y reportarle a Cajamag las que ya no existen y sacarlas de la lista de oportunidad.</div>
-        <div class="kpi-grid" id="empresasIlocKpis"></div>
-        <div class="table-scroll">
-        <table><thead><tr><th>Empresa</th><th>NIT</th><th>Asesor</th><th>Equipo</th><th>Grupo</th><th>Última gestión</th></tr></thead><tbody id="tblEmpIlocalizables"></tbody></table>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span><span class="dot"></span>Exportar a Excel</span></div>
-        <div class="section-desc">Filtro propio, independiente del filtro de arriba (ese solo afecta las gráficas y la tabla de detalle en pantalla).</div>
-        <div class="filters">
-          <div class="filter-group"><label>Buscar</label><input type="text" id="fExpEmpBuscar" placeholder="Nombre o NIT..."></div>
-          <div class="filter-group"><label>Estado de contacto</label><select id="fExpEmpPer"><option value="">Todos</option></select></div>
-          <div class="filter-group"><label>Tamaño</label><select id="fExpEmpTam"><option value="">Todos</option></select></div>
-          <div class="filter-group"><label>Estado afiliación</label><select id="fExpEmpEst"><option value="">Todos</option></select></div>
-          <div class="filter-group"><label>Asesor</label><select id="fExpEmpAse"><option value="">Todos</option></select></div>
-          <div class="filter-group"><label>Equipo/Zona</label><select id="fExpEmpEq"><option value="">Todas</option></select></div>
-          <div class="filter-group"><label>Dificultad</label><select id="fExpEmpDif"><option value="">Todas</option></select></div>
-          <button class="filter-clear" id="btnClearExpEmp">Limpiar</button>
-        </div>
-        <button class="filter-clear" id="btnExportEmp">⬇ Exportar a Excel (empresas + ilocalizables)</button>
       </div>
     </section>
 
@@ -997,6 +966,16 @@ const gestionesPorNit = {};
   if (!r.nit) return;
   gestionesPorNit[r.nit] = (gestionesPorNit[r.nit]||0) + 1;
 });
+
+// Estado unificado (27-ago-2026, a pedido de Luis): reemplaza la vieja columna
+// "Ilocalizable" (sí/no) + las listas separadas de "Oportunidad" e
+// "Ilocalizables" por UN solo campo con 3 valores posibles.
+function estadoUnificado(r){
+  if (r.iloc) return 'Ilocalizable';
+  if (r.per === 'No contactada') return 'Primer contacto';
+  return 'Ya se encontró';
+}
+const ESTADO_ORDER = ['Ya se encontró','Primer contacto','Ilocalizable'];
 const EMP_COLORS = {tam:{'Grande':'#00685E','Mediana':'#2E8B7A','Pequeña':'#8FBFAE','Micro':'#D2CE9E','Sin dato':'#B8B8B8'},
   per:{}, est:{'Activa':'#00685E','Inactiva':'#D6484B','Sin dato':'#B8B8B8'}};
 
@@ -1007,18 +986,12 @@ populateSelect('fEmpEst', [...new Set(empFull.map(r=>r.est).filter(Boolean))].so
 populateSelect('fEmpAse', [...new Set(empFull.map(r=>r.ase).filter(Boolean))].sort());
 populateSelect('fEmpEq', [...new Set(empFull.map(r=>r.eq).filter(Boolean))].sort());
 populateSelect('fEmpDif', [...new Set(empFull.map(r=>r.dif))].sort());
-
-// Panel de exportación: mismas opciones, filtros independientes de los de arriba
-populateSelect('fExpEmpPer', [...new Set(empFull.map(r=>r.per))].sort());
-populateSelect('fExpEmpTam', TAM_ORDER.filter(t=>empFull.some(r=>r.tam===t)));
-populateSelect('fExpEmpEst', [...new Set(empFull.map(r=>r.est).filter(Boolean))].sort());
-populateSelect('fExpEmpAse', [...new Set(empFull.map(r=>r.ase).filter(Boolean))].sort());
-populateSelect('fExpEmpEq', [...new Set(empFull.map(r=>r.eq).filter(Boolean))].sort());
-populateSelect('fExpEmpDif', [...new Set(empFull.map(r=>r.dif))].sort());
+populateSelect('fEmpEstado', ESTADO_ORDER);
 
 function getEmpresasFiltered(){
   const q = document.getElementById('fEmpBuscar').value.trim().toLowerCase();
   const per = document.getElementById('fEmpPer').value;
+  const estado = document.getElementById('fEmpEstado').value;
   const tam = document.getElementById('fEmpTam').value;
   const est = document.getElementById('fEmpEst').value;
   const ase = document.getElementById('fEmpAse').value;
@@ -1027,26 +1000,7 @@ function getEmpresasFiltered(){
   let rows = empFull;
   if (q) rows = rows.filter(r => (r.nom||'').toLowerCase().includes(q) || (r.nit||'').includes(q));
   if (per) rows = rows.filter(r=>r.per===per);
-  if (tam) rows = rows.filter(r=>r.tam===tam);
-  if (est) rows = rows.filter(r=>r.est===est);
-  if (ase) rows = rows.filter(r=>r.ase===ase);
-  if (eq) rows = rows.filter(r=>r.eq===eq);
-  if (dif) rows = rows.filter(r=>r.dif===dif);
-  return rows;
-}
-
-// Filtro INDEPENDIENTE, solo para el panel de exportación a Excel (no toca gráficas ni la tabla en pantalla)
-function getEmpresasFilteredExport(){
-  const q = document.getElementById('fExpEmpBuscar').value.trim().toLowerCase();
-  const per = document.getElementById('fExpEmpPer').value;
-  const tam = document.getElementById('fExpEmpTam').value;
-  const est = document.getElementById('fExpEmpEst').value;
-  const ase = document.getElementById('fExpEmpAse').value;
-  const eq = document.getElementById('fExpEmpEq').value;
-  const dif = document.getElementById('fExpEmpDif').value;
-  let rows = empFull;
-  if (q) rows = rows.filter(r => (r.nom||'').toLowerCase().includes(q) || (r.nit||'').includes(q));
-  if (per) rows = rows.filter(r=>r.per===per);
+  if (estado) rows = rows.filter(r=>estadoUnificado(r)===estado);
   if (tam) rows = rows.filter(r=>r.tam===tam);
   if (est) rows = rows.filter(r=>r.est===est);
   if (ase) rows = rows.filter(r=>r.ase===ase);
@@ -1177,73 +1131,34 @@ function renderEmpresasAll(){
   document.getElementById('empSummaryStrip').innerHTML = `
     <div class="sitem"><b>${fmtN(rows.length)}</b>Empresas filtradas</div>
     <div class="sitem"><b>${fmtN(iloc)}</b>Ilocalizables</div>
-    <div class="sitem"><b>${fmtN(noCont)}</b>No contactadas</div>
+    <div class="sitem"><b>${fmtN(rows.filter(r=>estadoUnificado(r)==='Primer contacto').length)}</b>Primer contacto</div>
   `;
   const shown = rows.slice(0,400);
-  document.getElementById('tblEmpresas').innerHTML = shown.map(r=>`
-    <tr><td>${r.nom||'—'}</td><td>${r.nit||'—'}</td><td>${r.tam||'—'}</td><td>${r.ase||'—'}</td><td>${r.eq||'—'}</td>
+  document.getElementById('tblEmpresas').innerHTML = shown.map(r=>{
+    const eu = estadoUnificado(r);
+    const euCls = eu==='Ilocalizable' ? 'bad' : (eu==='Primer contacto' ? 'warn' : 'ok');
+    return `<tr><td>${r.nom||'—'}</td><td>${r.nit||'—'}</td><td>${r.tam||'—'}</td><td>${r.ase||'—'}</td><td>${r.eq||'—'}</td>
     <td><span class="badge ${r.per==='No contactada'?'bad':(r.per==='Contactada - contrato actual'?'ok':'warn')}">${r.per}</span></td>
-    <td>${r.dif}</td><td>${r.iloc?'<span class="badge bad">Sí</span>':'—'}</td><td>${r.fue||'—'}</td><td>${fmtN(gestionesPorNit[r.nit]||0)}</td></tr>
-  `).join('') + (rows.length>400? `<tr><td colspan="10" style="text-align:center;color:var(--text-muted);font-style:italic;">Mostrando 400 de ${rows.length} — afina el filtro o exporta a Excel.</td></tr>`:'');
-
-  // ---- Oportunidad: "No contactada" dentro del filtro actual, priorizado por tamaño ----
-  const oportRows = rows.filter(r=>r.per==='No contactada').slice().sort((a,b)=>{
-    const ta = TAM_ORDER.indexOf(a.tam||'Sin dato'), tb = TAM_ORDER.indexOf(b.tam||'Sin dato');
-    return (ta<0?99:ta) - (tb<0?99:tb) || (a.nom||'').localeCompare(b.nom||'');
-  });
-  const oportShown = oportRows.slice(0,200);
-  document.getElementById('tblEmpOportunidad').innerHTML = oportShown.map(r=>`
-    <tr><td>${r.nom||'—'}</td><td>${r.nit||'—'}</td><td>${r.tam||'—'}</td><td>${r.ase||'—'}</td><td>${r.eq||'—'}</td><td>${r.sec||'—'}</td></tr>
-  `).join('') + (oportRows.length===0? `<tr><td colspan="6" style="text-align:center;color:var(--text-muted);font-style:italic;">Ninguna empresa "No contactada" con el filtro actual.</td></tr>` : (oportRows.length>200? `<tr><td colspan="6" style="text-align:center;color:var(--text-muted);font-style:italic;">Mostrando 200 de ${oportRows.length} — afina el filtro para ver más específico.</td></tr>`:''));
+    <td>${r.dif}</td><td><span class="badge ${euCls}">${eu}</span></td><td>${r.fue||'—'}</td><td>${fmtN(gestionesPorNit[r.nit]||0)}</td></tr>`;
+  }).join('') + (rows.length>400? `<tr><td colspan="10" style="text-align:center;color:var(--text-muted);font-style:italic;">Mostrando 400 de ${rows.length} — afina el filtro o exporta a Excel.</td></tr>`:'');
 }
 
 ['fEmpBuscar'].forEach(id=>document.getElementById(id).addEventListener('input', renderEmpresasAll));
-['fEmpPer','fEmpTam','fEmpEst','fEmpAse','fEmpEq','fEmpDif'].forEach(id=>document.getElementById(id).addEventListener('change', renderEmpresasAll));
+['fEmpPer','fEmpEstado','fEmpTam','fEmpEst','fEmpAse','fEmpEq','fEmpDif'].forEach(id=>document.getElementById(id).addEventListener('change', renderEmpresasAll));
 document.getElementById('btnClearEmp').addEventListener('click',()=>{
-  ['fEmpBuscar','fEmpPer','fEmpTam','fEmpEst','fEmpAse','fEmpEq','fEmpDif'].forEach(id=>document.getElementById(id).value='');
+  ['fEmpBuscar','fEmpPer','fEmpEstado','fEmpTam','fEmpEst','fEmpAse','fEmpEq','fEmpDif'].forEach(id=>document.getElementById(id).value='');
   renderEmpresasAll();
 });
-
-// ---- Empresas ilocalizables por contrato (aproximado) — reporte fijo, no depende de ningún filtro ----
-function grupoIlocLbl(per){
-  if (per==='Contactada - contrato actual') return 'Se localizó en el contrato actual, ahora no';
-  if (per==='Contactada - solo contrato anterior') return 'Solo se localizó en el contrato anterior';
-  return 'Nunca se ha logrado localizar';
-}
-function renderEmpresasIlocalizables(){
-  const ilocRows = empFull.filter(r=>r.iloc);
-  const porGrupo = {};
-  ilocRows.forEach(r=>{ const g = grupoIlocLbl(r.per); (porGrupo[g] = porGrupo[g]||[]).push(r); });
-  document.getElementById('empresasIlocKpis').innerHTML = `
-    <div class="kpi bad"><div class="kv">${fmtN(ilocRows.length)}</div><div class="kl">Total ilocalizables (aprox.)</div></div>
-  ` + Object.entries(porGrupo).map(([g,arr])=>`<div class="kpi warn"><div class="kv">${fmtN(arr.length)}</div><div class="kl">${g}</div></div>`).join('');
-  document.getElementById('tblEmpIlocalizables').innerHTML = ilocRows.length ? ilocRows.map(r=>`
-    <tr><td>${r.nom||'—'}</td><td>${r.nit||'—'}</td><td>${r.ase||'—'}</td><td>${r.eq||'—'}</td><td>${grupoIlocLbl(r.per)}</td><td>${r.fue||'—'}</td></tr>
-  `).join('') : `<tr><td colspan="6" style="text-align:center;color:var(--text-muted);font-style:italic;">No hay empresas marcadas como ilocalizables.</td></tr>`;
-}
-
-document.getElementById('btnClearExpEmp').addEventListener('click',()=>{
-  ['fExpEmpBuscar','fExpEmpPer','fExpEmpTam','fExpEmpEst','fExpEmpAse','fExpEmpEq','fExpEmpDif'].forEach(id=>document.getElementById(id).value='');
-});
 document.getElementById('btnExportEmp').addEventListener('click', ()=>{
-  const rows = getEmpresasFilteredExport();
-  if (!rows.length){ alert('No hay datos para exportar con el filtro actual (del panel de exportación).'); return; }
-  const wsData = rows.map(r=>({
+  const rows = getEmpresasFiltered();
+  exportToExcel(rows.map(r=>({
     Empresa:r.nom, NIT:r.nit, Tamaño:r.tam, Asesor:r.ase, Equipo:r.eq,
-    'Estado contacto':r.per, Dificultad:r.dif, Ilocalizable:r.iloc?'Sí':'No',
+    'Estado contacto':r.per, Dificultad:r.dif, Estado:estadoUnificado(r),
     'Última gestión':r.fue||'', 'Estado afiliación':r.est, Sector:r.sec,
     'Teléfono':r.tel||'', 'Cantidad de gestiones':gestionesPorNit[r.nit]||0
-  }));
-  const ilocData = empFull.filter(r=>r.iloc).map(r=>({
-    Empresa:r.nom, NIT:r.nit, Asesor:r.ase, Equipo:r.eq, Grupo:grupoIlocLbl(r.per), 'Última gestión':r.fue||''
-  }));
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(wsData), 'Empresas');
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(ilocData.length?ilocData:[{Empresa:'(ninguna)'}]), 'Ilocalizables');
-  XLSX.writeFile(wb, 'Empresas_CAJAMAG_' + new Date().toISOString().slice(0,10) + '.xlsx');
+  })), 'Empresas_CAJAMAG');
 });
 renderEmpresasAll();
-renderEmpresasIlocalizables();
 
 // ================= VENTAS =================
 document.getElementById('ventasNota').innerHTML = '<b>Fuente combinada:</b> '+ventasD.nota_fuentes;
