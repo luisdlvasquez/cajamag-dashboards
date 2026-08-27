@@ -506,6 +506,12 @@
       </div>
 
       <div class="card">
+        <div class="card-title"><span><span class="dot"></span>📞 Medios de contacto</span></div>
+        <div class="section-desc">Volumen real por canal, desde la bitácora de gestiones. Solo "Visitas presenciales" tiene meta individual definida en el contrato; los otros 4 muestran una referencia de equipo (meta del equipo repartida entre asesores activos), no una meta oficial por asesor.</div>
+        <div class="hca-ind-grid" id="hcaMediosGrid"></div>
+      </div>
+
+      <div class="card">
         <div class="card-title"><span><span class="dot"></span>💰 Ventas</span></div>
         <div class="kpi-grid" id="hcaVentasKpis"></div>
         <div class="grid2">
@@ -529,6 +535,13 @@
       <div class="card">
         <div class="card-title"><span><span class="dot"></span>🏢 Empresas</span></div>
         <div class="kpi-grid" id="hcaEmpresasKpis"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span><span class="dot"></span>Empresas por gestionar</span></div>
+        <div class="section-desc">Empresas asignadas a este asesor que no se han contactado en el contrato actual.</div>
+        <div class="kpi-grid" id="hcaEmpresasPorGestionar"></div>
+        <div class="kpi-grid" id="hcaEmpresasPorGestionarTam" style="margin-top:8px;"></div>
       </div>
 
       <div class="card pdf-own-page" id="hcaEmpresasListCard">
@@ -1458,7 +1471,7 @@ activeAdvisors.forEach(a=>{ const o=document.createElement('option'); o.value=a.
 let hcaPeriod = 'ACC';
 function buildHcaMonthTabs(){
   const tabs = document.getElementById('hcaMonthTabs');
-  let html = `<div class="month-tab accent ${hcaPeriod==='ACC'?'active':''}" data-period="ACC">Ejecutado Mar–Jul</div>`;
+  let html = `<div class="month-tab accent ${hcaPeriod==='ACC'?'active':''}" data-period="ACC">Ejecutado</div>`;
   DATA.gestiones.months.forEach(ym=>{
     html += `<div class="month-tab ${hcaPeriod===ym?'active':''}" data-period="${ym}">${DATA.gestiones.month_labels[ym]}</div>`;
   });
@@ -1474,7 +1487,7 @@ function renderHistoria(){
   const a = advisorsFull.find(x=>x.name===name);
   const h = DATA.historia_asesor[name] || {empresas:{},ventas:{},ultima_gestion:null,dias_sin_cargar_gestion:null};
   const periodData = hcaPeriod==='ACC' ? a.accumulated : a.months[hcaPeriod];
-  const periodLabel = hcaPeriod==='ACC' ? 'Ejecutado Mar–Jul' : DATA.gestiones.month_labels[hcaPeriod];
+  const periodLabel = hcaPeriod==='ACC' ? 'Ejecutado' : DATA.gestiones.month_labels[hcaPeriod];
 
   document.getElementById('hcaAvatar').textContent = initials(name);
   document.getElementById('hcaName').textContent = name;
@@ -1526,7 +1539,8 @@ function renderHistoria(){
   } else { hcaSparklineChart.data.datasets[0].data=sparkData; hcaSparklineChart.data.datasets[0].pointBackgroundColor=sparkColors; hcaSparklineChart.update(); }
 
   // ---- Grid de TODOS los indicadores, en tarjetas (con barra de progreso) ----
-  const gridInds = periodData ? Object.entries(periodData.indicators) : [];
+  const HCA_GRID_EXCLUDE = ['Ventas efectivas ($)','Órdenes de matrícula','Visitas presenciales'];
+  const gridInds = periodData ? Object.entries(periodData.indicators).filter(([k])=>!HCA_GRID_EXCLUDE.includes(k)) : [];
   document.getElementById('hcaIndicadoresGrid').innerHTML = gridInds.map(([k,d])=>{
     if (d.na) return `<div class="hca-ind-card"><div class="hi-top"><span class="hi-name">${k}</span><span class="hi-pct" style="color:#9AA1B0;">${d.reason==='sin_dato'?'Sin datos':(d.reason==='periodo_no_activo'?'Aún no ingresaba':'N/A')}</span></div></div>`;
     const pct = d.pct*100, cls = statusClass(pct);
@@ -1534,6 +1548,27 @@ function renderHistoria(){
     return `<div class="hca-ind-card"><div class="hi-top"><span class="hi-name">${k}</span><span class="hi-pct">${pct.toFixed(0)}%</span></div>
       <div class="hi-track"><div class="hi-fill ${fillCls}" style="width:${Math.min(pct,100)}%"></div></div>
       <div class="hi-meta">${d.real} / ${d.meta} meta</div></div>`;
+  }).join('');
+
+  // ---- Medios de contacto (real desde bitácora de gestiones; meta individual solo existe para Visitas presenciales) ----
+  const MEDIO_RAW_TO_OFICIAL = {'Llamada':'Llamadas','WhatsApp':'WhatsApp','Correo electrónico':'Correos','Visita presencial':'Visitas presenciales','Reunión virtual':'Reunión virtual'};
+  const rawGesAsesor = (DATA.gestiones.raw_gestiones||[]).filter(r=>r.asesor===name && (hcaPeriod==='ACC' || (r.fecha||'').slice(0,7)===hcaPeriod));
+  const medioRealAsesor = {};
+  rawGesAsesor.forEach(r=>{ const k = MEDIO_RAW_TO_OFICIAL[r.medio]; if(k) medioRealAsesor[k] = (medioRealAsesor[k]||0)+1; });
+  const medioCatContrato = (contract.categories.find(c=>c.name==='Medios de contacto')||{indicators:[]}).indicators;
+  const nActivosMedios = activeAdvisors.length || 1;
+  document.getElementById('hcaMediosGrid').innerHTML = medioCatContrato.map(mi=>{
+    const real = medioRealAsesor[mi.name]||0;
+    const dVis = periodData ? periodData.indicators['Visitas presenciales'] : null;
+    if (mi.name==='Visitas presenciales' && dVis && !dVis.na){
+      const pct = dVis.pct*100, cls = statusClass(pct), fillCls = cls===''?'ok':cls;
+      return `<div class="hca-ind-card"><div class="hi-top"><span class="hi-name">${mi.name}</span><span class="hi-pct">${pct.toFixed(0)}%</span></div>
+        <div class="hi-track"><div class="hi-fill ${fillCls}" style="width:${Math.min(pct,100)}%"></div></div>
+        <div class="hi-meta">${dVis.real} / ${dVis.meta} meta</div></div>`;
+    }
+    const refEquipo = hcaPeriod==='ACC' ? (mi.meta_6m*contract.elapsed_fraction/nActivosMedios) : (mi.meta_6m/6/nActivosMedios);
+    return `<div class="hca-ind-card"><div class="hi-top"><span class="hi-name">${mi.name}</span><span class="hi-pct" style="color:#9AA1B0;">${real}</span></div>
+      <div class="hi-meta">Referencia de equipo ≈ ${refEquipo.toFixed(0)} (no hay meta individual oficial para este medio)</div></div>`;
   }).join('');
 
   // ---- Ventas (recalculadas desde transacciones por asesor + periodo) ----
@@ -1550,16 +1585,16 @@ function renderHistoria(){
   const tvCounts = {};
   ventasRows.forEach(t=>{ const k=t.tipo_venta||'Sin dato'; if(!tvCounts[k]) tvCounts[k]={n:0,valor:0}; tvCounts[k].n++; tvCounts[k].valor+=t.valor; });
   const tvLabels = Object.keys(tvCounts);
-  const tvData = tvLabels.map(k=>tvCounts[k].n);
+  const tvData = tvLabels.map(k=>tvCounts[k].valor);
   if (!hcaChTipoVentaChart){
     hcaChTipoVentaChart = new Chart(document.getElementById('hcaChTipoVenta'),{
       type:'doughnut', data:{labels:tvLabels, datasets:[{data:tvData, backgroundColor:['#00685E','#FF6900','#D2CE9E','#B8B8B8']}]},
-      options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}
+      options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{position:'bottom',labels:{font:{size:10}}}, tooltip:{callbacks:{label:(ctx)=>ctx.label+': '+fmt(ctx.parsed)}}}}
     });
   } else { hcaChTipoVentaChart.data.labels=tvLabels; hcaChTipoVentaChart.data.datasets[0].data=tvData; hcaChTipoVentaChart.update(); }
 
   const svcCounts = {};
-  ventasRows.forEach(t=>{ const k=t.servicio||'Sin dato'; if(!svcCounts[k]) svcCounts[k]={n:0,valor:0}; svcCounts[k].n++; svcCounts[k].valor+=t.valor; });
+  ventasRows.forEach(t=>{ const k=t.servicio_oficial||'Sin clasificar (revisar)'; if(!svcCounts[k]) svcCounts[k]={n:0,valor:0}; svcCounts[k].n++; svcCounts[k].valor+=t.valor; });
   const svcTop = Object.entries(svcCounts).sort((a,b)=>b[1].n-a[1].n).slice(0,6);
   const svcLabels = svcTop.map(x=>x[0].length>20?x[0].slice(0,20)+'…':x[0]);
   const svcData = svcTop.map(x=>x[1].n);
@@ -1579,14 +1614,16 @@ function renderHistoria(){
     return Object.values(md.indicators).filter(d=>!d.na).reduce((s,d)=>s+d.real,0);
   });
   const cadVentas = cadMonths.map(ym=> DATA.ventas.transacciones.filter(t=>t.asesor===name && t.ym===ym).length);
+  const cadMedios = cadMonths.map(ym=> (DATA.gestiones.raw_gestiones||[]).filter(r=>r.asesor===name && (r.fecha||'').slice(0,7)===ym && MEDIO_RAW_TO_OFICIAL[r.medio]).length);
   if (!hcaChCadenciaChart){
     hcaChCadenciaChart = new Chart(document.getElementById('hcaChCadencia'),{
       type:'line', data:{labels:cadLabels, datasets:[
         {label:'Gestión / carga en Bitrix (actividades)', data:cadGestion, borderColor:'#00685E', backgroundColor:'#00685E33', tension:.3, fill:true},
         {label:'Ventas (transacciones)', data:cadVentas, borderColor:'#FF6900', backgroundColor:'#FF690033', tension:.3, fill:true},
+        {label:'Medios de contacto (llamadas+whatsapp+correos+visitas+reuniones)', data:cadMedios, borderColor:'#2E75B6', backgroundColor:'transparent', tension:.3, fill:false, borderDash:[5,3]},
       ]}, options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}
     });
-  } else { hcaChCadenciaChart.data.labels=cadLabels; hcaChCadenciaChart.data.datasets[0].data=cadGestion; hcaChCadenciaChart.data.datasets[1].data=cadVentas; hcaChCadenciaChart.update(); }
+  } else { hcaChCadenciaChart.data.labels=cadLabels; hcaChCadenciaChart.data.datasets[0].data=cadGestion; hcaChCadenciaChart.data.datasets[1].data=cadVentas; hcaChCadenciaChart.data.datasets[2].data=cadMedios; hcaChCadenciaChart.update(); }
 
   // ---- Empresas (estado actual, no varía por mes) ----
   const he = h.empresas || {};
@@ -1599,6 +1636,17 @@ function renderHistoria(){
 
   const noContRows = empFull.filter(r=>r.ase===name && r.per==='No contactada')
     .sort((x,y)=> TAM_ORDER.indexOf(x.tam) - TAM_ORDER.indexOf(y.tam));
+
+  // ---- Empresas por gestionar (nunca contactadas en este contrato) ----
+  const porGestionarTam = {'Grande':0,'Mediana':0,'Pequeña':0,'Micro':0};
+  noContRows.forEach(r=>{ const t = (r.tam in porGestionarTam) ? r.tam : 'Micro'; porGestionarTam[t]++; });
+  document.getElementById('hcaEmpresasPorGestionar').innerHTML = `
+    <div class="kpi bad"><div class="kv">${noContRows.length}</div><div class="kl">Empresas por gestionar (sin contactar en este contrato)</div></div>
+  `;
+  document.getElementById('hcaEmpresasPorGestionarTam').innerHTML = Object.entries(porGestionarTam).map(([t,n])=>`
+    <div class="kpi"><div class="kv">${n}</div><div class="kl">${t}</div></div>
+  `).join('');
+
   const top10NoCont = noContRows.slice(0,10);
   document.getElementById('hcaEmpresasList').innerHTML = top10NoCont.length ? (top10NoCont.map(r=>`
     <div class="hca-emp-row"><div><div class="hca-emp-name">${r.nom||'—'}</div><div class="hca-emp-sub">NIT ${r.nit||'—'} · ${r.eq||'—'}</div></div>
