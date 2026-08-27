@@ -1395,63 +1395,13 @@ async function requestWakeLock(){
     }
   }catch(e){ /* no soportado o denegado: seguimos con el audio-loop */ }
 }
-/* Timbre de aviso para la pausa activa (26-ago-2026, a pedido de Luis): antes
-   sonaba una musica ambiente de fondo durante TODA la pausa; ahora en vez de
-   eso suena un timbre tipo "atencion clientes" de almacen (motivo de
-   campanas, tono sine sin aspereza) fuerte de volumen pero no estridente,
-   SOLO durante los primeros ~10 segundos de la pausa. El resto de la pausa
-   queda en silencio (la imagen/overlay se mantiene en pantalla igual). */
-let pausaActivaChimeCtx = null;
-let pausaActivaChimeTimer = null;
-function playChimeNote(ctx, master, freq, startTime, duration, gain){
-  const osc = ctx.createOscillator();
-  osc.type = 'sine';
-  osc.frequency.value = freq;
-  const g = ctx.createGain();
-  g.gain.setValueAtTime(0, startTime);
-  g.gain.linearRampToValueAtTime(gain, startTime + 0.015); // ataque rapido tipo campana
-  g.gain.exponentialRampToValueAtTime(0.0001, startTime + duration); // caida suave
-  osc.connect(g).connect(master);
-  osc.start(startTime);
-  osc.stop(startTime + duration + 0.05);
-}
-function startPausaActivaAmbient(){
-  if(pausaActivaChimeCtx) return; // ya esta sonando
-  try{
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const master = ctx.createGain();
-    master.gain.value = 1;
-    master.connect(ctx.destination);
-    const now = ctx.currentTime;
-
-    // Motivo de 4 notas tipo timbre de almacen (sol-mi-do-mi), volumen fuerte
-    // (0.4) pero timbre sine puro y suave para que avise sin aturdir. Se
-    // repite 4 veces con un pequeño espacio entre pasadas, cubriendo los
-    // primeros ~10 segundos de la pausa; despues queda en silencio.
-    const notas = [783.99, 659.25, 523.25, 659.25]; // G5, E5, C5, E5
-    const pasadas = 4;
-    const espacioEntrePasadas = 2.5; // segundos
-    for(let r=0; r<pasadas; r++){
-      const base = now + r*espacioEntrePasadas;
-      notas.forEach((f,i)=>{ playChimeNote(ctx, master, f, base + i*0.32, 0.55, 0.4); });
-    }
-
-    pausaActivaChimeCtx = ctx;
-    // Cierra el AudioContext despues de que termino de sonar (~10s), no lo
-    // deja abierto sin necesidad por el resto de la pausa.
-    pausaActivaChimeTimer = setTimeout(()=>{
-      try{ ctx.close(); }catch(e){}
-      pausaActivaChimeCtx = null;
-    }, (pasadas*espacioEntrePasadas*1000) + 800);
-  }catch(e){}
-}
-function stopPausaActivaAmbient(){
-  if(pausaActivaChimeTimer){ clearTimeout(pausaActivaChimeTimer); pausaActivaChimeTimer = null; }
-  if(pausaActivaChimeCtx){
-    try{ pausaActivaChimeCtx.close(); }catch(e){}
-    pausaActivaChimeCtx = null;
-  }
-}
+/* Sonido de la pausa activa quitado por completo (27-ago-2026, a pedido de
+   Luis): antes sonaba un timbre corto de 4 notas al iniciar la pausa; ahora
+   la pausa activa es totalmente silenciosa (solo queda la imagen/overlay en
+   pantalla). Se dejan las funciones como no-ops para no tocar las llamadas
+   existentes en checkPausaActiva(). */
+function startPausaActivaAmbient(){}
+function stopPausaActivaAmbient(){}
 function startAntiSleepAudio(){
   const a = document.createElement('audio');
   a.setAttribute('playsinline','');
