@@ -535,7 +535,6 @@
       <div class="card">
         <div class="card-title"><span><span class="dot"></span>🏢 Empresas</span></div>
         <div class="kpi-grid" id="hcaEmpresasKpis"></div>
-        <div id="hcaEmpresasKpisTam"></div>
       </div>
 
       <div class="card pdf-own-page" id="hcaEmpresasListCard">
@@ -1624,33 +1623,24 @@ function renderHistoria(){
   const heGestionadas = heRows.filter(r=>r.per==='Contactada - contrato actual');
   const heOportunidad = heRows.filter(r=>r.per==='No contactada');
   const heIloc = heRows.filter(r=>r.iloc);
-  document.getElementById('hcaEmpresasKpis').innerHTML = `
-    <div class="kpi"><div class="kv">${heRows.length}</div><div class="kl">Empresas asignadas (Responsable)</div></div>
-    <div class="kpi acc"><div class="kv">${heGestionadas.length}</div><div class="kl">Gestionadas este contrato</div></div>
-    <div class="kpi warn"><div class="kv">${heOportunidad.length}</div><div class="kl">Oportunidad de primer contacto</div></div>
-    <div class="kpi bad"><div class="kv">${heIloc.length}</div><div class="kl">Ilocalizables</div></div>
-  `;
   function hcaTamBreak(rows){
     const c = {'Grande':0,'Mediana':0,'Pequeña':0,'Micro':0};
     rows.forEach(r=>{ const t = (r.tam in c) ? r.tam : 'Micro'; c[t]++; });
     return c;
   }
-  document.getElementById('hcaEmpresasKpisTam').innerHTML = [
-    ['Asignadas — por tamaño', heRows],
-    ['Gestionadas este contrato — por tamaño', heGestionadas],
-    ['Oportunidad de primer contacto — por tamaño', heOportunidad],
-    ['Ilocalizables — por tamaño', heIloc],
-  ].map(([label, lrows])=>{
-    const c = hcaTamBreak(lrows);
-    return `<div style="margin-top:10px;">
-      <div class="hca-emp-sub" style="font-weight:600;margin-bottom:4px;">${label}</div>
-      <div class="kpi-grid">
-        <div class="kpi"><div class="kv">${c['Grande']}</div><div class="kl">Grande</div></div>
-        <div class="kpi"><div class="kv">${c['Mediana']}</div><div class="kl">Mediana</div></div>
-        <div class="kpi"><div class="kv">${c['Pequeña']}</div><div class="kl">Pequeña</div></div>
-        <div class="kpi"><div class="kv">${c['Micro']}</div><div class="kl">Micro</div></div>
-      </div></div>`;
-  }).join('');
+  function hcaTamMiniRow(cls, rows){
+    const c = hcaTamBreak(rows);
+    const cell = (n,l)=>`<div class="kpi ${cls}" style="padding:6px 8px;border-top-width:2px;"><div class="kv" style="font-size:14px;">${n}</div><div class="kl" style="font-size:8.5px;">${l}</div></div>`;
+    return `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px;">
+      ${cell(c['Grande'],'Grande')}${cell(c['Mediana'],'Mediana')}${cell(c['Pequeña'],'Pequeña')}${cell(c['Micro'],'Micro')}
+    </div>`;
+  }
+  document.getElementById('hcaEmpresasKpis').innerHTML = `
+    <div class="kpi"><div class="kv">${heRows.length}</div><div class="kl">Empresas asignadas (Responsable)</div>${hcaTamMiniRow('', heRows)}</div>
+    <div class="kpi acc"><div class="kv">${heGestionadas.length}</div><div class="kl">Gestionadas este contrato</div>${hcaTamMiniRow('acc', heGestionadas)}</div>
+    <div class="kpi warn"><div class="kv">${heOportunidad.length}</div><div class="kl">Oportunidad de primer contacto</div>${hcaTamMiniRow('warn', heOportunidad)}</div>
+    <div class="kpi bad"><div class="kv">${heIloc.length}</div><div class="kl">Ilocalizables</div>${hcaTamMiniRow('bad', heIloc)}</div>
+  `;
 
   const noContRows = heOportunidad.slice().sort((x,y)=> TAM_ORDER.indexOf(x.tam) - TAM_ORDER.indexOf(y.tam));
   const top10NoCont = noContRows.slice(0,10);
