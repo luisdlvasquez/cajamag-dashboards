@@ -242,10 +242,10 @@
       </div>
 
       <div class="card">
-        <div class="card-title"><span><span class="dot"></span>Ejecución vs. meta — Ventas (por asesor)</span></div>
-        <div class="section-desc">La meta de cada asesor está prorrateada según sus propios meses activos — no se mide igual a quien lleva 6 meses que a quien lleva 2.</div>
+        <div class="card-title"><span><span class="dot"></span>Ejecución de Ventas (por asesor)</span></div>
+        <div class="section-desc">Ordenado de mayor a menor por lo ejecutado. % Participación = qué parte del total vendido por el equipo aporta cada asesor.</div>
         <div class="table-scroll">
-        <table><thead><tr><th>Asesor</th><th>Desde</th><th>Hasta</th><th>Meses activo</th><th>Ejecutado</th><th>Meta a la fecha</th><th>% Ejecución</th></tr></thead><tbody id="tblResumenVentasEjecucion"></tbody></table>
+        <table><thead><tr><th>Asesor</th><th>Desde</th><th>Hasta</th><th>Meses activo</th><th>Ejecutado</th><th>% Participación</th></tr></thead><tbody id="tblResumenVentasEjecucion"></tbody></table>
         </div>
       </div>
     </section>
@@ -1708,20 +1708,18 @@ document.getElementById('btnHcaPdf').addEventListener('click', ()=>{
     const r = ventasRankByName[a.name];
     const mesesN = a.meses_activos || (r ? r.meses_activos : 0) || 0;
     if (!mesesN) return null;
-    const tasaMensual = (r && r.meta_acumulada_5m && r.meses_activos) ? (r.meta_acumulada_5m/r.meses_activos) : 21000000;
-    const meta = tasaMensual * mesesN;
     const real = r ? (r.total_acumulado||0) : 0;
-    const pct = meta>0 ? (real/meta*100) : null;
     const mesesArr = (a.active_months||[]).slice().sort();
     const desde = mesesArr.length? (gesLblVen[mesesArr[0]] || mesesArr[0]) : '—';
     const hasta = mesesArr.length? (gesLblVen[mesesArr[mesesArr.length-1]] || mesesArr[mesesArr.length-1]) : '—';
-    return {name:a.name, mesesN, desde, hasta, real, meta, pct};
-  }).filter(Boolean).sort((a,b)=>(b.pct||0)-(a.pct||0));
+    return {name:a.name, mesesN, desde, hasta, real};
+  }).filter(Boolean).sort((a,b)=>b.real-a.real);
+  const totalVenEj = rowsVen.reduce((s,r)=>s+r.real,0);
   const tblVenEj = document.getElementById('tblResumenVentasEjecucion');
   if (tblVenEj) tblVenEj.innerHTML = rowsVen.map(r=>{
-    const cls = r.pct!=null? statusClass(r.pct):'na';
-    return `<tr><td>${r.name}</td><td>${r.desde}</td><td>${r.hasta}</td><td>${r.mesesN}</td><td>${fmt(r.real)}</td><td>${fmt(r.meta)}</td><td><span class="badge ${cls||'ok'}">${r.pct!=null?r.pct.toFixed(0)+'%':'—'}</span></td></tr>`;
-  }).join('');
+    const part = totalVenEj>0 ? (r.real/totalVenEj*100) : 0;
+    return `<tr><td>${r.name}</td><td>${r.desde}</td><td>${r.hasta}</td><td>${r.mesesN}</td><td>${fmt(r.real)}</td><td>${part.toFixed(1)}%</td></tr>`;
+  }).join('') + `<tr style="font-weight:700;background:#f4f6f5;"><td colspan="4">Total</td><td>${fmt(totalVenEj)}</td><td>100%</td></tr>`;
 
   // Gestion > Equipo: solo Estado + Meses activo + rango Desde/Hasta (sin %, a pedido de Luis)
   const rowsGesAct = advisorsFull.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(a=>{
