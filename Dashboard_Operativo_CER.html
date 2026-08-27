@@ -563,6 +563,22 @@
         <table><thead><tr><th>Fecha</th><th>Asesor</th><th>Empresa</th><th>NIT</th><th>Medio</th><th>Gestión</th><th>Comentario</th></tr></thead><tbody id="tblHechosFeed"></tbody></table>
         </div>
       </div>
+
+      <div class="card">
+        <div class="card-title"><span><span class="dot"></span>Ventas auditadas (en vivo)</span></div>
+        <div class="section-desc">Estado de auditoría de las ventas registradas en Bitrix — se refresca solo cada 45 segundos.</div>
+        <div class="table-scroll">
+        <table><thead><tr><th>Fecha</th><th>Asesor</th><th>Negocio</th><th>Monto</th><th>Estado</th><th>Motivo de rechazo</th></tr></thead><tbody id="tblVentasAuditadas"><tr><td colspan="6" style="text-align:center;color:var(--text-muted);font-style:italic;">Cargando…</td></tr></tbody></table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span><span class="dot"></span>Cambios de asesor en empresas (en vivo)</span></div>
+        <div class="section-desc">Reasignaciones de empresa detectadas automáticamente al comparar el responsable actual en Bitrix contra el último registrado.</div>
+        <div class="table-scroll">
+        <table><thead><tr><th>Detectado</th><th>Empresa</th><th>Asesor anterior</th><th>Asesor nuevo</th></tr></thead><tbody id="tblCambiosAsesor"><tr><td colspan="4" style="text-align:center;color:var(--text-muted);font-style:italic;">Cargando…</td></tr></tbody></table>
+        </div>
+      </div>
     </section>
   </main>
 </div>
@@ -1681,6 +1697,46 @@ document.getElementById('btnHcaPdf').addEventListener('click', ()=>{
   document.getElementById('tblHechosFeed').innerHTML = raw.slice(0,100).map(r=>`
     <tr><td>${r.fecha}</td><td>${r.asesor}</td><td>${r.empresa||'—'}</td><td>${r.nit||'—'}</td><td>${r.medio||'—'}</td><td>${r.gestion||'—'}</td><td>${r.comentario||'—'}</td></tr>
   `).join('');
+})();
+
+// ---- Ventas auditadas + Cambios de asesor (en vivo via Supabase, 26-ago-2026 a pedido de Luis) ----
+(function(){
+  const SUPA_URL = 'https://nzmnzmnozbeqttofbmlf.supabase.co';
+  const SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56bW56bW5vemJlcXR0b2ZibWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2NTAzMjQsImV4cCI6MjA5NTIyNjMyNH0.r3hrXsazoJK_xUWTsskEgjQ40Xhg60_0YaGvWs1VXP8';
+  function fmtMoneyH(n){ if(n==null) return '—'; return '$'+Math.round(n).toLocaleString('es-CO'); }
+  function fmtFechaH(iso){ if(!iso) return '—'; try{ const d=new Date(iso); return d.toLocaleDateString('es-CO')+' '+d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); }catch(e){ return iso; } }
+  function estadoBadgeH(e){
+    if(e==='aprobado') return '<span class="badge ok">Aprobado</span>';
+    if(e==='rechazado') return '<span class="badge bad">Rechazado</span>';
+    return '<span class="badge warn">Pendiente</span>';
+  }
+  function cargarVentasAuditadas(){
+    fetch(SUPA_URL+'/rest/v1/bitrix_eventos?evento=neq.backfill_historico&titulo=not.is.null&order=creado_en.desc&limit=60', {
+      headers:{apikey:SUPA_ANON, Authorization:'Bearer '+SUPA_ANON}
+    }).then(r=>r.json()).then(rows=>{
+      const tbl = document.getElementById('tblVentasAuditadas');
+      if(!tbl) return;
+      if(!Array.isArray(rows) || !rows.length){ tbl.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);font-style:italic;">Sin ventas registradas todavía.</td></tr>'; return; }
+      tbl.innerHTML = rows.map(r=>`
+        <tr><td>${fmtFechaH(r.creado_en)}</td><td>${r.asesor||'—'}</td><td>${r.titulo||('Negocio '+r.deal_id)}</td><td>${fmtMoneyH(r.monto)}</td><td>${estadoBadgeH(r.estado_auditoria)}</td><td>${r.motivo_rechazo||'—'}</td></tr>
+      `).join('');
+    }).catch(e=>console.error('ventas auditadas error', e));
+  }
+  function cargarCambiosAsesor(){
+    fetch(SUPA_URL+'/rest/v1/empresas_cambios_asesor?order=detectado_en.desc&limit=60', {
+      headers:{apikey:SUPA_ANON, Authorization:'Bearer '+SUPA_ANON}
+    }).then(r=>r.json()).then(rows=>{
+      const tbl = document.getElementById('tblCambiosAsesor');
+      if(!tbl) return;
+      if(!Array.isArray(rows) || !rows.length){ tbl.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);font-style:italic;">Sin cambios de asesor detectados todavía.</td></tr>'; return; }
+      tbl.innerHTML = rows.map(r=>`
+        <tr><td>${fmtFechaH(r.detectado_en)}</td><td>${r.nombre_empresa||'—'}</td><td>${r.asesor_anterior_nombre||'—'}</td><td>${r.asesor_nuevo_nombre||'—'}</td></tr>
+      `).join('');
+    }).catch(e=>console.error('cambios asesor error', e));
+  }
+  function cicloHechosVivo(){ cargarVentasAuditadas(); cargarCambiosAsesor(); }
+  cicloHechosVivo();
+  setInterval(cicloHechosVivo, 45000);
 })();
 </script>
 
