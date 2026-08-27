@@ -212,10 +212,10 @@
 <div class="body-wrap">
   <nav class="sidebar">
     <div class="navitem active" data-section="resumen"><span class="ic">🏠</span>Resumen</div>
-    <div class="navitem" data-section="contrato"><span class="ic">🎯</span>Contrato</div>
     <div class="navitem" data-section="gestion"><span class="ic">📋</span>Gestión</div>
     <div class="navitem" data-section="empresas"><span class="ic">🏢</span>Empresas</div>
     <div class="navitem" data-section="ventas"><span class="ic">💰</span>Ventas</div>
+    <div class="navitem" data-section="contrato"><span class="ic">🎯</span>Contrato</div>
   </nav>
 
   <main>
@@ -255,25 +255,6 @@
           <div class="table-scroll">
           <table><thead><tr><th>Asesor</th><th>Zona</th><th>Estado</th><th>Meses activo</th><th>Ventas ejecutadas</th><th>% Cumpl. ventas</th><th>% Cumpl. gestión</th><th>Empresas gestionadas</th><th>Empresas faltantes</th></tr></thead><tbody id="tblResumenConsolidado"></tbody></table>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== CONTRATO ===================== -->
-    <section class="section" id="sec-contrato">
-      <div class="section-title">Cómo vamos frente al Contrato</div>
-      <div class="section-desc">Vista estratégica: avance real vs. TODAS las metas contractuales, medido al ritmo esperado del contrato completo (11 meses). El checkpoint intermedio de 6 meses queda como referencia histórica al final de la hoja.</div>
-      <div class="kpi-grid" id="contratoKpis"></div>
-      <div class="card" id="contratoRiesgoCard" style="display:none;">
-        <div class="card-title"><span><span class="dot"></span>⚠️ Indicadores por debajo del ritmo esperado (&lt;80%)</span></div>
-        <div class="hca-ind-grid" id="contratoRiesgoList"></div>
-      </div>
-      <div id="contratoCategorias"></div>
-      <div class="card">
-        <div class="card-title"><span><span class="dot"></span>Checkpoint contractual de 6 meses (histórico)</span></div>
-        <div class="section-desc" style="margin-top:-6px;">Meta intermedia fijada por contrato para el primer semestre — referencia adicional, no reemplaza la meta anual de arriba.</div>
-        <div class="table-scroll">
-        <table><thead><tr><th>Indicador</th><th>Real</th><th>Esperado al corte (6m)</th><th>Meta 6m</th><th>% checkpoint</th></tr></thead><tbody id="tblContratoCheckpoint"></tbody></table>
         </div>
       </div>
     </section>
@@ -447,6 +428,18 @@
         <table><thead><tr><th>Fecha</th><th>Mes</th><th>Asesor</th><th>Zona</th><th>Tipo</th><th>Servicio</th><th>Cliente</th><th>NIT/CC</th><th>Empresa</th><th>Detalle</th><th>Cantidad</th><th>Valor</th><th>Fuente</th></tr></thead><tbody id="tblVentas"></tbody></table>
         </div>
       </div>
+    </section>
+
+    <!-- ===================== CONTRATO ===================== -->
+    <section class="section" id="sec-contrato">
+      <div class="section-title">Cómo vamos frente al Contrato</div>
+      <div class="section-desc">Vista estratégica: avance real vs. las metas del contrato vigente (6 meses) al ritmo esperado a la fecha de corte.</div>
+      <div class="kpi-grid" id="contratoKpis"></div>
+      <div class="card" id="contratoRiesgoCard" style="display:none;">
+        <div class="card-title"><span><span class="dot"></span>⚠️ Indicadores por debajo del ritmo esperado (&lt;80%)</span></div>
+        <div class="hca-ind-grid" id="contratoRiesgoList"></div>
+      </div>
+      <div id="contratoCategorias"></div>
     </section>
 
 
@@ -1052,63 +1045,63 @@ renderVentasAll();
 })();
 
 
-// ================= CONTRATO (vista estrategica, hoja nueva) =================
+// ================= CONTRATO (vista estrategica, hoja nueva -- medido contra el
+// contrato VIGENTE de 6 meses, aclarado por Luis el 27-ago-2026: el de 11 meses
+// aun no se ha firmado, asi que no se usa como referencia principal) =================
 (function(){
   const allIndsC = contract.categories.flatMap(cat=>cat.indicators.map(i=>Object.assign({categoria:cat.name}, i)));
-  const activeIndsC = allIndsC.filter(i=>!i.pending && i.pct_anual_pace!=null);
+  const activeIndsC = allIndsC.filter(i=>!i.pending && i.meta_6m);
 
   const hoyC = new Date(contract.data_cutoff);
-  const inicioC = new Date(contract.contract_start);
-  const finAnualC = new Date(contract.contract_annual_end);
-  const diasTranscurridosC = Math.round((hoyC-inicioC)/86400000);
-  const diasTotalesC = Math.round((finAnualC-inicioC)/86400000);
-  const diasRestantesC = Math.max(diasTotalesC-diasTranscurridosC,0);
-  const pctTiempoAnualC = (contract.elapsed_fraction_annual||0)*100;
-  const pctPromedioC = activeIndsC.length ? activeIndsC.reduce((s,i)=>s+Math.min(i.pct_anual_pace,150),0)/activeIndsC.length : 0;
+  const finC = new Date(contract.period_end);
+  const diasRestantesC = Math.max(Math.round((finC-hoyC)/86400000),0);
+  const pctTiempoC = (contract.elapsed_fraction||0)*100;
+
+  const pctList = activeIndsC.map(i=>{
+    const esperado = i.meta_6m*contract.elapsed_fraction;
+    return esperado>0 ? Math.min(i.real/esperado*100,150) : 0;
+  });
+  const pctPromedioC = pctList.length ? pctList.reduce((s,p)=>s+p,0)/pctList.length : 0;
   const clsGlobalC = statusClass(Math.min(pctPromedioC,100));
   const ventasInd = allIndsC.find(i=>i.name==='Ventas efectivas totales ($)');
 
   document.getElementById('contratoKpis').innerHTML = `
-    <div class="kpi"><div class="kv">${pctTiempoAnualC.toFixed(0)}%</div><div class="kl">Tiempo transcurrido del contrato (11 meses)</div></div>
-    <div class="kpi"><div class="kv">${diasRestantesC}</div><div class="kl">Días restantes hasta ${finAnualC.toLocaleDateString('es-CO')}</div></div>
+    <div class="kpi"><div class="kv">${pctTiempoC.toFixed(0)}%</div><div class="kl">Tiempo transcurrido del contrato vigente (6 meses)</div></div>
+    <div class="kpi"><div class="kv">${diasRestantesC}</div><div class="kl">Días restantes hasta el cierre (${finC.toLocaleDateString('es-CO')})</div></div>
     <div class="kpi ${clsGlobalC==='bad'?'bad':(clsGlobalC==='warn'?'':'acc')}"><div class="kv">${pctPromedioC.toFixed(0)}%</div><div class="kl">Cumplimiento promedio vs. ritmo esperado (todos los indicadores)</div></div>
     <div class="kpi"><div class="kv">${ventasInd?fmtM(ventasInd.real):'—'}</div><div class="kl">Ventas ejecutadas del contrato (marzo a la fecha)</div></div>
   `;
 
-  const riesgosC = activeIndsC.filter(i=>i.pct_anual_pace<80).sort((a,b)=>a.pct_anual_pace-b.pct_anual_pace);
+  const riesgosC = activeIndsC.map(i=>{
+    const esperado = i.meta_6m*contract.elapsed_fraction;
+    const pct = esperado>0 ? i.real/esperado*100 : 0;
+    return Object.assign({}, i, {pct, esperado});
+  }).filter(i=>i.pct<80).sort((a,b)=>a.pct-b.pct);
   if (riesgosC.length){
     document.getElementById('contratoRiesgoCard').style.display='';
     document.getElementById('contratoRiesgoList').innerHTML = riesgosC.map(i=>`
-      <div class="hca-ind-card"><div class="hi-top"><span class="hi-name">${i.categoria} — ${i.name}</span><span class="hi-pct">${i.pct_anual_pace.toFixed(0)}%</span></div>
-      <div class="hi-track"><div class="hi-fill bad" style="width:${Math.min(i.pct_anual_pace,100)}%"></div></div>
-      <div class="hi-meta">${i.name.includes('($)')?fmtM(i.real):fmtN(i.real)} de ${i.name.includes('($)')?fmtM(i.meta_a_la_fecha_anual):fmtN(i.meta_a_la_fecha_anual)} esperado a la fecha (meta anual: ${i.name.includes('($)')?fmtM(i.meta_11m):fmtN(i.meta_11m)})</div></div>
+      <div class="hca-ind-card"><div class="hi-top"><span class="hi-name">${i.categoria} — ${i.name}</span><span class="hi-pct">${i.pct.toFixed(0)}%</span></div>
+      <div class="hi-track"><div class="hi-fill bad" style="width:${Math.min(i.pct,100)}%"></div></div>
+      <div class="hi-meta">${i.name.includes('($)')?fmtM(i.real):fmtN(i.real)} de ${i.name.includes('($)')?fmtM(i.esperado):fmtN(Math.round(i.esperado))} esperado a la fecha (meta del contrato: ${i.name.includes('($)')?fmtM(i.meta_6m):fmtN(i.meta_6m)})</div></div>
     `).join('');
   }
 
   document.getElementById('contratoCategorias').innerHTML = contract.categories.map(cat=>{
     const rows = cat.indicators.map(i=>{
       if (i.pending) return `<tr><td>${i.name}</td><td colspan="4" style="color:var(--text-muted);">Sin fuente de datos aún</td></tr>`;
-      const cls = statusClass(Math.min(i.pct_anual_pace,100));
+      const esperado = i.meta_6m*contract.elapsed_fraction;
+      const pct = esperado>0 ? i.real/esperado*100 : 0;
+      const cls = statusClass(Math.min(pct,100));
       const isVal = i.name.includes('($)');
       const f = isVal ? fmtM : fmtN;
-      return `<tr><td>${i.name}${i.partial?' *':''}</td><td>${f(i.real)}</td><td>${f(i.meta_a_la_fecha_anual)}</td><td>${f(i.meta_11m)}</td><td><span class="badge ${cls||'ok'}">${i.pct_anual_pace.toFixed(0)}%</span></td></tr>`;
+      return `<tr><td>${i.name}${i.partial?' *':''}</td><td>${f(i.real)}</td><td>${f(Math.round(esperado))}</td><td>${f(i.meta_6m)}</td><td><span class="badge ${cls||'ok'}">${pct.toFixed(0)}%</span></td></tr>`;
     }).join('');
     return `<div class="card">
       <div class="card-title"><span><span class="dot"></span>${cat.name}</span></div>
       <div class="table-scroll">
-      <table><thead><tr><th>Indicador</th><th>Real</th><th>Ritmo esperado a la fecha</th><th>Meta anual (11m)</th><th>% vs. ritmo</th></tr></thead><tbody>${rows}</tbody></table>
+      <table><thead><tr><th>Indicador</th><th>Real</th><th>Ritmo esperado a la fecha</th><th>Meta contrato (6m)</th><th>% vs. ritmo</th></tr></thead><tbody>${rows}</tbody></table>
       </div>
     </div>`;
-  }).join('');
-
-  document.getElementById('tblContratoCheckpoint').innerHTML = contractIndicatorsAll.map(i=>{
-    if (i.pending) return `<tr><td>${i.name}</td><td colspan="3" style="color:var(--text-muted);">Pendiente</td><td><span class="badge na">Falta fuente</span></td></tr>`;
-    const expected = i.meta_6m*contract.elapsed_fraction;
-    const pct = expected>0? i.real/expected*100:0;
-    const cls = statusClass(pct);
-    const isVal = i.name.includes('($)');
-    const f = isVal ? fmtM : fmtN;
-    return `<tr><td>${i.name}${i.partial?' *':''}</td><td>${f(i.real)}</td><td>${f(Math.round(expected))}</td><td>${f(i.meta_6m)}</td><td><span class="badge ${cls||'ok'}">${pct.toFixed(0)}%</span></td></tr>`;
   }).join('');
 })();
 </script>
