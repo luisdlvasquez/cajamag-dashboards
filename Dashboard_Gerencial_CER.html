@@ -891,7 +891,80 @@ populateSelect('fVenMes', ventasD.meses_order.map(ym=>ventasD.mes_labels[ym]));
 populateSelect('fVenAsesor', ventasD.filtros.asesores);
 populateSelect('fVenZona', ventasD.filtros.zonas);
 populateSelect('fVenTipo', ventasD.filtros.tipos_venta);
-populateSelect('fVenServicio', ventasD.filtros.servicios);
+// ---- Catálogo OFICIAL de servicios + IVA (mismo catálogo/resolución que Dashboard Operativo) ----
+const IMPUESTO_OFICIAL = {
+  'ADULTO MAYOR': 19, 'VACUNACION SANTA MARTA': 0,
+  'CAPACITACION SANTA MARTA': 19, 'CAPACITACION CIENAGA': 19, 'CAPACITACION FUNDACION': 19, 'CAPACITACION PIVIJAY': 19,
+  'INST. FORMACION TECNICO': 0, 'INST. FORMACION TECN CIENAGA': 0, 'INST. FORMACION TECN FUNDACION': 0, 'INST. FORMACION TECNICO PIVIJA': 0,
+  'CAP ESCUELA MUSICAL SANTA MARTA': 19, 'BIBLIOTECA SANTA MTA': 19, 'UNIDAD DE CULTURA Y COMUNICACION': 19, 'TEATRO CAJAMAG': 0,
+  'RECREACION. STA MTA': 19, 'RECREACION CIENAGA': 19, 'RECREACION FUNDAC.': 19, 'CENTRO RECREC.TEYUNA': 19, 'CAFETERIA TEYUNA': 8,
+  'DEPORTES STA MTA': 19, 'DEPORTES CIENAGA': 19, 'DEPORTES FUNDACION .': 19, 'RECREACION PIVIJAY': 19,
+  'CENTRO RECREACIONAL CIENAGA': 19, 'CENTRO RECREACIONAL FUNDACION': 19,
+  'TURISMO SOCIAL STA MARTA': 19, 'TURISMO SOCIAL CIENAGA': 19, 'TURISMO SOCIAL FUNDACION': 19, 'TURISMO SOCIAL PIVIJAY': 19,
+};
+function normServ(s){ return (s||'').toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]/g,''); }
+const OFICIAL_NORM = {};
+Object.keys(IMPUESTO_OFICIAL).forEach(k=>{ OFICIAL_NORM[normServ(k)] = k; });
+
+const RECREACION_POR_ZONA = {'Santa Marta':'RECREACION. STA MTA','Ciénaga':'RECREACION CIENAGA','Fundación':'RECREACION FUNDAC.'};
+const DEPORTES_POR_ZONA = {'Santa Marta':'DEPORTES STA MTA','Ciénaga':'DEPORTES CIENAGA','Fundación':'DEPORTES FUNDACION .'};
+const CAPACITACION_POR_ZONA = {'Santa Marta':'CAPACITACION SANTA MARTA','Ciénaga':'CAPACITACION CIENAGA','Fundación':'CAPACITACION FUNDACION'};
+const IFT_POR_ZONA = {'Santa Marta':'INST. FORMACION TECNICO','IFT':'INST. FORMACION TECNICO','Ciénaga':'INST. FORMACION TECN CIENAGA','Fundación':'INST. FORMACION TECN FUNDACION'};
+const TURISMO_POR_ZONA = {'Santa Marta':'TURISMO SOCIAL STA MARTA','Ciénaga':'TURISMO SOCIAL CIENAGA','Fundación':'TURISMO SOCIAL FUNDACION'};
+function porZonaServ(map, zona){ return map[zona] || map['Santa Marta']; }
+
+const SERVICIO_RAW_FIJO = {
+  'TEATRO CULPA':'TEATRO CAJAMAG','TEATRO- LOS DE LA CULPA':'TEATRO CAJAMAG','TEATRO CAJAMAG CULPA':'TEATRO CAJAMAG',
+  'BOLETAS TEATRO ORQUESTA':'TEATRO CAJAMAG','BOLETA TEATRO ORQUETA ARANGO':'TEATRO CAJAMAG','boleta teatro orquesta':'TEATRO CAJAMAG',
+  'TEATRO BOLETAS ORQUETAS':'TEATRO CAJAMAG','ENTRADAS ORQUESTA ARAGON':'TEATRO CAJAMAG','ENTRADAS TEATRO ORQUESTA ARAGON':'TEATRO CAJAMAG',
+  'Teatro':'TEATRO CAJAMAG', 'Biblioteca':'BIBLIOTECA SANTA MTA',
+  'Vacunación':'VACUNACION SANTA MARTA','VACUNA HEPATITIS A':'VACUNACION SANTA MARTA','VACUNA HEPATITIS B':'VACUNACION SANTA MARTA',
+  'VACUNA MENINGOCOCO':'VACUNACION SANTA MARTA','HEPATITIS B PLENA':'VACUNACION SANTA MARTA','TETANO PLENA':'VACUNACION SANTA MARTA',
+  'SERVICIOS UIS CIENAGA':'CAPACITACION CIENAGA','SERVICIOS UIS FUNDACION':'CAPACITACION FUNDACION',
+};
+['CURSO DE NATACION ADULTO INICIO','CURSO DE NATACION INICIO ADULTOS','CURSO DE NATACION INICIACION','ALQUILER DE CANCHA','Deporte']
+  .forEach(k=>SERVICIO_RAW_FIJO[k]='__DEPORTES_ZONA__');
+['CARIBE AVENTURA NIÑO','CARIBE AVENTURA ADULTO','CARIBE AVENTURA PASADIA','CUPO ADULTO CARIBE AVENTURA','NOCHE BLANCA KATAMARAN',
+ 'PASADIA ACUARIO','CAMINATA ECOLOGICA','CAMINATA ECOLOGICA INCA','PARQUE INFLAMBLE','PARQUE TEMATICO INFLABLE','CHIVA RUMBERA',
+ 'tradición de Cuba','SALIDAS PEDAGÓGICAS','ALQUILER DE SALON','ALQUILER DE AUDITORIO','ALQUILER DE SLAON X 4 HORAS','Alquiler de salones','Recreación']
+  .forEach(k=>SERVICIO_RAW_FIJO[k]='__RECREACION_ZONA__');
+['PLAN DECAMERON NIÑO','PLAN DECAMERON ADULTO','PLAN TURISTICO CARTAGENA','PASADIA BARRANQUILLA','SEGURO DE VIDA']
+  .forEach(k=>SERVICIO_RAW_FIJO[k]='__TURISMO_ZONA__');
+['IFT','Inscripción','Inglés conversacional'].forEach(k=>SERVICIO_RAW_FIJO[k]='__IFT_ZONA__');
+[ 'CINEMARK','BOLETAS CINEMARK','COMBO CINE','combo de cine mark','combo cine','BONOS CINEMARK','ENTRADAS A CINEMARK','combo cine mark',
+  'BONOS DE CINEMARK','combo de cine','BONOS PARA CINEMARK','Combo de cine mark','boletas cinemark','BOLETA CINEMARK','BONO CINEMARK','Bono Cinemark',
+  'cinemark','CIBNEMARK','ENTRADAS A CINEMAK','combo de cinemark','comvo de cine mark','combo de cinemak','CINEMARK2','CINE COMBO',
+  'boleta cine','BOLETAS DE CINE','Boleta de cine','ENTREDA CINEMAKR','ENTRADAS CINEMARK','ENTRADAS CINEMAKR','ENTRADA CINEMARK','bono de cinemark',
+  'Combo de cine' ].forEach(k=>SERVICIO_RAW_FIJO[k]='__RECREACION_ZONA__');
+const TEYUNA_CAFE_KEYWORDS = ['aliment','bebida','cafeteria','gaseosa','almuerzo','refrigerio','perro caliente','parrillada','botellon','mesero'];
+['ALIMENTOS Y BEBIDAS TEYUNA','BOTELLON DE AGUA','GASEOSA','ALMUERZO INFANTIL','ALMUERZO PARRILLADA ADULTOS','REGRIGERIO PERRO CALIENTE RANCHERO','MESERO']
+  .forEach(k=>SERVICIO_RAW_FIJO[k]='CAFETERIA TEYUNA');
+['Teyuna','ALOJAMIENTO Y EVENTOS TEYUNA','Paasadia a teyuna','ALQUILER DE KIOSKI','KIOSCO X 8 HORAS','SALON PARA CAPACITACION TEYUNA']
+  .forEach(k=>{ SERVICIO_RAW_FIJO[k]='__TEYUNA_KEYWORD__'; });
+
+function resolverServicioOficial(r){
+  const raw = r.servicio;
+  const nrm = normServ(raw);
+  if (OFICIAL_NORM[nrm]) return OFICIAL_NORM[nrm];
+  const marker = SERVICIO_RAW_FIJO[raw];
+  if (marker && !marker.startsWith('__')) return marker;
+  if (marker === '__DEPORTES_ZONA__') return porZonaServ(DEPORTES_POR_ZONA, r.zona);
+  if (marker === '__RECREACION_ZONA__') return porZonaServ(RECREACION_POR_ZONA, r.zona);
+  if (marker === '__TURISMO_ZONA__') return porZonaServ(TURISMO_POR_ZONA, r.zona);
+  if (marker === '__IFT_ZONA__') return porZonaServ(IFT_POR_ZONA, r.zona);
+  if (marker === '__TEYUNA_KEYWORD__'){
+    const d = (r.detalle||'').toLowerCase();
+    const esComida = TEYUNA_CAFE_KEYWORDS.some(kw=>d.includes(kw));
+    return esComida ? 'CAFETERIA TEYUNA' : 'CENTRO RECREC.TEYUNA';
+  }
+  return null; // sin clasificar (no aparece en el catálogo oficial de Luis)
+}
+ventasD.transacciones.forEach(r=>{
+  const oficial = resolverServicioOficial(r);
+  r.servicio_oficial = oficial || 'Sin clasificar (revisar)';
+});
+
+populateSelect('fVenServicio', [...new Set(ventasD.transacciones.map(r=>r.servicio_oficial))].sort());
 
 let chVentasTendencia, chVentasServicio, chVentasTipo;
 
@@ -903,7 +976,7 @@ function getVentasFiltered(){
   if (asesor) rows = rows.filter(r=>r.asesor===asesor);
   if (zona) rows = rows.filter(r=>(r.zona||'Sin zona asignada')===zona);
   if (tipo) rows = rows.filter(r=>r.tipo_venta===tipo);
-  if (servicio) rows = rows.filter(r=>r.servicio===servicio);
+  if (servicio) rows = rows.filter(r=>r.servicio_oficial===servicio);
   return rows;
 }
 
@@ -943,7 +1016,7 @@ function renderVentasAll(){
 
   // ---- Ranking de servicios (dentro del filtro) — todos los servicios ----
   const servMap = {};
-  rows.forEach(r=>{ servMap[r.servicio] = (servMap[r.servicio]||0) + r.valor; });
+  rows.forEach(r=>{ servMap[r.servicio_oficial] = (servMap[r.servicio_oficial]||0) + r.valor; });
   const servTop = Object.entries(servMap).sort((a,b)=>b[1]-a[1]);
   const servLabels = servTop.map(s=>s[0].length>30?s[0].slice(0,30)+'…':s[0]);
   const servVals = servTop.map(s=>s[1]);
