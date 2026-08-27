@@ -675,13 +675,17 @@ document.getElementById('resumenEmpresasEquipo').innerHTML = `
   <div class="kpi bad"><div class="kv">${fmtN(noContactadasEquipo)}</div><div class="kl">Sin contactar</div></div>
 `;
 
-document.getElementById('resumenGestionEquipo').innerHTML = contract.categories.map(cat=>{
-  const inds = cat.indicators.filter(i=>!i.pending);
-  let real=0, expected=0;
-  inds.forEach(i=>{ real += i.real; expected += i.meta_6m*contract.elapsed_fraction; });
-  const pct = expected>0 ? Math.min(real/expected,1.5)*100 : 0;
-  return `<div class="kpi"><div class="kv">${pct.toFixed(0)}%</div><div class="kl">${cat.name} — % ejecución</div></div>`;
-}).join('');
+const gestionCatCant = contract.categories.map(cat=>{
+  // Se excluyen indicadores en $ (ej. "Ventas efectivas totales ($)") -- son monto vendido, no
+  // cantidad de gestiones, y sumarlos junto a conteos de actividades daria un numero sin sentido.
+  const inds = cat.indicators.filter(i=>!i.pending && !/\(\$\)/.test(i.name));
+  const real = inds.reduce((s,i)=>s+i.real,0);
+  return {name:cat.name, real};
+});
+const gestionCatTotal = gestionCatCant.reduce((s,c)=>s+c.real,0);
+document.getElementById('resumenGestionEquipo').innerHTML =
+  gestionCatCant.map(c=>`<div class="kpi"><div class="kv">${fmtN(c.real)}</div><div class="kl">${c.name} — cantidad</div></div>`).join('') +
+  `<div class="kpi acc"><div class="kv">${fmtN(gestionCatTotal)}</div><div class="kl">Total (gestión + medios de contacto)</div></div>`;
 new Chart(document.getElementById('chResumenTendencia'),{
   type:'bar', data:{ labels: ventasD.tendencia.map(t=>t.mes),
     datasets:[
