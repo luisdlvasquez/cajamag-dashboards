@@ -224,6 +224,8 @@
       <div class="section-title">Resumen General</div>
       <div class="section-desc">Estado consolidado de los tres frentes — un vistazo antes de entrar al detalle.</div>
       <div class="kpi-grid" id="resumenKpis"></div>
+      <div class="section-desc" style="margin-top:10px;">Mismos indicadores, pero del mes en curso.</div>
+      <div class="kpi-grid" id="resumenKpisMes"></div>
       <div class="grid2">
         <div class="card">
           <div class="card-title"><span><span class="dot"></span>Ventas ejecutadas — tendencia marzo a la fecha</span></div>
@@ -235,26 +237,32 @@
         </div>
       </div>
 
-      <div class="grid2">
-        <div class="card">
-          <div class="card-title"><span><span class="dot"></span>Cumplimiento vs. meta contractual — Ventas (por asesor)</span></div>
-          <div class="table-scroll">
-          <table><thead><tr><th>Asesor</th><th>Meses activo</th><th>Ejecutado</th><th>Meta a la fecha</th><th>% Cumpl.</th></tr></thead><tbody id="tblResumenVentasMeta"></tbody></table>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-title"><span><span class="dot"></span>Cumplimiento vs. meta contractual — Gestiones (por asesor)</span></div>
-          <div class="table-scroll">
-          <table><thead><tr><th>Asesor</th><th>Meses activo</th><th>% Cumpl. gestión</th><th>Estado</th></tr></thead><tbody id="tblResumenGestionMeta"></tbody></table>
-          </div>
-        </div>
+      <div class="card">
+        <div class="card-title"><span><span class="dot"></span>Gestión integral — por mes</span></div>
+        <div class="table-scroll"><table id="tblResumenGestionMes"></table></div>
+        <div class="chart-box" style="height:220px;margin-top:12px;"><canvas id="chResumenGestionMesTendencia"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span><span class="dot"></span>Medios de contacto — por mes</span></div>
+        <div class="table-scroll"><table id="tblResumenMediosMes"></table></div>
+        <div class="chart-box" style="height:220px;margin-top:12px;"><canvas id="chResumenMediosMesTendencia"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span><span class="dot"></span>Ventas por servicio — cantidad por mes</span></div>
+        <div class="table-scroll"><table id="tblResumenVentasServMes"></table></div>
+        <div class="chart-box" style="height:220px;margin-top:12px;"><canvas id="chResumenVentasServMesTendencia"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span><span class="dot"></span>Empresas atendidas por tamaño — por mes</span></div>
+        <div class="table-scroll"><table id="tblResumenEmpresasTamMes"></table></div>
+        <div class="chart-box" style="height:220px;margin-top:12px;"><canvas id="chResumenEmpresasTamMesTendencia"></canvas></div>
+      </div>
 
-        <div class="card">
-          <div class="card-title"><span><span class="dot"></span>📊 Resumen consolidado por asesor</span></div>
-          <div class="section-desc">Todo en una sola tabla: zona, ventas, gestión y empresas — para revisar de un vistazo.</div>
-          <div class="table-scroll">
-          <table><thead><tr><th>Asesor</th><th>Zona</th><th>Estado</th><th>Meses activo</th><th>Ventas ejecutadas</th><th>% Cumpl. ventas</th><th>% Cumpl. gestión</th><th>Empresas gestionadas</th><th>Empresas faltantes</th></tr></thead><tbody id="tblResumenConsolidado"></tbody></table>
-          </div>
+      <div class="card">
+        <div class="card-title"><span><span class="dot"></span>Ejecución de Ventas (por asesor)</span></div>
+        <div class="section-desc">Ordenado de mayor a menor por el Total (acumulado + mes en curso). % Participación = qué parte del acumulado vendido por el equipo aporta cada asesor.</div>
+        <div class="table-scroll">
+        <table><thead><tr><th>Asesor</th><th>Desde</th><th>Hasta</th><th>Meses activo</th><th>Ejecutado</th><th>% Participación</th><th>Ejecución mes en curso</th><th>Total</th></tr></thead><tbody id="tblResumenVentasEjecucion"></tbody></table>
         </div>
       </div>
     </section>
@@ -529,6 +537,127 @@ new Chart(document.getElementById('chResumenEmpresas'),{
   type:'doughnut', data:{ labels: perLabels, datasets:[{ data: perLabels.map(l=>DATA.empresas_agg.per_counts[l]), backgroundColor:['#00685E','#FF6900','#D2CE9E'] }] },
   options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}
 });
+
+// ---- Mes en curso (31-ago-2026, a pedido de Luis): tarjetas espejo de resumenKpis + 4 cuadros mes-a-mes ----
+const ymActual = ventasD.meses_order[ventasD.meses_order.length-1];
+const mesLabelActual = ventasD.mes_labels[ymActual] || ymActual;
+const rawGesAllTop = DATA.gestiones.raw_gestiones || [];
+const rawGesMesTop = rawGesAllTop.filter(r=>(r.fecha||'').slice(0,7)===ymActual);
+const mesActualTendEq = ventasD.tendencia[ventasD.tendencia.length-1];
+const pctMesEquipo = mesActualTendEq.meta>0 ? (mesActualTendEq.ventas/mesActualTendEq.meta*100) : 0;
+
+function countTagPeriodo(rows, tag){
+  return rows.filter(r=>(r.gestion||'').split('/').some(p=>p.trim()===tag)).length;
+}
+const MEDIO_MAP_TOP = {'Llamada':'Llamadas','WhatsApp':'WhatsApp','Correo electrónico':'Correos','Visita presencial':'Visitas presenciales','Reunión virtual':'Reunión virtual'};
+// % ejecución del mes (Gestión): solo Promoción + Mantenimiento + Medios de contacto -- son los
+// unicos frentes con fuente mensual real (raw_gestiones/medio). Ventas (Cotizaciones, Ordenes de
+// compra, etc.) es conteo de negociaciones de Bitrix sin desglose mensual disponible en DATA, asi
+// que se deja fuera de este promedio (su $ si tiene mes en curso propio, en la tarjeta de al lado).
+const NOMBRE_TAG_GESTION = {
+  'Actualización de base de datos': 'Actualización de datos',
+  'Visita por primera vez': 'Empresa contactada por primera vez',
+  'Presentación de portafolio': 'Presentación de Portafolio',
+};
+let sumaPctGesMes = 0, nIndGesMes = 0;
+contract.categories.forEach(cat=>{
+  if (cat.name==='Ventas') return;
+  cat.indicators.forEach(ind=>{
+    if (ind.pending) return;
+    const metaMes = (ind.meta_6m||0)/6;
+    if (!(metaMes>0)) return;
+    let realMes;
+    if (cat.name==='Medios de contacto') realMes = rawGesMesTop.filter(r=>MEDIO_MAP_TOP[r.medio]===ind.name).length;
+    else realMes = countTagPeriodo(rawGesMesTop, NOMBRE_TAG_GESTION[ind.name] || ind.name);
+    sumaPctGesMes += Math.min(realMes/metaMes, 1.5);
+    nIndGesMes++;
+  });
+});
+const pctGestionMes = nIndGesMes ? (sumaPctGesMes/nIndGesMes*100) : 0;
+const nitEmpMesSet = new Set(rawGesMesTop.map(r=>r.nit).filter(Boolean));
+const nitEmpPrimeraVezMesSet = new Set(rawGesMesTop.filter(r=>(r.gestion||'').split('/').some(p=>p.trim()==='Empresa contactada por primera vez')).map(r=>r.nit).filter(Boolean));
+
+document.getElementById('resumenKpisMes').innerHTML = `
+  <div class="kpi"><div class="kv">${pctGestionMes.toFixed(0)}%</div><div class="kl">Ejecución del mes (Gestión)</div></div>
+  <div class="kpi acc"><div class="kv">${fmtM(mesActualTendEq.ventas)}</div><div class="kl">Ventas ejecutadas (${mesLabelActual})</div></div>
+  <div class="kpi"><div class="kv">${fmtM(mesActualTendEq.meta)}</div><div class="kl">Meta del mes (${pctMesEquipo.toFixed(0)}% ejecutado)</div></div>
+  <div class="kpi"><div class="kv">${fmtN(nitEmpMesSet.size)}</div><div class="kl">Empresas atendidas este mes</div></div>
+  <div class="kpi"><div class="kv">${fmtN(nitEmpPrimeraVezMesSet.size)}</div><div class="kl">Contactadas por primera vez este mes</div></div>
+`;
+
+// ---- Helper generico: tabla categoria x mes con totales + grafico de linea ----
+function renderMatrizMes(elId, chartId, rows, months, monthLabels, dataFn, chartLabel, color){
+  const totalPorMes = {}; months.forEach(m=>totalPorMes[m]=0);
+  let totalGeneral = 0;
+  const bodyRows = rows.map(r=>{
+    let rowTotal = 0;
+    const tds = months.map(m=>{
+      const v = dataFn(r.key, m) || 0;
+      totalPorMes[m] += v; rowTotal += v;
+      return `<td>${v.toLocaleString('es-CO')}</td>`;
+    }).join('');
+    totalGeneral += rowTotal;
+    return `<tr><td>${r.label}</td>${tds}<td style="font-weight:700;">${rowTotal.toLocaleString('es-CO')}</td></tr>`;
+  }).join('');
+  const totalRow = `<tr style="font-weight:700;background:#f4f6f5;"><td>Total</td>${months.map(m=>`<td>${totalPorMes[m].toLocaleString('es-CO')}</td>`).join('')}<td>${totalGeneral.toLocaleString('es-CO')}</td></tr>`;
+  const thead = `<thead><tr><th>Categoría</th>${months.map(m=>`<th>${monthLabels[m]||m}</th>`).join('')}<th>Total</th></tr></thead>`;
+  const elTable = document.getElementById(elId);
+  if (elTable) elTable.innerHTML = thead + '<tbody>' + bodyRows + totalRow + '</tbody>';
+  const elChart = document.getElementById(chartId);
+  if (elChart) new Chart(elChart, {
+    type:'line',
+    data:{ labels: months.map(m=>monthLabels[m]||m), datasets:[{ label: chartLabel, data: months.map(m=>totalPorMes[m]||0), borderColor:color, backgroundColor:color+'33', fill:true, tension:0.3, pointRadius:3 }] },
+    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}}
+  });
+  return totalPorMes;
+}
+
+// 1) Gestión integral por mes (mismas 10 categorías del informe mensual)
+const CATS_GESTION_ROWS = [
+  ['Asesorías generales','Asesorías generales'],
+  ['Presentación de Portafolio','Presentación de portafolio'],
+  ['Empresa contactada por primera vez','Empresa contactada por primera vez'],
+  ['Actualización de datos','Actualización de datos'],
+  ['Actividades de mantenimiento','Actividades de mantenimiento'],
+  ['Gestión fallida','Gestión fallida'],
+  ['Seguimiento ventas','Seguimiento de ventas'],
+  ['Acompañamiento servicio postventa','Acompañamiento postventa'],
+  ['Feria de servicios','Feria de servicios'],
+  ['Empresa ilocalizable','Empresa ilocalizable'],
+].map(([key,label])=>({key,label}));
+function countTagMonth(rows, tag, ym){
+  return rows.filter(r=>(r.fecha||'').slice(0,7)===ym && (r.gestion||'').split('/').some(p=>p.trim()===tag)).length;
+}
+renderMatrizMes('tblResumenGestionMes','chResumenGestionMesTendencia', CATS_GESTION_ROWS, ventasD.meses_order, ventasD.mes_labels,
+  (key,ym)=>countTagMonth(rawGesAllTop, key, ym), 'Gestiones', '#00685E');
+
+// 2) Medios de contacto por mes
+const MEDIOS_ROWS = [
+  ['Llamada','Llamadas'],['WhatsApp','WhatsApp'],['Correo electrónico','Correos'],
+  ['Visita presencial','Visitas presenciales'],['Reunión virtual','Reunión virtual'],
+].map(([key,label])=>({key,label}));
+renderMatrizMes('tblResumenMediosMes','chResumenMediosMesTendencia', MEDIOS_ROWS, ventasD.meses_order, ventasD.mes_labels,
+  (key,ym)=>rawGesAllTop.filter(r=>(r.fecha||'').slice(0,7)===ym && r.medio===key).length, 'Medios de contacto', '#FF6900');
+
+// 3) Ventas por servicio por mes (catalogo oficial, cantidad de ventas) -- se llena mas abajo,
+// despues de que el Paso de Ventas calcule ventasD.transacciones[].servicio_oficial.
+window.__renderVentasServicioMes = function(){
+  const catalogo = Object.keys(IMPUESTO_OFICIAL).map(k=>({key:k,label:k}));
+  renderMatrizMes('tblResumenVentasServMes','chResumenVentasServMesTendencia', catalogo, ventasD.meses_order, ventasD.mes_labels,
+    (key,ym)=>ventasD.transacciones.filter(t=>t.ym===ym && t.servicio_oficial===key).length, 'Ventas', '#1F2A44');
+};
+
+// 4) Empresas atendidas por tamaño por mes
+const empTamByNitTop = {};
+(DATA.empresas_full||[]).forEach(e=>{ empTamByNitTop[e.nit] = e.tam || 'Sin dato'; });
+const TAM_ROWS = [['Grande','Grande'],['Mediana','Mediana'],['Pequeña','Pequeña'],['Micro','Micro']].map(([key,label])=>({key,label}));
+renderMatrizMes('tblResumenEmpresasTamMes','chResumenEmpresasTamMesTendencia', TAM_ROWS, ventasD.meses_order, ventasD.mes_labels,
+  (tam,ym)=>{
+    const nits = new Set();
+    rawGesAllTop.forEach(r=>{ if((r.fecha||'').slice(0,7)===ym && r.nit && empTamByNitTop[r.nit]===tam) nits.add(r.nit); });
+    return nits.size;
+  }, 'Empresas atendidas', '#8850A0');
+
 
 // ================= GESTIÓN =================
 const teamAvgPct = activeAdvisors.reduce((s,a)=>s+a.accumulated.global_pct,0)/activeAdvisors.length*100;
@@ -965,6 +1094,7 @@ ventasD.transacciones.forEach(r=>{
 });
 
 populateSelect('fVenServicio', [...new Set(ventasD.transacciones.map(r=>r.servicio_oficial))].sort());
+ if (window.__renderVentasServicioMes) window.__renderVentasServicioMes();
 
 let chVentasTendencia, chVentasServicio, chVentasTipo;
 
@@ -1078,43 +1208,42 @@ document.getElementById('btnExportVen').addEventListener('click',()=>{
 });
 renderVentasAll();
 
-// ================= RESUMEN: cumplimiento vs metas contractuales =================
 (function(){
+  const gesLblVen = DATA.gestiones.month_labels || {};
+  const mesActualVenByAsesor = {};
+  ventasD.transacciones.forEach(t=>{
+    if (t.ym===ymActual) mesActualVenByAsesor[t.asesor] = (mesActualVenByAsesor[t.asesor]||0) + t.valor;
+  });
   const rowsVen = advisorsFull.map(a=>{
     const r = ventasRankByName[a.name];
-    if (!r || !r.meta_acumulada_5m) return null;
-    const pct = r.meta_acumulada_5m>0 ? (r.total_acumulado/r.meta_acumulada_5m*100) : null;
-    return {name:a.name, meses:a.meses_activos||r.meses_activos, real:r.total_acumulado, meta:r.meta_acumulada_5m, pct};
-  }).filter(Boolean).sort((a,b)=>(b.pct||0)-(a.pct||0));
-  document.getElementById('tblResumenVentasMeta').innerHTML = rowsVen.map(r=>{
-    const cls = r.pct!=null? statusClass(r.pct):'na';
-    return `<tr><td>${r.name}</td><td>${r.meses}</td><td>${fmt(r.real)}</td><td>${fmt(r.meta)}</td><td><span class="badge ${cls||'ok'}">${r.pct!=null?r.pct.toFixed(0)+'%':'—'}</span></td></tr>`;
-  }).join('');
-
-  const rowsGes = advisorsFull.slice().sort((a,b)=>b.accumulated.global_pct-a.accumulated.global_pct).map(a=>{
-    const pct = a.accumulated.global_pct*100;
-    return {name:a.name, meses:a.meses_activos, pct, active:a.active};
+    const mesesN = a.meses_activos || (r ? r.meses_activos : 0) || 0;
+    const mesActualVal = mesActualVenByAsesor[a.name] || 0;
+    if (!mesesN && !mesActualVal) return null;
+    const real = r ? (r.total_acumulado||0) : 0;
+    const mesesArr = (a.active_months||[]).slice().sort();
+    const desde = mesesArr.length? (gesLblVen[mesesArr[0]] || mesesArr[0]) : '—';
+    const hasta = mesesArr.length? (gesLblVen[mesesArr[mesesArr.length-1]] || mesesArr[mesesArr.length-1]) : '—';
+    return {name:a.name, mesesN, desde, hasta, real, mesActualVal};
+  }).filter(Boolean);
+  // Asesores con venta este mes que no aparecen en advisorsFull (p.ej. salieron sin que Luis lo
+  // haya confirmado aun) igual deben ver su valor de mes en curso -- no depende del roster.
+  const yaIncluidosVen = new Set(rowsVen.map(r=>r.name));
+  Object.keys(mesActualVenByAsesor).forEach(name=>{
+    if (yaIncluidosVen.has(name)) return;
+    rowsVen.push({name, mesesN:0, desde:'—', hasta:'—', real:0, mesActualVal: mesActualVenByAsesor[name]});
   });
-  document.getElementById('tblResumenGestionMeta').innerHTML = rowsGes.map(r=>{
-    const cls = statusClass(r.pct);
-    return `<tr><td>${r.name}</td><td>${r.meses}</td><td><span class="badge ${cls||'ok'}">${r.pct.toFixed(0)}%</span></td><td><span class="badge ${r.active===false?'off':'on'}">${r.active===false?'Inactivo':'Activo'}</span></td></tr>`;
-  }).join('');
+  rowsVen.forEach(r=>{ r.total = r.real + r.mesActualVal; });
+  rowsVen.sort((a,b)=>b.total-a.total);
+  const totalVenEj = rowsVen.reduce((s,r)=>s+r.real,0);
+  const totalMesVenEj = rowsVen.reduce((s,r)=>s+r.mesActualVal,0);
+  const totalGralVenEj = rowsVen.reduce((s,r)=>s+r.total,0);
+  const tblVenEj = document.getElementById('tblResumenVentasEjecucion');
+  if (tblVenEj) tblVenEj.innerHTML = rowsVen.map(r=>{
+    const part = totalVenEj>0 ? (r.real/totalVenEj*100) : 0;
+    return `<tr><td>${r.name}</td><td>${r.desde}</td><td>${r.hasta}</td><td>${r.mesesN}</td><td>${fmt(r.real)}</td><td>${part.toFixed(1)}%</td><td>${fmt(r.mesActualVal)}</td><td style="font-weight:700;">${fmt(r.total)}</td></tr>`;
+  }).join('') + `<tr style="font-weight:700;background:#f4f6f5;"><td colspan="4">Total</td><td>${fmt(totalVenEj)}</td><td>100%</td><td>${fmt(totalMesVenEj)}</td><td>${fmt(totalGralVenEj)}</td></tr>`;
 
-  const rowsCons = advisorsFull.map(a=>{
-    const rv = ventasRankByName[a.name] || {};
-    const pctVentas = rv.meta_acumulada_5m ? (rv.total_acumulado/rv.meta_acumulada_5m*100) : null;
-    const pctGestion = a.accumulated.global_pct*100;
-    return {
-      name: a.name, zona: rv.zona || '—', active: a.active, meses: a.meses_activos,
-      ventas: rv.total_acumulado||0, pctVentas, pctGestion,
-      gestionadas: a.empresas_gestionadas_contrato||0, faltantes: a.empresas_faltantes_contrato||0,
-    };
-  }).sort((a,b)=>(b.pctGestion||0)-(a.pctGestion||0));
-  document.getElementById('tblResumenConsolidado').innerHTML = rowsCons.map(r=>{
-    const clsV = r.pctVentas!=null? statusClass(r.pctVentas):'na';
-    const clsG = statusClass(r.pctGestion);
-    return `<tr><td>${r.name}</td><td>${r.zona}</td><td><span class="badge ${r.active===false?'off':'on'}">${r.active===false?'Inactivo':'Activo'}</span></td><td>${r.meses}</td><td>${fmt(r.ventas)}</td><td><span class="badge ${clsV||'ok'}">${r.pctVentas!=null?r.pctVentas.toFixed(0)+'%':'—'}</span></td><td><span class="badge ${clsG||'ok'}">${r.pctGestion.toFixed(0)}%</span></td><td>${r.gestionadas}</td><td>${r.faltantes}</td></tr>`;
-  }).join('');
+
 })();
 
 
