@@ -1133,21 +1133,22 @@ function renderEmpresasAll(){
   document.getElementById('empresasKpis').innerHTML = `
     <div class="kpi"><div class="kv">${fmtN(total)}</div><div class="kl">Empresas (según filtro)</div></div>
     <div class="kpi acc"><div class="kv">${fmtN(contActual)}</div><div class="kl">Contactadas contrato actual (${pct(contActual)}%)</div></div>
-    <div class="kpi warn"><div class="kv">${fmtN(contAnterior)}</div><div class="kl">Solo contrato anterior (${pct(contAnterior)}%)</div></div>
-    <div class="kpi bad"><div class="kv">${fmtN(noCont)}</div><div class="kl">No contactadas (${pct(noCont)}%)</div></div>
+    <div class="kpi warn"><div class="kv">${fmtN(contAnterior)}</div><div class="kl">Solo contrato anterior — faltan re-contactar (${pct(contAnterior)}%)</div></div>
+    <div class="kpi bad"><div class="kv">${fmtN(noCont)}</div><div class="kl">No contactadas — oportunidad de primera vez (${pct(noCont)}%)</div></div>
   `;
 
   // ---- Reencuadre a nivel EQUIPO, sin sesgo por asesor activo/inactivo (31-ago-2026, a pedido de
   // Luis: "Empresas gestionadas (contrato)"/"Faltantes por gestionar" sesgaban a los asesores activos
   // y no le sirven -- "a mi me sirve mas ver a CER en esta parte como un equipo"). Se calculan
   // directo sobre el filtro de empresas (mismas 3 categorias de 'per' de arriba), no por asesor.
-  const faltaReContactar = contAnterior; // ya contactamos en el contrato anterior, aun no en este
+  // 31-ago-2026 (2do ajuste, a pedido de Luis): "Faltan re-contactar" y "Oportunidades de contacto
+  // por primera vez" repetian exactamente los mismos numeros que "Solo contrato anterior" y "No
+  // contactadas" de arriba -- se unifican esas 2 tarjetas duplicadas dentro de las de arriba (ver
+  // etiquetas actualizadas) y aqui solo queda la UNICA metrica que no estaba en ningun lado:
+  // "falta contactar en general este contrato", que junta ambos grupos (con y sin historia anterior).
   const faltaContactarGeneral = contAnterior + noCont; // no tocadas EN ESTE contrato (con o sin historia anterior)
-  const oportunidadPrimeraVez = noCont; // nunca contactadas, en ningun contrato
   document.getElementById('empresasKpis').insertAdjacentHTML('beforeend', `
-    <div class="kpi warn"><div class="kv">${fmtN(faltaReContactar)}</div><div class="kl">Faltan re-contactar (ya contactadas contrato anterior, ${pct(faltaReContactar)}%)</div></div>
-    <div class="kpi bad"><div class="kv">${fmtN(faltaContactarGeneral)}</div><div class="kl">Faltan contactar en general este contrato (${pct(faltaContactarGeneral)}%)</div></div>
-    <div class="kpi bad"><div class="kv">${fmtN(oportunidadPrimeraVez)}</div><div class="kl">Oportunidades de contacto por primera vez (${pct(oportunidadPrimeraVez)}%)</div></div>
+    <div class="kpi bad"><div class="kv">${fmtN(faltaContactarGeneral)}</div><div class="kl">Faltan contactar en general este contrato, sin contar historia anterior (${pct(faltaContactarGeneral)}%)</div></div>
   `);
 
   // Por tamaño
