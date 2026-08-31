@@ -304,6 +304,14 @@
             <div class="chart-box sm"><canvas id="chGestionMedios"></canvas></div>
           </div>
         </div>
+        <div class="card">
+          <div class="card-title"><span><span class="dot"></span>Indicadores de gestión — real vs. meta (equipo, acumulado del contrato)</span></div>
+          <div class="kpi-grid" id="gestionIndicadoresMetas"></div>
+        </div>
+        <div class="card">
+          <div class="card-title"><span><span class="dot"></span>Medios de contacto — real vs. meta (equipo, acumulado del contrato)</span></div>
+          <div class="kpi-grid" id="gestionMediosMetas"></div>
+        </div>
       </div>
 
       <div class="subpanel" id="gsub-asesor">
@@ -764,6 +772,25 @@ new Chart(document.getElementById('chGestionMedios'),{
   type:'bar', data:{ labels: medioSorted.map(x=>x[0]), datasets:[{label:'Gestiones', data: medioSorted.map(x=>x[1]), backgroundColor:'#2E75B6aa'}] },
   options:{indexAxis:'y', responsive:true,maintainAspectRatio:false, plugins:{legend:{display:false}}}
 });
+
+// ---- Indicadores de gestión / Medios de contacto real vs. meta (equipo, acumulado del contrato) ----
+// (31-ago-2026, a pedido de Luis: mismo par de tarjetas que ya existe en Operativo)
+document.getElementById('gestionIndicadoresMetas').innerHTML = contract.categories
+  .filter(c=>c.name==='Promoción' || c.name==='Mantenimiento')
+  .flatMap(c=>c.indicators).filter(i=>!i.pending).map(i=>{
+    const expected = i.meta_6m*contract.elapsed_fraction;
+    const pct = expected>0 ? Math.min(i.real/expected,1.5)*100 : 0;
+    const cls = statusClass(pct);
+    return `<div class="kpi ${cls}"><div class="kv">${pct.toFixed(0)}%</div><div class="kl">${i.name}</div><div class="ks">${fmtN(i.real)} / ${fmtN(i.meta_6m)} meta contrato</div></div>`;
+  }).join('');
+
+document.getElementById('gestionMediosMetas').innerHTML = (contract.categories.find(c=>c.name==='Medios de contacto')?.indicators||[])
+  .filter(i=>!i.pending).map(i=>{
+    const expected = i.meta_6m*contract.elapsed_fraction;
+    const pct = expected>0 ? Math.min(i.real/expected,1.5)*100 : 0;
+    const cls = statusClass(pct);
+    return `<div class="kpi ${cls}"><div class="kv">${pct.toFixed(0)}%</div><div class="kl">${i.name}</div><div class="ks">${fmtN(i.real)} / ${fmtN(i.meta_6m)} meta contrato</div></div>`;
+  }).join('');
 
 // KPIs adicionales: mejor indicador, actividad top, cotizaciones/OC a nivel equipo
 const bestInd = Object.entries(indTotals).filter(([,v])=>v.pctN>0).sort((a,b)=>(b[1].pctSum/b[1].pctN)-(a[1].pctSum/a[1].pctN))[0];
