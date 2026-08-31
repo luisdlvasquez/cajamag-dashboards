@@ -368,10 +368,12 @@
         <div class="card">
           <div class="card-title"><span><span class="dot"></span>Estado de contacto</span></div>
           <div class="chart-box sm"><canvas id="chEmpresasPer"></canvas></div>
+          <div id="chEmpresasPerLegend" style="margin-top:8px;"></div>
         </div>
         <div class="card">
           <div class="card-title"><span><span class="dot"></span>Estado de afiliación</span></div>
           <div class="chart-box sm"><canvas id="chEmpresasEst"></canvas></div>
+          <div id="chEmpresasEstLegend" style="margin-top:8px;"></div>
         </div>
       </div>
       <div class="grid3">
@@ -1135,27 +1137,17 @@ function renderEmpresasAll(){
     <div class="kpi bad"><div class="kv">${fmtN(noCont)}</div><div class="kl">No contactadas (${pct(noCont)}%)</div></div>
   `;
 
-  // ---- Asignadas/gestionadas/faltantes (26-ago-2026, a pedido de Luis: se movió aquí desde Gestión) ----
-  // Sigue el mismo filtro de Asesor que ya existe arriba: si hay uno elegido, muestra sus 3 números;
-  // si está en "Todos", suma el equipo activo completo.
-  const aseSelEmp = document.getElementById('fEmpAse').value;
-  let empAsigK, empGestK, empFaltK, empLblK;
-  if (aseSelEmp){
-    const aEmp = advisorsFull.find(x=>x.name===aseSelEmp);
-    empAsigK = aEmp ? (aEmp.empresas_asignadas||0) : 0;
-    empGestK = aEmp ? (aEmp.empresas_gestionadas_contrato||0) : 0;
-    empFaltK = aEmp ? (aEmp.empresas_faltantes_contrato||0) : 0;
-    empLblK = aseSelEmp;
-  } else {
-    empAsigK = activeAdvisors.reduce((s,x)=>s+(x.empresas_asignadas||0),0);
-    empGestK = activeAdvisors.reduce((s,x)=>s+(x.empresas_gestionadas_contrato||0),0);
-    empFaltK = activeAdvisors.reduce((s,x)=>s+(x.empresas_faltantes_contrato||0),0);
-    empLblK = 'equipo';
-  }
+  // ---- Reencuadre a nivel EQUIPO, sin sesgo por asesor activo/inactivo (31-ago-2026, a pedido de
+  // Luis: "Empresas gestionadas (contrato)"/"Faltantes por gestionar" sesgaban a los asesores activos
+  // y no le sirven -- "a mi me sirve mas ver a CER en esta parte como un equipo"). Se calculan
+  // directo sobre el filtro de empresas (mismas 3 categorias de 'per' de arriba), no por asesor.
+  const faltaReContactar = contAnterior; // ya contactamos en el contrato anterior, aun no en este
+  const faltaContactarGeneral = contAnterior + noCont; // no tocadas EN ESTE contrato (con o sin historia anterior)
+  const oportunidadPrimeraVez = noCont; // nunca contactadas, en ningun contrato
   document.getElementById('empresasKpis').insertAdjacentHTML('beforeend', `
-    <div class="kpi"><div class="kv">${fmtN(empAsigK)}</div><div class="kl">Empresas asignadas — ${empLblK}</div></div>
-    <div class="kpi acc"><div class="kv">${fmtN(empGestK)}</div><div class="kl">Empresas gestionadas (contrato)</div></div>
-    <div class="kpi bad"><div class="kv">${fmtN(empFaltK)}</div><div class="kl">Faltantes por gestionar</div></div>
+    <div class="kpi warn"><div class="kv">${fmtN(faltaReContactar)}</div><div class="kl">Faltan re-contactar (ya contactadas contrato anterior, ${pct(faltaReContactar)}%)</div></div>
+    <div class="kpi bad"><div class="kv">${fmtN(faltaContactarGeneral)}</div><div class="kl">Faltan contactar en general este contrato (${pct(faltaContactarGeneral)}%)</div></div>
+    <div class="kpi bad"><div class="kv">${fmtN(oportunidadPrimeraVez)}</div><div class="kl">Oportunidades de contacto por primera vez (${pct(oportunidadPrimeraVez)}%)</div></div>
   `);
 
   // Por tamaño
@@ -1181,6 +1173,10 @@ function renderEmpresasAll(){
       options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}
     });
   } else { chEmpPer.data.labels=perLabels; chEmpPer.data.datasets[0].data=perData; chEmpPer.update(); }
+  // 31-ago-2026, a pedido de Luis: numero + % visibles siempre (no solo al pasar el mouse).
+  document.getElementById('chEmpresasPerLegend').innerHTML = perLabels.map((l,i)=>
+    `<div class="zona-row"><span>${l}</span><b>${fmtN(perData[i])} (${pct(perData[i])}%)</b></div>`
+  ).join('');
 
   // Estado de afiliación
   const estCounts = countBy(rows, 'est');
@@ -1193,6 +1189,9 @@ function renderEmpresasAll(){
       options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}
     });
   } else { chEmpEst.data.labels=estLabels; chEmpEst.data.datasets[0].data=estData; chEmpEst.update(); }
+  document.getElementById('chEmpresasEstLegend').innerHTML = estLabels.map((l,i)=>
+    `<div class="zona-row"><span>${l}</span><b>${fmtN(estData[i])} (${pct(estData[i])}%)</b></div>`
+  ).join('');
 
   // Por asesor (top 10)
   const aseTop = topN(countBy(rows,'ase'), 10);
@@ -1205,10 +1204,16 @@ function renderEmpresasAll(){
     });
   } else { chEmpAsesor.data.labels=aseLabels; chEmpAsesor.data.datasets[0].data=aseData; chEmpAsesor.update(); }
 
-  // Por zona/equipo
+  // Por zona/equipo (31-ago-2026, a pedido de Luis: orden logico Santa Marta/Contact Center/IFT/
+  // Cienaga/Fundacion, y "Sin equipo asignado" se suma dentro de Santa Marta).
   const zonaCounts = countBy(rows,'eq');
-  const zonaLabels = Object.keys(zonaCounts);
-  const zonaData = Object.values(zonaCounts);
+  if (zonaCounts['Sin equipo asignado']){
+    zonaCounts['Santa Marta'] = (zonaCounts['Santa Marta']||0) + zonaCounts['Sin equipo asignado'];
+    delete zonaCounts['Sin equipo asignado'];
+  }
+  const ZONA_EMP_ORDEN = ['Santa Marta','Contact Center','IFT','Cienaga','Fundacion'];
+  const zonaLabels = Object.keys(zonaCounts).sort((a,b)=>ZONA_EMP_ORDEN.indexOf(a)-ZONA_EMP_ORDEN.indexOf(b));
+  const zonaData = zonaLabels.map(l=>zonaCounts[l]);
   if (!chEmpZona){
     chEmpZona = new Chart(document.getElementById('chEmpresasZona'),{
       type:'bar', data:{labels:zonaLabels, datasets:[{label:'Empresas', data:zonaData, backgroundColor:'#00685Eaa'}]},
