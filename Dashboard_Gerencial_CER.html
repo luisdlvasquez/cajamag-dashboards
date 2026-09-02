@@ -316,9 +316,17 @@
         <div class="chart-box" style="height:220px;margin-top:12px;"><canvas id="chResumenMediosMesTendencia"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title"><span><span class="dot"></span>Ventas por servicio — cantidad por mes</span></div>
-        <div class="table-scroll"><table id="tblResumenVentasServMes"></table></div>
-        <div class="chart-box" style="height:220px;margin-top:12px;"><canvas id="chResumenVentasServMesTendencia"></canvas></div>
+        <div class="card-title"><span><span class="dot"></span>Ventas por servicio (contrato completo a la fecha)</span></div>
+        <style>
+          .svc-row{display:grid;grid-template-columns:200px 1fr 170px;align-items:center;gap:10px;margin:7px 0;}
+          .svc-name{font-size:.85rem;color:var(--text-muted, #555);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+          .svc-bar-wrap{background:#eef1f0;border-radius:5px;height:16px;overflow:hidden;}
+          .svc-bar{height:100%;border-radius:5px;}
+          .svc-vals{display:flex;flex-direction:column;font-size:.8rem;text-align:right;line-height:1.25;}
+          .svc-money{font-weight:700;}
+          .svc-sub{color:var(--text-muted, #777);}
+        </style>
+        <div id="resumenVentasServicioBars"></div>
       </div>
       <div class="card">
         <div class="card-title"><span><span class="dot"></span>Empresas atendidas por tamaño — por mes</span></div>
@@ -730,10 +738,36 @@ renderMatrizMes('tblResumenMediosMes','chResumenMediosMesTendencia', MEDIOS_ROWS
 
 // 3) Ventas por servicio por mes (catalogo oficial, cantidad de ventas) -- se llena mas abajo,
 // despues de que el Paso de Ventas calcule ventasD.transacciones[].servicio_oficial.
+const SVC_COLORS_RESUMEN = ['#5b8def','#3ecf8e','#f5a524','#ee6c6c','#a78bfa','#22c1c3','#f472b6','#c084fc','#94a3b8'];
 window.__renderVentasServicioMes = function(){
-  const catalogo = Object.keys(IMPUESTO_OFICIAL).map(k=>({key:k,label:k}));
-  renderMatrizMes('tblResumenVentasServMes','chResumenVentasServMesTendencia', catalogo, ventasD.meses_order, ventasD.mes_labels,
-    (key,ym)=>ventasD.transacciones.filter(t=>t.ym===ym && t.servicio_oficial===key).length, 'Ventas', '#1F2A44');
+  const porServicio = {};
+  ventasD.transacciones.forEach(t=>{
+    const k = t.servicio_oficial || 'Sin clasificar';
+    if (!porServicio[k]) porServicio[k] = {servicio:k, valor:0, cantidad:0};
+    porServicio[k].valor += (t.valor||0);
+    porServicio[k].cantidad += 1;
+  });
+  let rows = Object.values(porServicio).sort((a,b)=>b.valor-a.valor);
+  if (rows.length > 8){
+    const top8 = rows.slice(0,8);
+    const otros = rows.slice(8).reduce((acc,r)=>{ acc.valor+=r.valor; acc.cantidad+=r.cantidad; return acc; }, {servicio:'Otros', valor:0, cantidad:0});
+    rows = [...top8, otros];
+  }
+  const el = document.getElementById('resumenVentasServicioBars');
+  if (!el) return;
+  if (!rows.length){ el.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);">Sin datos de servicio</div>'; return; }
+  const maxVal = Math.max(...rows.map(r=>r.valor), 1);
+  const totalVal = rows.reduce((s,r)=>s+r.valor, 0);
+  el.innerHTML = rows.map((r,i)=>{
+    const pct = Math.max(4, (r.valor/maxVal)*100);
+    const share = totalVal ? ((r.valor/totalVal)*100).toFixed(1) : '0.0';
+    const color = SVC_COLORS_RESUMEN[i % SVC_COLORS_RESUMEN.length];
+    return `<div class="svc-row">
+      <div class="svc-name">${r.servicio}</div>
+      <div class="svc-bar-wrap"><div class="svc-bar" style="width:${pct}%;background:${color}"></div></div>
+      <div class="svc-vals"><span class="svc-money">${fmt(r.valor)}</span><span class="svc-sub">${fmtN(r.cantidad)} ventas · ${share}%</span></div>
+    </div>`;
+  }).join('');
 };
 
 // 4) Empresas atendidas por tamaño por mes
