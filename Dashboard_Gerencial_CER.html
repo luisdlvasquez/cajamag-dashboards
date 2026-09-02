@@ -336,9 +336,9 @@
 
       <div class="card">
         <div class="card-title"><span><span class="dot"></span>Ejecución de Ventas (por asesor)</span></div>
-        <div class="section-desc">Ordenado de mayor a menor por el Total (acumulado + mes en curso). % Participación = qué parte del acumulado vendido por el equipo aporta cada asesor.</div>
+        <div class="section-desc">Ordenado de mayor a menor por la Ejecución mes en curso.</div>
         <div class="table-scroll">
-        <table><thead><tr><th>Asesor</th><th>Desde</th><th>Hasta</th><th>Meses activo</th><th>Ejecutado</th><th>% Participación</th><th>Ejecución mes en curso</th><th>Total</th></tr></thead><tbody id="tblResumenVentasEjecucion"></tbody></table>
+        <table><thead><tr><th>Asesor</th><th>Desde</th><th>Hasta</th><th>Meses activo</th><th>Ejecutado meses anteriores</th><th>Ejecución mes en curso</th><th>Total</th></tr></thead><tbody id="tblResumenVentasEjecucion"></tbody></table>
         </div>
       </div>
     </section>
@@ -433,8 +433,10 @@
         <div class="filter-group"><label>Asesor</label><select id="fEmpAse"><option value="">Todos</option></select></div>
         <div class="filter-group"><label>Equipo/Zona</label><select id="fEmpEq"><option value="">Todas</option></select></div>
         <div class="filter-group"><label>Dificultad</label><select id="fEmpDif"><option value="">Todas</option></select></div>
+        <div class="filter-group"><label>Contactadas hasta (contrato actual)</label><input type="date" id="fEmpHastaFecha"></div>
         <button class="filter-clear" id="btnClearEmp">Limpiar</button>
       </div>
+      <div class="section-desc" id="empFechaCorteNota" style="display:none;"></div>
 
       <div class="kpi-grid" id="empresasKpis"></div>
 
@@ -683,7 +685,7 @@ document.getElementById('resumenKpisMes').innerHTML = `
 `;
 
 // ---- Helper generico: tabla categoria x mes con totales + grafico de linea ----
-function renderMatrizMes(elId, chartId, rows, months, monthLabels, dataFn, chartLabel, color){
+function renderMatrizMes(elId, chartId, rows, months, monthLabels, dataFn, chartLabel, color, serie2025){
   const totalPorMes = {}; months.forEach(m=>totalPorMes[m]=0);
   let totalGeneral = 0;
   const bodyRows = rows.map(r=>{
@@ -701,13 +703,20 @@ function renderMatrizMes(elId, chartId, rows, months, monthLabels, dataFn, chart
   const elTable = document.getElementById(elId);
   if (elTable) elTable.innerHTML = thead + '<tbody>' + bodyRows + totalRow + '</tbody>';
   const elChart = document.getElementById(chartId);
-  if (elChart) new Chart(elChart, {
-    type:'line',
-    data:{ labels: months.map(m=>monthLabels[m]||m), datasets:[{ label: chartLabel, data: months.map(m=>totalPorMes[m]||0), borderColor:color, backgroundColor:color+'33', fill:true, tension:0.3, pointRadius:3 }] },
-    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}}
-  });
+  if (elChart){
+    const datasets = [{ label: chartLabel, data: months.map(m=>totalPorMes[m]||0), borderColor:color, backgroundColor:color+'33', fill:true, tension:0.3, pointRadius:3 }];
+    if (serie2025) datasets.push({ label: chartLabel + ' 2025 (contrato anterior)', data: serie2025, borderColor:'#8a8f98', backgroundColor:'transparent', borderDash:[6,4], fill:false, tension:0.3, pointRadius:3, spanGaps:false });
+    new Chart(elChart, {
+      type:'line',
+      data:{ labels: months.map(m=>monthLabels[m]||m), datasets },
+      options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display: !!serie2025}}}
+    });
+  }
   return totalPorMes;
 }
+
+const GESTIONES_2025_POR_MES = {'2026-03':null, '2026-04':2462, '2026-05':1258, '2026-06':650, '2026-07':1243, '2026-08':1024};
+const EMPRESAS_GESTIONADAS_2025_POR_MES = {'2026-03':null, '2026-04':1106, '2026-05':664, '2026-06':363, '2026-07':511, '2026-08':552};
 
 // 1) Gestión integral por mes (mismas 10 categorías del informe mensual)
 const CATS_GESTION_ROWS = [
@@ -726,7 +735,7 @@ function countTagMonth(rows, tag, ym){
   return rows.filter(r=>(r.fecha||'').slice(0,7)===ym && (r.gestion||'').split('/').some(p=>p.trim()===tag)).length;
 }
 renderMatrizMes('tblResumenGestionMes','chResumenGestionMesTendencia', CATS_GESTION_ROWS, ventasD.meses_order, ventasD.mes_labels,
-  (key,ym)=>countTagMonth(rawGesAllTop, key, ym), 'Gestiones', '#00685E');
+  (key,ym)=>countTagMonth(rawGesAllTop, key, ym), 'Gestiones', '#00685E', ventasD.meses_order.map(ym=>GESTIONES_2025_POR_MES[ym]));
 
 // 2) Medios de contacto por mes
 const MEDIOS_ROWS = [
@@ -779,7 +788,7 @@ renderMatrizMes('tblResumenEmpresasTamMes','chResumenEmpresasTamMesTendencia', T
     const nits = new Set();
     rawGesAllTop.forEach(r=>{ if((r.fecha||'').slice(0,7)===ym && r.nit && empTamByNitTop[r.nit]===tam) nits.add(r.nit); });
     return nits.size;
-  }, 'Empresas atendidas', '#8850A0');
+  }, 'Empresas atendidas', '#8850A0', ventasD.meses_order.map(ym=>EMPRESAS_GESTIONADAS_2025_POR_MES[ym]));
 
 
 // ================= GESTIÓN =================
@@ -1017,6 +1026,16 @@ populateSelect('fEmpAse', [...new Set(empFull.map(r=>r.ase).filter(Boolean))].so
 populateSelect('fEmpEq', [...new Set(empFull.map(r=>r.eq).filter(Boolean))].sort());
 populateSelect('fEmpDif', [...new Set(empFull.map(r=>r.dif))].sort());
 
+const primerContactoPorNit = {};
+(DATA.gestiones.raw_gestiones||[]).forEach(r=>{
+  if (!r.nit || !r.fecha) return;
+  if (!primerContactoPorNit[r.nit] || r.fecha < primerContactoPorNit[r.nit]) primerContactoPorNit[r.nit] = r.fecha;
+});
+function perAsOfFecha(r, hastaFecha){
+  if (r.per !== 'Contactada - contrato actual' && r.per !== 'No contactada') return r.per;
+  const pc = primerContactoPorNit[r.nit];
+  return (pc && pc <= hastaFecha) ? 'Contactada - contrato actual' : 'No contactada';
+}
 function getEmpresasFiltered(){
   const q = document.getElementById('fEmpBuscar').value.trim().toLowerCase();
   const per = document.getElementById('fEmpPer').value;
@@ -1025,7 +1044,9 @@ function getEmpresasFiltered(){
   const ase = document.getElementById('fEmpAse').value;
   const eq = document.getElementById('fEmpEq').value;
   const dif = document.getElementById('fEmpDif').value;
+  const hastaFecha = document.getElementById('fEmpHastaFecha').value;
   let rows = empFull;
+  if (hastaFecha) rows = rows.map(r=>({...r, per: perAsOfFecha(r, hastaFecha)}));
   if (q) rows = rows.filter(r => (r.nom||'').toLowerCase().includes(q) || (r.nit||'').includes(q));
   if (per) rows = rows.filter(r=>r.per===per);
   if (tam) rows = rows.filter(r=>r.tam===tam);
@@ -1145,10 +1166,19 @@ function renderEmpresasAll(){
   `).join('') + (rows.length>400? `<tr><td colspan="9" style="text-align:center;color:var(--text-muted);font-style:italic;">Mostrando 400 de ${rows.length} — afina el filtro o exporta a Excel.</td></tr>`:'');
 }
 
+function actualizarNotaFechaCorte(){
+  const el = document.getElementById('empFechaCorteNota');
+  const v = document.getElementById('fEmpHastaFecha').value;
+  if (!el) return;
+  if (v){ el.style.display='block'; el.textContent = `Mostrando el estado de contacto (contrato actual) tal como estaba el ${v} — no el estado de hoy.`; }
+  else { el.style.display='none'; el.textContent=''; }
+}
 ['fEmpBuscar'].forEach(id=>document.getElementById(id).addEventListener('input', renderEmpresasAll));
 ['fEmpPer','fEmpTam','fEmpEst','fEmpAse','fEmpEq','fEmpDif'].forEach(id=>document.getElementById(id).addEventListener('change', renderEmpresasAll));
+document.getElementById('fEmpHastaFecha').addEventListener('change', ()=>{ actualizarNotaFechaCorte(); renderEmpresasAll(); });
 document.getElementById('btnClearEmp').addEventListener('click',()=>{
-  ['fEmpBuscar','fEmpPer','fEmpTam','fEmpEst','fEmpAse','fEmpEq','fEmpDif'].forEach(id=>document.getElementById(id).value='');
+  ['fEmpBuscar','fEmpPer','fEmpTam','fEmpEst','fEmpAse','fEmpEq','fEmpDif','fEmpHastaFecha'].forEach(id=>document.getElementById(id).value='');
+  actualizarNotaFechaCorte();
   renderEmpresasAll();
 });
 document.getElementById('btnExportEmp').addEventListener('click', ()=>{
@@ -1409,15 +1439,14 @@ renderVentasAll();
     rowsVen.push({name, mesesN:0, desde:'—', hasta:'—', real:0, mesActualVal: mesActualVenByAsesor[name]});
   });
   rowsVen.forEach(r=>{ r.total = r.real + r.mesActualVal; });
-  rowsVen.sort((a,b)=>b.total-a.total);
+  rowsVen.sort((a,b)=>b.mesActualVal-a.mesActualVal);
   const totalVenEj = rowsVen.reduce((s,r)=>s+r.real,0);
   const totalMesVenEj = rowsVen.reduce((s,r)=>s+r.mesActualVal,0);
   const totalGralVenEj = rowsVen.reduce((s,r)=>s+r.total,0);
   const tblVenEj = document.getElementById('tblResumenVentasEjecucion');
   if (tblVenEj) tblVenEj.innerHTML = rowsVen.map(r=>{
-    const part = totalVenEj>0 ? (r.real/totalVenEj*100) : 0;
-    return `<tr><td>${r.name}</td><td>${r.desde}</td><td>${r.hasta}</td><td>${r.mesesN}</td><td>${fmt(r.real)}</td><td>${part.toFixed(1)}%</td><td>${fmt(r.mesActualVal)}</td><td style="font-weight:700;">${fmt(r.total)}</td></tr>`;
-  }).join('') + `<tr style="font-weight:700;background:#f4f6f5;"><td colspan="4">Total</td><td>${fmt(totalVenEj)}</td><td>100%</td><td>${fmt(totalMesVenEj)}</td><td>${fmt(totalGralVenEj)}</td></tr>`;
+    return `<tr><td>${r.name}</td><td>${r.desde}</td><td>${r.hasta}</td><td>${r.mesesN}</td><td>${fmt(r.real)}</td><td>${fmt(r.mesActualVal)}</td><td style="font-weight:700;">${fmt(r.total)}</td></tr>`;
+  }).join('') + `<tr style="font-weight:700;background:#f4f6f5;"><td colspan="4">Total</td><td>${fmt(totalVenEj)}</td><td>${fmt(totalMesVenEj)}</td><td>${fmt(totalGralVenEj)}</td></tr>`;
 
 
 })();
