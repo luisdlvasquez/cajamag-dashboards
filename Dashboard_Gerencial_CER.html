@@ -170,6 +170,73 @@
   .hca-firma-lbl { font-size:11.5px; color:var(--text-muted); font-weight:700; }
   .badge.on { background:var(--ok-bg); color:var(--ok); }
   .badge.off { background:var(--bad-bg); color:var(--bad); }
+
+  /* ===================== MOBILE (celular/tablet) ===================== */
+  .nav-toggle { display:none; }
+  @media (max-width:860px) {
+    .nav-toggle {
+      display:flex; align-items:center; justify-content:center;
+      width:36px; height:36px; border-radius:8px; border:1px solid var(--border);
+      background:#fff; font-size:18px; cursor:pointer; flex-shrink:0;
+    }
+    header { padding:8px 12px; }
+    .brand { gap:8px; }
+    .brand img { height:24px; }
+    .brand h1 { font-size:12.5px; }
+    .brand .sub { display:none; }
+    .opt-tag { font-size:9px; padding:3px 8px; }
+
+    .health-strip { -webkit-overflow-scrolling:touch; }
+    .health-item { min-width:118px; padding:8px 12px; }
+    .health-item .hv { font-size:14px; }
+    .health-item .hl { font-size:8px; }
+
+    .body-wrap { flex-direction:column; position:relative; }
+    nav.sidebar {
+      width:100%; height:auto; max-height:0; opacity:0;
+      display:flex; flex-direction:column; overflow:hidden;
+      border-right:none; border-bottom:1px solid var(--border);
+      padding:0 10px; flex-shrink:0; transition:max-height .2s ease, opacity .2s ease, padding .2s ease;
+      position:absolute; top:0; left:0; right:0; z-index:50; box-shadow:0 8px 18px rgba(0,0,0,.08);
+    }
+    nav.sidebar.open { max-height:70vh; opacity:1; padding:10px 10px; overflow-y:auto; }
+    nav.sidebar .navitem { padding:12px 14px; font-size:13px; }
+
+    main { padding:14px 12px 40px; }
+    .section-title { font-size:16px; }
+    .section-desc { font-size:11px; }
+
+    .kpi-grid { grid-template-columns:1fr 1fr; gap:10px; }
+    .kpi { padding:12px 14px; }
+    .kpi .kv { font-size:18px; }
+    .kpi .kl { font-size:9.5px; }
+
+    .chart-box { height:200px; }
+    .chart-box.sm { height:170px; }
+
+    .lb-name { width:100px; font-size:11px; }
+    .lb-val { width:80px; font-size:10.5px; }
+
+    table { display:block; overflow-x:auto; white-space:nowrap; }
+    .table-scroll { max-height:400px; }
+
+    .hca-hero { gap:14px; }
+    .hca-gauge-wrap { width:110px; height:110px; }
+    .hca-sparkline-wrap { margin-left:0; }
+    .hca-hero-stats { gap:14px; }
+    .hca-name { font-size:15px; }
+
+    .filter-group { min-width:130px; flex:1 1 130px; }
+    .summary-strip { gap:12px; }
+
+    .zona-cards { grid-template-columns:1fr; }
+    .hca-ind-grid { grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:480px) {
+    .kpi-grid { grid-template-columns:1fr; }
+    .hca-ind-grid { grid-template-columns:1fr; }
+    .grid2, .grid3 { grid-template-columns:1fr !important; }
+  }
   .table-scroll{overflow-x:auto}
   @media(max-width:768px){
     body{font-size:13px}
@@ -201,6 +268,7 @@
 
 <header>
   <div class="brand">
+    <div class="nav-toggle" id="navToggle">☰</div>
     <img src="assets/logo_cer.png" alt="CER" onerror="this.style.display='none'">
     <div><h1>CAJAMAG — Dashboard Gerencial</h1><div class="sub">Resumen, Gestión, Empresas y Ventas frente a metas contractuales — vista privada</div></div>
   </div>
@@ -483,8 +551,21 @@ function initials(name){ return name.split(' ').filter(w=>w.length>2).slice(0,2)
 function goSection(id){
   document.querySelectorAll('.navitem').forEach(n=>n.classList.toggle('active', n.dataset.section===id));
   document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active', s.id==='sec-'+id));
+  document.querySelector('nav.sidebar')?.classList.remove('open');
 }
 document.querySelectorAll('.navitem').forEach(n=>n.addEventListener('click',()=>goSection(n.dataset.section)));
+
+// ---- Nav movil (hamburguesa) ----
+const navToggleBtn = document.getElementById('navToggle');
+const sidebarNav = document.querySelector('nav.sidebar');
+if (navToggleBtn && sidebarNav) {
+  navToggleBtn.addEventListener('click', (e) => { e.stopPropagation(); sidebarNav.classList.toggle('open'); });
+  document.addEventListener('click', (e) => {
+    if (sidebarNav.classList.contains('open') && !sidebarNav.contains(e.target) && e.target !== navToggleBtn) {
+      sidebarNav.classList.remove('open');
+    }
+  });
+}
 
 document.querySelectorAll('[data-gsub]').forEach(t=>t.addEventListener('click',()=>{
   document.querySelectorAll('[data-gsub]').forEach(x=>x.classList.toggle('active', x===t));
@@ -1401,7 +1482,6 @@ renderVentasAll();
   }catch(e){}
 })();
 </script>
-
 
 <!-- CER-WEBHOOK-ENRICH v1 -->
 <script>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Tablero TV — Desempeño de Asesores · CER</title>
-<meta name="viewport" content="width=1920, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -301,6 +301,71 @@ footer{flex-shrink:0; padding:8px 32px 12px; background:#fff; border-top:1px sol
 .hdr-btn{background:var(--bg); border:1px solid var(--border); border-radius:10px; width:34px; height:34px; font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text);}
 .hdr-btn:hover{background:var(--naranja-light);}
 .hdr-btn.active{background:var(--naranja); color:#fff; border-color:var(--naranja);}
+
+/* ===================== MOBILE (celular/tablet) ===================== */
+@media (max-width:900px){
+  html,body{ overflow-y:auto; overflow-x:hidden; height:auto; min-height:100%; }
+  body{ width:100%; height:auto; min-height:100vh; }
+
+  header{ flex-wrap:wrap; padding:8px 14px; gap:8px; row-gap:8px; }
+  .brand{ gap:10px; }
+  .brand .logos img{ height:22px; }
+  .brand .ttl{ padding-left:10px; }
+  .brand .ttl h1{ font-size:13px; }
+  .brand .ttl .sub{ font-size:8.5px; }
+  .hdr-right{ gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+  .periodo-ctrl{ padding:4px 6px; }
+  .periodo-ctrl select{ font-size:10.5px; }
+  .section-pill{ font-size:9px; padding:4px 10px; }
+  .clock{ font-size:13px; }
+  .clock .date{ font-size:8.5px; }
+  .hdr-btn{ width:28px; height:28px; font-size:12px; }
+
+  #stage{ padding:10px 12px 60px; overflow:visible; }
+  .screen{
+    position:relative !important; inset:auto !important;
+    opacity:1 !important; transform:none !important; pointer-events:auto !important;
+    display:none !important;
+  }
+  .screen.show{ display:flex !important; }
+
+  .scr-head h2{ font-size:16px; }
+  .scr-head .tag{ font-size:10px; }
+
+  .podium{ grid-template-columns:1fr; gap:10px; }
+  .p-card.gold, .p-card.silver, .p-card.bronze{ order:0; padding-top:14px; }
+  .rest-list{ grid-template-columns:1fr; }
+
+  .gest-grid{ grid-template-columns:1fr; gap:10px; }
+  .g-ind{ grid-template-columns:70px 1fr 56px; }
+  .g-canales{ grid-template-columns:repeat(3,1fr); }
+
+  .emp2-grid{ grid-template-columns:1fr; }
+  .emp2-tbl{ grid-template-columns:44px repeat(4,1fr); font-size:11px; }
+  .tam-boxes{ flex-wrap:wrap; }
+
+  .svc-row{ grid-template-columns:1fr; gap:4px; text-align:left; }
+
+  .vd-grid{ grid-template-columns:1fr; }
+
+  .vc-list{ grid-template-columns:1fr; }
+  .vc-top{ flex-wrap:wrap; }
+  .vc-valcol{ width:104px; }
+
+  .tv-navarrow{ width:34px; height:34px; font-size:16px; opacity:.35; }
+
+  .anuncios-modal{ width:94vw !important; max-width:94vw !important; }
+  .an-titulo{ font-size:22px !important; }
+  .an-img-wrap{ max-height:40vh !important; }
+
+  .pa-title{ font-size:1.4rem; }
+}
+@media (max-width:480px){
+  .gest-grid, .emp2-grid, .vd-grid, .podium, .rest-list, .vc-list{ grid-template-columns:1fr; }
+  .g-canales{ grid-template-columns:repeat(2,1fr); }
+  .emp2-tbl{ grid-template-columns:36px repeat(4,1fr); font-size:10px; }
+  .r-val{ width:64px; font-size:10px; }
+}
 </style>
 </head>
 <body>
@@ -1508,7 +1573,6 @@ window.addEventListener('DOMContentLoaded', async ()=>{
   setInterval(()=>location.reload(), 30*60*1000);
 });
 </script>
-
 
 <!-- CER-WEBHOOK-ENRICH v1 -->
 <script>
