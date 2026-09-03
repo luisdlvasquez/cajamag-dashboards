@@ -1305,51 +1305,40 @@ function renderVentasAll(){
   `;
 
   // ---- Tendencia mensual (dentro del filtro) ----
+  // NOTA (3-sep-2026, a pedido de Luis): Gerencial muestra UNICAMENTE la meta contractual
+  // real (los 590M del contrato, prorateados a 98.3M/mes), nunca las metas individuales
+  // internas del equipo (que suman mas, ~352M/mes, y son solo referencia interna de
+  // Operativo). Antes esta grafica tenia una 2da linea de "meta individual" que en algunos
+  // filtros de asesor/zona mostraba una cifra mas alta que el contrato -- se quito.
   const tendData = ventasD.meses_order.map(ym=>porMes[ym]||0);
   const tendLabels = ventasD.meses_order.map(ym=>ventasD.mes_labels[ym]);
-  function tasaMensualAsesor(a){
-    const r = ventasRankByName[a.name];
-    if (r && r.meta_acumulada_5m && r.meses_activos) return r.meta_acumulada_5m / r.meses_activos;
-    return 21000000;
-  }
   const aseSelVen = document.getElementById('fVenAsesor').value;
   const zonaSelVen = document.getElementById('fVenZona').value;
   const totalActivosVen = activeAdvisors.length || 1;
   const metaContractualPorAsesor = ventasD.meta_contractual_mensual / totalActivosVen;
-  let metaMensualLinea = ventasD.meta_contractual_mensual;
   let metaContractualLinea = ventasD.meta_contractual_mensual;
-  let metaLineLabel = 'Meta individual (equipo)';
-  let metaContractualLabel = 'Meta contractual real (equipo)';
+  let metaContractualLabel = 'Meta contractual real (equipo, 590M/6 meses)';
   if (aseSelVen){
-    const aVen = advisorsFull.find(x=>x.name===aseSelVen);
-    metaMensualLinea = aVen ? tasaMensualAsesor(aVen) : 0;
     metaContractualLinea = metaContractualPorAsesor;
-    metaLineLabel = `Meta individual (${aseSelVen})`;
     metaContractualLabel = `Meta contractual real, prorrateada (${aseSelVen})`;
   } else if (zonaSelVen){
     const activosZonaVen = activeAdvisors.filter(a=>a.current_profile===zonaSelVen);
-    metaMensualLinea = activosZonaVen.reduce((s,a)=>s+tasaMensualAsesor(a),0);
     metaContractualLinea = metaContractualPorAsesor * activosZonaVen.length;
-    metaLineLabel = `Meta individual (${zonaSelVen})`;
     metaContractualLabel = `Meta contractual real, prorrateada (${zonaSelVen})`;
   }
-  const tendMeta = ventasD.meses_order.map(()=>metaMensualLinea);
   const tendMetaContractual = ventasD.meses_order.map(()=>metaContractualLinea);
   if (!chVentasTendencia){
     chVentasTendencia = new Chart(document.getElementById('chVentasTendencia'),{
       type:'bar', data:{ labels: tendLabels,
         datasets:[
           {label:'Ejecutado (filtro)', data: tendData, backgroundColor:'#00685Eaa', borderRadius:5},
-          {label:metaLineLabel, data: tendMeta, type:'line', borderColor:'#1F2A44', borderDash:[6,4], pointRadius:2, fill:false},
-          {label:metaContractualLabel, data: tendMetaContractual, type:'line', borderColor:'#B8860B', borderDash:[2,3], pointRadius:2, fill:false},
+          {label:metaContractualLabel, data: tendMetaContractual, type:'line', borderColor:'#1F2A44', borderDash:[6,4], pointRadius:2, fill:false},
         ]}, options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}, scales:{y:{ticks:{callback:v=>(v/1000000)+'M'}}}}
     });
   } else {
     chVentasTendencia.data.datasets[0].data = tendData;
-    chVentasTendencia.data.datasets[1].data = tendMeta;
-    chVentasTendencia.data.datasets[1].label = metaLineLabel;
-    chVentasTendencia.data.datasets[2].data = tendMetaContractual;
-    chVentasTendencia.data.datasets[2].label = metaContractualLabel;
+    chVentasTendencia.data.datasets[1].data = tendMetaContractual;
+    chVentasTendencia.data.datasets[1].label = metaContractualLabel;
     chVentasTendencia.update();
   }
 
