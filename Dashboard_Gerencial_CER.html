@@ -612,11 +612,6 @@ document.getElementById('healthStrip').innerHTML = healthItems.map(h=>`
 `).join('');
 
 // ================= RESUMEN =================
-// 3-sep-2026, a pedido de Luis: esta tarjeta suma TODO el rango de tendencia (marzo a la
-// fecha), incluyendo marzo -- marzo tiene su propia meta real (prorateada, ~60.3M, no la
-// tasa plana de 98.3M/mes de abril-septiembre) y debe contarse. Este acumulado NO lleva
-// ningun factor extra (el +25% es exclusivo de Operativo, nunca de Gerencial): es la suma
-// llana de las metas reales mes a mes que ya trae ventasD.tendencia.
 const mesesTendenciaG = ventasD.tendencia.map(t=>t.mes);
 const rangoTendenciaG = mesesTendenciaG.length? (mesesTendenciaG[0]+'-'+mesesTendenciaG[mesesTendenciaG.length-1]) : '';
 const acumEjecutadoG = ventasD.tendencia.reduce((s,t)=>s+t.ventas,0);
