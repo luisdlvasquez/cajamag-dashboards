@@ -612,16 +612,15 @@ document.getElementById('healthStrip').innerHTML = healthItems.map(h=>`
 `).join('');
 
 // ================= RESUMEN =================
-// 3-sep-2026, a pedido de Luis: esta tarjeta debe mostrar la meta NORMAL del contrato
-// (590M/6 meses), proyectada a la fecha -- no la suma de marzo + los 6 meses del contrato
-// (que daba 650M). Marzo fue un mes de arranque con meta prorateada distinta (60.3M, no
-// 98.3M/mes), por eso se excluye de este acumulado: solo se suman los meses cuya meta ya es
-// la tasa plana contractual (98.3M/mes), que son los 6 meses reales del contrato.
-const tendenciaContratoG = ventasD.tendencia.filter(t=>t.meta===ventasD.meta_contractual_mensual);
-const mesesTendenciaG = tendenciaContratoG.map(t=>t.mes);
+// 3-sep-2026, a pedido de Luis: esta tarjeta suma TODO el rango de tendencia (marzo a la
+// fecha), incluyendo marzo -- marzo tiene su propia meta real (prorateada, ~60.3M, no la
+// tasa plana de 98.3M/mes de abril-septiembre) y debe contarse. Este acumulado NO lleva
+// ningun factor extra (el +25% es exclusivo de Operativo, nunca de Gerencial): es la suma
+// llana de las metas reales mes a mes que ya trae ventasD.tendencia.
+const mesesTendenciaG = ventasD.tendencia.map(t=>t.mes);
 const rangoTendenciaG = mesesTendenciaG.length? (mesesTendenciaG[0]+'-'+mesesTendenciaG[mesesTendenciaG.length-1]) : '';
-const acumEjecutadoG = tendenciaContratoG.reduce((s,t)=>s+t.ventas,0);
-const acumMetaG = tendenciaContratoG.reduce((s,t)=>s+t.meta,0);
+const acumEjecutadoG = ventasD.tendencia.reduce((s,t)=>s+t.ventas,0);
+const acumMetaG = ventasD.tendencia.reduce((s,t)=>s+t.meta,0);
 const pctAcumG = acumMetaG>0 ? (acumEjecutadoG/acumMetaG*100) : 0;
 document.getElementById('resumenKpis').innerHTML = `
   <div class="kpi"><div class="kv">${contractAvgPct.toFixed(0)}%</div><div class="kl">Cumplimiento contractual (Gestión)</div></div>
