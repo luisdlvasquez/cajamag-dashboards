@@ -623,9 +623,9 @@ document.getElementById('resumenKpis').innerHTML = `
   <div class="kpi"><div class="kv">${fmtM(acumMetaG)}</div><div class="kl">Meta acumulada ${rangoTendenciaG} (${pctAcumG.toFixed(0)}% ejecutado)</div></div>
   <div class="kpi"><div class="kv">${DATA.empresas_agg.per_counts['Contactada - contrato actual']||0}</div><div class="kl">Empresas contactadas (contrato actual)</div></div>
   <div class="kpi bad"><div class="kv">${DATA.empresas_agg.per_counts['No contactada']||0}</div><div class="kl">Empresas no contactadas</div></div>
-  <div class="kpi"><div class="kv">${DATA.empresas_agg.per_counts['Contactada - contrato actual']||0}</div><div class="kl">Empresas gestionadas -- contrato actual (a la fecha)</div></div>
-  <div class="kpi"><div class="kv">3.863</div><div class="kl">Empresas gestionadas -- contrato anterior (a la misma altura del calendario, abr-sep 2025)</div></div>
-  <div class="kpi"><div class="kv">5.121</div><div class="kl">Empresas gestionadas -- contrato anterior (total, abr2025-ene2026)</div></div>
+  <div class="kpi"><div class="kv">${DATA.empresas_agg.per_counts['Contactada - contrato actual']||0}</div><div class="kl">Empresas distintas gestionadas -- contrato actual (a la fecha)</div></div>
+  <div class="kpi"><div class="kv">1.435</div><div class="kl">Empresas distintas gestionadas -- contrato anterior (misma altura del calendario, abr-sep 2025, Bitrix)</div></div>
+  <div class="kpi"><div class="kv">1.506</div><div class="kl">Empresas distintas gestionadas -- contrato anterior (total, abr2025-ene2026, Bitrix)</div></div>
 `;
 new Chart(document.getElementById('chResumenTendencia'),{
   type:'bar', data:{ labels: ventasD.tendencia.map(t=>t.mes),
