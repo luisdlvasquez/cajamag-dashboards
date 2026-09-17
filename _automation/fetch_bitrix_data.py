@@ -53,7 +53,15 @@ import urllib.parse
 
 import pandas as pd
 
-BITRIX_BASE = os.environ.get('BITRIX_REST_URL', 'https://bitrix.cajamag.com.co/rest/24371/jptcd95wxx2lruif/')
+BITRIX_BASE = os.environ.get('BITRIX_REST_URL')
+if not BITRIX_BASE:
+    print('ERROR: falta la variable de entorno BITRIX_REST_URL (webhook de Bitrix). '
+          'Por seguridad esta URL (incluye un token) NUNCA debe quedar escrita en el '
+          'codigo -- debe venir siempre de un secret (GitHub Actions: Settings > '
+          'Secrets and variables > Actions > BITRIX_REST_URL).')
+    sys.exit(1)
+if not BITRIX_BASE.endswith('/'):
+    BITRIX_BASE += '/'
 OUT_DIR = os.environ.get('BITRIX_EXPORT_DIR')
 if not OUT_DIR:
     import glob
