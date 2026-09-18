@@ -39,20 +39,14 @@ AUTO = f"{BASE}/_automation"
 MASTER = f"{AUTO}/Dashboard_Master_DATA.html"
 TV_MASTER = f"{AUTO}/TV_Master_DATA.html"
 
-def effective_today(real_today=None, cutoff_business_days=2):
-    """Misma regla que pipeline_master.py (ver ahi el detalle): durante los
-    primeros `cutoff_business_days` dias habiles de un mes nuevo, se sigue
-    tratando el mes ANTERIOR como 'mes en curso' para que el tablero termine
-    de consolidar su cierre antes de saltar al mes nuevo."""
+def effective_today(real_today=None):
+    """Misma regla que pipeline_master.py (actualizada 17-sep-2026 a pedido
+    de Luis): del dia 1 al 7 (inclusive) del mes nuevo, el tablero sigue
+    tratando el mes ANTERIOR como 'mes en curso'; desde el dia 8 usa el mes
+    real."""
     t = real_today or date.today()
-    first_of_month = t.replace(day=1)
-    business_days = []
-    d = first_of_month
-    while len(business_days) < cutoff_business_days:
-        if d.weekday() < 5:
-            business_days.append(d)
-        d += timedelta(days=1)
-    if t <= business_days[-1]:
+    if t.day <= 7:
+        first_of_month = t.replace(day=1)
         return first_of_month - timedelta(days=1)
     return t
 

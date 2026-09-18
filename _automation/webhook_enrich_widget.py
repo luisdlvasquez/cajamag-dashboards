@@ -40,6 +40,7 @@ paneles) puedan leerlas.
 Uso manual:
     python3 webhook_enrich_widget.py Dashboard_Operativo_CER.html Dashboard_Gerencial_CER.html Tablero_TV_Asesores_CER.html
 """
+import os
 import sys
 
 MARKER_START = "<!-- CER-WEBHOOK-ENRICH v1 -->"
@@ -47,7 +48,17 @@ MARKER_END = "<!-- /CER-WEBHOOK-ENRICH v1 -->"
 
 SUPA_URL = "https://nzmnzmnozbeqttofbmlf.supabase.co"
 SUPA_ANON = ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56bW56bW5vemJlcXR0b2ZibWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2NTAzMjQsImV4cCI6MjA5NTIyNjMyNH0.r3hrXsazoJK_xUWTsskEgjQ40Xhg60_0YaGvWs1VXP8")
-BITRIX_REST_URL = "https://bitrix.cajamag.com.co/rest/24371/jptcd95wxx2lruif/"
+# NUNCA hardcodear el webhook real aqui: este script inyecta el valor DENTRO
+# del HTML publico (se ve en el codigo fuente de la pagina), asi que solo debe
+# usarse con un webhook de alcance minimo (idealmente solo lectura de crm),
+# nunca el webhook principal con permisos de escritura. Se toma de la env var
+# BITRIX_REST_URL_PUBLIC (distinta de BITRIX_REST_URL, que es el webhook
+# privado usado server-side por fetch_bitrix_data.py).
+BITRIX_REST_URL = os.environ.get("BITRIX_REST_URL_PUBLIC", "")
+if not BITRIX_REST_URL:
+    print("ERROR: falta la variable de entorno BITRIX_REST_URL_PUBLIC "
+          "(webhook de Bitrix de alcance minimo, solo para uso client-side).")
+    sys.exit(1)
 
 SNIPPET = """<!-- CER-WEBHOOK-ENRICH v1 -->
 <script>
