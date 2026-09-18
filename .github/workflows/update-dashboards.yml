@@ -20,7 +20,7 @@ jobs:
       BITRIX_REST_URL: ${{ secrets.BITRIX_REST_URL }}
       PIPELINE_BASE_DIR: ${{ github.workspace }}
       PIPELINE_OUT_DIR: ${{ github.workspace }}
-      BITRIX_EXPORT_DIR: ${{ github.workspace }}/_bitrix_export
+      BITRIX_EXPORT_DIR: ${{ github.workspace }}/_bitrix_export/
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
