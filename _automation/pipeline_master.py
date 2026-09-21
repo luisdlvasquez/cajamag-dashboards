@@ -359,6 +359,45 @@ new_tx += parse_ventas('individual.xls', 'Individual', 'A', 'CERRADO GANADO', f'
 new_tx += parse_ventas('empresarial.xls', 'Empresarial', 'E', 'CERRADO GANADO', f'Bitrix (Empresarial) - {MES_NOMBRE} {TODAY.year} (al {TODAY.day})')
 new_tx += parse_ventas('ift.xls', 'IFT', 'Formación para el trabajo (IFT)', 'CERRADO MATRICULARO', f'Bitrix (IFT) - {MES_NOMBRE} {TODAY.year} (al {TODAY.day})')
 
+# Ventas confirmadas manualmente en Bitrix (ID de negocio verificado, etapa
+# CERRADO GANADO, Fecha de facturacion dentro del mes) que el pull automatico
+# via API (fetch_bitrix_data.py / crm.deal.list) NO esta trayendo, por una
+# causa raiz aun no diagnosticada (posible tema de paginacion o de como
+# Bitrix indexa UF_CRM_1681152455392 para ese negocio puntual). Confirmado
+# con Luis el 21-sep-2026 tras reclamo sobre la venta de Maria Jose Garcia
+# Guaman ($11.571.200 reales vs $4.478.500 que mostraba el dashboard).
+# Se reinyectan en CADA corrida (porque el paso 2 de arriba borra y
+# reconstruye el mes en curso desde cero) pero solo si el pull fresco todavia
+# no las trae -- el dia que Bitrix/la API las capture normalmente, esta
+# verificacion evita duplicarlas y se pueden retirar de esta lista.
+MANUAL_VENTAS_FORZADAS = [
+    {
+        'ym': '2026-09', 'fecha': '2026-09-01', 'asesor': 'Maria Jose Garcia Guaman',
+        'zona': 'Call Center', 'tipo_venta': 'Individual', 'categoria': 'B',
+        'servicio': 'PLAN TURISTICO AMAZONAS', 'valor': 7092700.0,
+        'fuente': f'Bitrix (Individual) - {MES_NOMBRE} {TODAY.year} (al {TODAY.day}) '
+                  '[correccion manual: negocio 30843 confirmado en Bitrix (CERRADO GANADO, '
+                  'Fecha de facturacion 01/09/2026), el pull automatico no lo esta trayendo]',
+        'cliente': 'LLANES MORON KARINA MELISSA LLANES MORON', 'nit': None, 'empresa': None,
+        'detalle': 'PLAN TURISTICO AMANZONAS NIÑO, PLAN TURISTICO AMAZONAS ADULTO', 'cantidad': 2,
+        '_bitrix_id': '30843',
+    },
+]
+for _mt in MANUAL_VENTAS_FORZADAS:
+    if _mt['ym'] != YM:
+        continue
+    ya_presente = any(
+        t['asesor'] == _mt['asesor'] and t['ym'] == _mt['ym']
+        and abs(t['valor'] - _mt['valor']) < 1
+        and (t.get('cliente') or '') == (_mt.get('cliente') or '')
+        for t in new_tx
+    )
+    if ya_presente:
+        print(f"  [manual] {_mt['cliente']} (${_mt['valor']:,.0f}) ya vino en el pull fresco de Bitrix - no se duplica (se puede retirar de MANUAL_VENTAS_FORZADAS).")
+    else:
+        new_tx.append({k: v for k, v in _mt.items() if k != '_bitrix_id'})
+        print(f"  [manual] agregada venta forzada: {_mt['cliente']} (${_mt['valor']:,.0f}) - negocio {_mt['_bitrix_id']}, no vino en el pull automatico de Bitrix.")
+
 print('ventas nuevas (mes en curso):', len(new_tx), 'total $', sum(t['valor'] for t in new_tx))
 
 # Etapas que cuentan como "ya sucedido" (confirmado por Luis, 1-sep-2026): cierre
