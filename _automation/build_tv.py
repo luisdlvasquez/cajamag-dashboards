@@ -71,6 +71,26 @@ def main():
     s, e = find_blob_bounds(tv_html, r'window\.TVDATA\s*=\s*(\{)')
     tv_html2 = tv_html[:s] + new_blob + tv_html[e:]
 
+    # El subtitulo visible ("El asesor frente a su meta · corte YYYY-MM-DD") es
+    # un literal HTML de SRC_TV (el propio Tablero_TV_Asesores_CER.html publicado
+    # el dia anterior), NO parte del JSON de TVDATA -- por eso el swap de arriba
+    # nunca lo toca y queda congelado en la fecha del ultimo publish manual
+    # (bug encontrado el 24-sep-2026: quedo pegado en "corte 2026-09-14" durante
+    # dias aunque TV_Master_DATA.html si se corregia bien cada corrida via el
+    # regex de pipeline_master.py, porque ese regex solo escribe TV_MASTER, no
+    # el SRC_TV que build_tv.py usa como base). Se extrae la fecha real de
+    # 'periodo.corte' del propio new_blob (ya correcta, la pone pipeline_master.py)
+    # y se reaplica aqui tambien, para que el subtitulo publicado nunca quede
+    # desfasado del TVDATA que sí se actualiza.
+    m_periodo = re.search(r'"periodo":\{[^}]*\}', new_blob)
+    m_corte = re.search(r'"corte":"(\d{4}-\d{2}-\d{2})"', m_periodo.group(0)) if m_periodo else None
+    if m_corte:
+        tv_html2 = re.sub(r'(El asesor frente a su meta · corte )\d{4}-\d{2}-\d{2}',
+                           r'\g<1>' + m_corte.group(1), tv_html2)
+        print(f"  subtitulo 'corte' sincronizado -> {m_corte.group(1)}")
+    else:
+        print("  ADVERTENCIA: no se encontro 'periodo.corte' en TVDATA, subtitulo 'corte' no se toco")
+
     open(OUT, 'w', encoding='utf-8').write(tv_html2)
     print(f"Tablero TV actualizado -> {OUT} ({len(new_blob)} bytes de TVDATA)")
 
