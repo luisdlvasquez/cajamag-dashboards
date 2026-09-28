@@ -1049,6 +1049,54 @@ for ym_k in TVDATA['meses']:
 ventas_servicio_by_period['acumulado'] = _servicio_agg(all_tx)
 TVDATA['ventas_servicio_by_period'] = ventas_servicio_by_period
 
+# ---- Ventas por servicio, agrupadas por ZONA FISICA (25-sep-2026, a pedido de
+# Luis: la pagina "Ventas por Servicio" del Tablero TV pasa de un solo listado
+# de barras a 4 cuadros, uno por zona -- Santa Marta, Cienaga, Fundacion,
+# Pivijay). OJO: esta es la zona FISICA donde se presta el servicio (la que ya
+# viene codificada en el propio nombre del catalogo oficial, ej. "RECREACION
+# CIENAGA" o "TURISMO SOCIAL PIVIJAY"), NO la zona comercial del asesor que
+# vendio (esa es t['zona'], usada en el resto del Tablero: Santa Marta/Call
+# Center/IFT/Cienaga/Fundacion). Se usa el nombre de la categoria oficial ya
+# resuelta para inferir la zona fisica; solo cuando la categoria no trae zona
+# en el nombre (ej. "Sin clasificar (revisar)", "TEATRO CAJAMAG", "CAFETERIA
+# TEYUNA") se cae de vuelta a la zona comercial del asesor, colapsando
+# Call Center/IFT/Santa Marta en "Santa Marta" ya que esas 3 no tienen sede
+# fisica propia distinta del campus central.
+ZONAS_FISICAS = ['Santa Marta', 'Ciénaga', 'Fundación', 'Pivijay']
+def _zona_fisica(servicio_oficial, zona_asesor):
+    s = _norm_serv_oficial(servicio_oficial)
+    if 'PIVIJA' in s:
+        return 'Pivijay'
+    if 'CIENAGA' in s:
+        return 'Ciénaga'
+    if 'FUNDACION' in s or 'FUNDAC' in s:
+        return 'Fundación'
+    if any(k in s for k in ('STAMTA', 'SANTAMARTA', 'TEYUNA', 'CAJAMAG', 'CULTURA', 'ADULTOMAYOR')):
+        return 'Santa Marta'
+    za = zona_asesor or 'Santa Marta'
+    return za if za in ('Ciénaga', 'Fundación', 'Pivijay') else 'Santa Marta'
+
+def _servicio_por_zona_agg(tx_list):
+    por_zona = {z: {} for z in ZONAS_FISICAS}
+    for t in tx_list:
+        cat = _resolver_servicio_oficial(t)
+        z = _zona_fisica(cat, t.get('zona'))
+        agg = por_zona[z]
+        d = agg.setdefault(cat, {'servicio': cat, 'valor': 0.0, 'cantidad': 0})
+        d['valor'] += (t.get('valor') or 0.0)
+        d['cantidad'] += 1
+    out = {}
+    for z in ZONAS_FISICAS:
+        servicios = sorted(por_zona[z].values(), key=lambda r: -r['valor'])
+        out[z] = {'total': sum(r['valor'] for r in servicios), 'servicios': servicios}
+    return out
+
+ventas_servicio_por_zona_by_period = {}
+for ym_k in TVDATA['meses']:
+    ventas_servicio_por_zona_by_period[ym_k] = _servicio_por_zona_agg([t for t in all_tx if t.get('ym')==ym_k])
+ventas_servicio_por_zona_by_period['acumulado'] = _servicio_por_zona_agg(all_tx)
+TVDATA['ventas_servicio_por_zona_by_period'] = {'orden': ZONAS_FISICAS, 'periodos': ventas_servicio_por_zona_by_period}
+
 # ---- Corte del periodo (fecha "hasta" que se muestra en el encabezado del TV) ----
 # Se corrige aqui SIEMPRE porque quedaba desactualizado corrida tras corrida
 # (bug detectado repetidamente: 18-ago, 20-ago, 21-ago) al no tocarse este campo.
