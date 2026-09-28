@@ -175,13 +175,14 @@ header{
 .zsvc-dot{width:11px; height:11px; border-radius:50%; flex:none;}
 .zsvc-name{font-size:15px; font-weight:800; color:var(--text); flex:1;}
 .zsvc-total{font-size:15px; font-weight:800; color:var(--verde-dark); font-variant-numeric:tabular-nums;}
-.zsvc-list{display:flex; flex-direction:column; gap:9px; flex:1; min-height:0; justify-content:center; overflow:hidden;}
-.zsvc-row{display:flex; flex-direction:column; gap:4px;}
-.zsvc-row-top{display:flex; align-items:baseline; justify-content:space-between; gap:8px;}
-.zsvc-sname{font-size:11.5px; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-.zsvc-sval{font-size:11.5px; font-weight:800; color:var(--text); font-variant-numeric:tabular-nums; flex-shrink:0;}
-.zsvc-bar-wrap{height:9px; background:var(--bg); border:1px solid var(--border); border-radius:5px; overflow:hidden;}
-.zsvc-bar{height:100%; border-radius:5px 0 0 5px; transition:width .4s ease;}
+.zsvc-list{display:flex; flex-direction:column; gap:7px; flex:1; min-height:0; justify-content:center; overflow:hidden;}
+.zsvc-row{border:1px solid var(--border); border-radius:10px; padding:7px 10px; background:var(--bg);}
+.zsvc-sname{font-size:11px; font-weight:700; color:var(--text); margin-bottom:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.zsvc-stats{display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px;}
+.zsvc-stat{display:flex; flex-direction:column; gap:1px; min-width:0;}
+.zsvc-stat-label{font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:.3px; color:var(--text-muted);}
+.zsvc-stat-val{font-size:11px; font-weight:800; color:var(--text); font-variant-numeric:tabular-nums; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.zsvc-stat-pct .zsvc-stat-val{color:var(--verde-dark);}
 .zsvc-empty{font-size:11.5px; color:var(--text-muted); text-align:center; padding:20px 0;}
 
 /* ---------- VENTAS DEL DIA ---------- */
@@ -1033,12 +1034,18 @@ function renderEmpresasPodio(entries){
 /* ---------------- VENTAS POR SERVICIO, POR ZONA (25-sep-2026, a pedido de
    Luis: reemplaza el listado unico de barras por 4 cuadros -- uno por zona
    fisica (Santa Marta, Cienaga, Fundacion, Pivijay) -- cada uno con el total
-   de la zona y sus servicios mas vendidos debajo. Sin comparacion contra
-   meta por ahora (a pedido de Luis, 28-sep-2026) -- si mas adelante se
-   consigue la meta por zona del contrato nuevo, se puede agregar una barra
-   de avance junto al total de cada cuadro. Los datos vienen ya agregados por
-   zona desde pipeline_master.py (D.ventas_servicio_por_zona_by_period). */
+   de la zona y sus servicios mas vendidos debajo. Los datos vienen ya
+   agregados por zona desde pipeline_master.py (D.ventas_servicio_por_zona_by_period).
+   28-sep-2026 (2a vuelta, a pedido de Luis): cada servicio ya NO se muestra
+   con una barra de "cumplimiento" -- ahora es un mini-cuadro con 3 datos:
+   Ejecucion, Meta y % Ejecutado. Todavia no tenemos las metas del contrato
+   nuevo, asi que META_SERVICIO_POR_ZONA queda vacio y meta/pct quedan en 0
+   a proposito (a pedido de Luis: "dejala en 0 y luego te digo como seria").
+   Cuando Luis pase las metas, solo hay que llenar este objeto -- clave =
+   zona fisica, valor = {NOMBRE_SERVICIO_OFICIAL: montoMeta} -- y el render
+   ya calcula el % automaticamente. */
 const ZONA_FISICA_COLORS = {'Santa Marta':'#2E75B6','Ciénaga':'#4C9F70','Fundación':'#E08E3E','Pivijay':'#2FA9A1'};
+const META_SERVICIO_POR_ZONA = {}; // {} = sin metas cargadas todavia -> toda meta/pct se ve en $0 / 0%
 function renderVentasPorServicio(periodKey){
   const zdata = D.ventas_servicio_por_zona_by_period;
   const periodo = zdata && zdata.periodos && zdata.periodos[periodKey];
@@ -1050,18 +1057,23 @@ function renderVentasPorServicio(periodKey){
   const cards = orden.map(zona=>{
     const zinfo = periodo[zona] || {total:0, servicios:[]};
     const color = ZONA_FISICA_COLORS[zona] || '#5B6770';
+    const metasZona = META_SERVICIO_POR_ZONA[zona] || {};
     const servicios = zinfo.servicios || [];
     let shown = servicios.slice(0,4);
     const resto = servicios.slice(4);
     if(resto.length){
       shown = shown.concat([{servicio:'Otros', valor: resto.reduce((s,r)=>s+r.valor,0), cantidad: resto.reduce((s,r)=>s+r.cantidad,0)}]);
     }
-    const maxVal = Math.max(...shown.map(r=>r.valor), 1);
     const rows = shown.length ? shown.map(r=>{
-      const pct = Math.max(4, (r.valor/maxVal)*100);
+      const meta = metasZona[r.servicio] || 0;
+      const pct = meta > 0 ? Math.round((r.valor/meta)*100) : 0;
       return `<div class="zsvc-row">
-        <div class="zsvc-row-top"><span class="zsvc-sname">${escapeHtml(r.servicio)}</span><span class="zsvc-sval">${money(r.valor)}</span></div>
-        <div class="zsvc-bar-wrap"><div class="zsvc-bar" style="width:${pct}%;background:${color}"></div></div>
+        <div class="zsvc-sname">${escapeHtml(r.servicio)}</div>
+        <div class="zsvc-stats">
+          <div class="zsvc-stat"><span class="zsvc-stat-label">Ejecución</span><span class="zsvc-stat-val">${money(r.valor)}</span></div>
+          <div class="zsvc-stat"><span class="zsvc-stat-label">Meta</span><span class="zsvc-stat-val">${money(meta)}</span></div>
+          <div class="zsvc-stat zsvc-stat-pct"><span class="zsvc-stat-label">% Ejec.</span><span class="zsvc-stat-val">${pct}%</span></div>
+        </div>
       </div>`;
     }).join('') : `<div class="zsvc-empty">Sin ventas este periodo</div>`;
     return `<div class="zsvc-card">
