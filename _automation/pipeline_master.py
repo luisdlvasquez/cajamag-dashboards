@@ -320,8 +320,15 @@ DEDUP_DEAL_IDS = {'29104', '29033'}  # corregido 11-sep-2026: se retira 29197 (f
 # tambien son falsos positivos del mismo lote del 18-ago.
 
 def parse_ventas(fname, tipo_venta, categoria_default, etapa_ok, fuente_tag):
-    path = DL + fname
-    df = pd.read_html(path)[0]
+    path = os.path.join(DL, fname)
+    # 29-sep-2026: un export sin negocios (ej. IFT sin matriculas aun en el mes)
+    # sale como tabla vacia y read_html no la reconoce -> antes tumbaba TODA la
+    # actualizacion. Ahora simplemente no aporta ventas.
+    try:
+        df = pd.read_html(path)[0]
+    except (ValueError, IndexError):
+        print(f'  [{fname}] sin negocios en el rango')
+        return []
     rows = []
     excluded = 0
     for _, r in df.iterrows():
@@ -406,7 +413,11 @@ print('ventas nuevas (mes en curso):', len(new_tx), 'total $', sum(t['valor'] fo
 # de los demas pipelines (ver docstring arriba).
 ETAPAS_OK = {'EJECUCION EVENTO', 'CERRADO GANADO', 'CERRADO PERDIDO'}  # ya sin tildes (comparado via _norm_txt)
 
-g = pd.read_html(DL + 'gestiones.xls')[0]
+try:
+    g = pd.read_html(os.path.join(DL, 'gestiones.xls'))[0]
+except (ValueError, IndexError):
+    print('  [gestiones.xls] sin gestiones en el rango')
+    g = pd.DataFrame(columns=['Fecha y hora evento'])
 new_raw_gestiones = []
 excluidas_por_etapa = 0
 for _, r in g.iterrows():

@@ -47,6 +47,7 @@ hasta hoy), calculado con la MISMA regla de "mes en curso" que pipeline_master.p
 (ver effective_today en ese archivo -- congelado hasta el dia 7 del mes siguiente).
 """
 import os, sys, json, time
+from collections import Counter
 from datetime import date, timedelta
 import urllib.request
 import urllib.parse
@@ -86,12 +87,41 @@ def effective_today(real_today=None):
 _FORCE_TODAY = os.environ.get('FORCE_TODAY')
 TODAY = date.fromisoformat(_FORCE_TODAY) if _FORCE_TODAY else effective_today()
 YM = TODAY.strftime('%Y-%m')
+def _ultimo_dia_mes(d):
+    nxt = (d.replace(day=28) + timedelta(days=4)).replace(day=1)
+    return nxt - timedelta(days=1)
+
+
+# 29-sep-2026: por defecto se consulta el MES COMPLETO (dia 1 al ultimo dia), no
+# "hasta hoy". Antes, una venta ganada cuya Fecha de facturacion quedaba
+# registrada un dia posterior a hoy (o el mismo dia, segun como Bitrix compare
+# la hora) no entraba hasta ese dia -- y Operaciones si la cuenta. El pipeline
+# de todos modos solo toma lo que cae dentro del mes en curso.
 _desde = os.environ.get('FECHA_DESDE') or f'{YM}-01'
-_hasta = os.environ.get('FECHA_HASTA') or TODAY.isoformat()
+_hasta = os.environ.get('FECHA_HASTA') or _ultimo_dia_mes(TODAY).isoformat()
 FECHA_DESDE = _desde
 FECHA_HASTA = _hasta
+# Ventana de consulta a la API ampliada 3 dias a cada lado: el filtro de fechas de
+# Bitrix compara contra fecha-hora y puede correr el limite por zona horaria (un
+# negocio con fecha 01/09 puede quedar "antes" de '2026-09-01' en el servidor --
+# sospecha principal del caso del negocio 30843 de sep-2026). Despues se filtra
+# localmente por la fecha tal como la muestra Bitrix.
+CONSULTA_DESDE = (date.fromisoformat(FECHA_DESDE) - timedelta(days=3)).isoformat()
+CONSULTA_HASTA = (date.fromisoformat(FECHA_HASTA) + timedelta(days=3)).isoformat()
 
-print(f'Rango de consulta: {FECHA_DESDE} -> {FECHA_HASTA} (YM={YM})')
+print(f'Rango de negocio: {FECHA_DESDE} -> {FECHA_HASTA} (YM={YM}); '
+      f'consulta API ampliada {CONSULTA_DESDE} -> {CONSULTA_HASTA}')
+
+
+def _fecha_local(s):
+    """'2026-09-16T00:00:00-05:00' -> '2026-09-16' (la fecha calendario tal cual
+    la guarda Bitrix)."""
+    return (s or '')[:10]
+
+
+def _en_rango(s):
+    f = _fecha_local(s)
+    return bool(f) and FECHA_DESDE <= f <= FECHA_HASTA
 
 # ---------------- helpers REST ----------------
 
@@ -116,18 +146,34 @@ def call(method, params=None):
 
 
 def list_all(method, filter_=None, select=None, order=None):
+    """Pagina TODO el resultado. 29-sep-2026: se fuerza orden estable por ID
+    (sin 'order' Bitrix no garantiza el mismo orden entre paginas y la
+    paginacion por 'start' puede saltarse o repetir registros) y se deduplica
+    por ID."""
     out = []
+    vistos = set()
     start = 0
+    if not order:
+        order = {'ID': 'ASC'}
     while True:
         params = {'start': start}
         for k, v in (filter_ or {}).items():
-            params[f'filter[{k}]'] = v
+            if isinstance(v, (list, tuple)):
+                params[f'filter[{k}][]'] = list(v)
+            else:
+                params[f'filter[{k}]'] = v
         for i, s in enumerate(select or []):
             params[f'select[{i}]'] = s
         for k, v in (order or {}).items():
             params[f'order[{k}]'] = v
         r = call(method, params)
-        out.extend(r['result'])
+        for item in r['result']:
+            iid = item.get('ID') if isinstance(item, dict) else None
+            if iid is not None:
+                if iid in vistos:
+                    continue
+                vistos.add(iid)
+            out.append(item)
         nxt = r.get('next')
         if nxt is None:
             break
@@ -135,14 +181,41 @@ def list_all(method, filter_=None, select=None, order=None):
     return out
 
 
+BATCH_FALLIDOS = []  # sub-llamadas que fallaron incluso tras reintentos (se reportan en el cuadre)
+
+
 def batch(calls_dict):
-    """calls_dict: {clave: 'metodo?param=valor&...'} (max 50 por tanda)."""
+    """Ejecuta {clave: 'metodo?params'} en tandas de 50 y REINTENTA las
+    sub-llamadas que fallen (result_error, p.ej. QUERY_LIMIT_EXCEEDED). Hasta el
+    29-sep-2026 una sub-llamada fallida devolvia vacio en silencio (el negocio
+    quedaba sin lineas de producto o sin nombre de asesor/contacto)."""
     out = {}
-    items = list(calls_dict.items())
-    for i in range(0, len(items), 50):
-        chunk = dict(items[i:i + 50])
-        r = call('batch', {'halt': 0, **{f'cmd[{k}]': v for k, v in chunk.items()}})
-        out.update(r['result']['result'])
+    pendientes = dict(calls_dict)
+    for intento in range(4):
+        if not pendientes:
+            break
+        items = list(pendientes.items())
+        fallidos = {}
+        for i in range(0, len(items), 50):
+            chunk = dict(items[i:i + 50])
+            r = call('batch', {'halt': 0, **{f'cmd[{k}]': v for k, v in chunk.items()}})
+            res = r['result'].get('result') or {}
+            errs = r['result'].get('result_error') or {}
+            if not isinstance(res, dict):
+                res = {}
+            if not isinstance(errs, dict):
+                errs = {}
+            for k, v in chunk.items():
+                if k in errs or k not in res:
+                    fallidos[k] = v
+                else:
+                    out[k] = res[k]
+        pendientes = fallidos
+        if pendientes:
+            time.sleep(2 * (intento + 1))
+    if pendientes:
+        print(f'  ADVERTENCIA: {len(pendientes)} sub-llamadas batch fallaron tras 4 intentos')
+        BATCH_FALLIDOS.extend(pendientes.values())
     return out
 
 
@@ -200,52 +273,53 @@ def category_name(category_id):
     return CATEGORY_NAME_CACHE.get(str(category_id), str(category_id))
 
 USER_NAME_CACHE = {}
-
-def resolve_users(user_ids):
-    faltan = [u for u in set(user_ids) if u and u not in USER_NAME_CACHE]
-    for i in range(0, len(faltan), 50):
-        chunk = faltan[i:i + 50]
-        cmds = {f'u{j}': f'user.get?ID={uid}' for j, uid in enumerate(chunk)}
-        r = call('batch', {'halt': 0, **{f'cmd[{k}]': v for k, v in cmds.items()}})
-        for j, uid in enumerate(chunk):
-            data = r['result']['result'].get(f'u{j}') or []
-            if data:
-                u = data[0]
-                USER_NAME_CACHE[uid] = f"{u.get('NAME', '')} {u.get('LAST_NAME', '')}".strip()
-            else:
-                USER_NAME_CACHE[uid] = ''
-
-def resolve_contacts(contact_ids):
-    faltan = [c for c in set(contact_ids) if c and c != '0' and c not in CONTACT_CACHE]
-    for i in range(0, len(faltan), 50):
-        chunk = faltan[i:i + 50]
-        cmds = {f'c{j}': f'crm.contact.get?ID={cid}' for j, cid in enumerate(chunk)}
-        r = call('batch', {'halt': 0, **{f'cmd[{k}]': v for k, v in cmds.items()}})
-        for j, cid in enumerate(chunk):
-            CONTACT_CACHE[cid] = r['result']['result'].get(f'c{j}') or {}
-
-def resolve_companies(company_ids):
-    faltan = [c for c in set(company_ids) if c and c != '0' and c not in COMPANY_CACHE]
-    for i in range(0, len(faltan), 50):
-        chunk = faltan[i:i + 50]
-        cmds = {f'e{j}': f'crm.company.get?ID={cid}' for j, cid in enumerate(chunk)}
-        r = call('batch', {'halt': 0, **{f'cmd[{k}]': v for k, v in cmds.items()}})
-        for j, cid in enumerate(chunk):
-            COMPANY_CACHE[cid] = r['result']['result'].get(f'e{j}') or {}
-
 CONTACT_CACHE = {}
 COMPANY_CACHE = {}
 
+
+def resolve_users(user_ids):
+    faltan = sorted({u for u in user_ids if u and u not in USER_NAME_CACHE})
+    if not faltan:
+        return
+    res = batch({f'u{uid}': f'user.get?ID={uid}' for uid in faltan})
+    for uid in faltan:
+        data = res.get(f'u{uid}') or []
+        if data:
+            u = data[0]
+            USER_NAME_CACHE[uid] = f"{u.get('NAME', '')} {u.get('LAST_NAME', '')}".strip()
+        else:
+            # No se pudo resolver: se deja el ID visible en vez de '' para que la
+            # venta no quede "sin asesor" (y se note en el cuadre).
+            USER_NAME_CACHE[uid] = f'(usuario Bitrix {uid})'
+
+
+def resolve_contacts(contact_ids):
+    faltan = sorted({c for c in contact_ids if c and c != '0' and c not in CONTACT_CACHE})
+    if not faltan:
+        return
+    res = batch({f'c{cid}': f'crm.contact.get?ID={cid}' for cid in faltan})
+    for cid in faltan:
+        CONTACT_CACHE[cid] = res.get(f'c{cid}') or {}
+
+
+def resolve_companies(company_ids):
+    faltan = sorted({c for c in company_ids if c and c != '0' and c not in COMPANY_CACHE})
+    if not faltan:
+        return
+    res = batch({f'e{cid}': f'crm.company.get?ID={cid}' for cid in faltan})
+    for cid in faltan:
+        COMPANY_CACHE[cid] = res.get(f'e{cid}') or {}
+
+
 def resolve_productrows(deal_ids):
-    out = {}
+    """Devuelve {deal_id: [lineas]} SOLO para los negocios cuya consulta de
+    productos respondio bien. Un negocio ausente del dict = no se pudo leer
+    (distinto de "no tiene productos", que es una lista vacia)."""
     ids = list(deal_ids)
-    for i in range(0, len(ids), 50):
-        chunk = ids[i:i + 50]
-        cmds = {f'p{j}': f'crm.deal.productrows.get?id={did}' for j, did in enumerate(chunk)}
-        r = call('batch', {'halt': 0, **{f'cmd[{k}]': v for k, v in cmds.items()}})
-        for j, did in enumerate(chunk):
-            out[did] = r['result']['result'].get(f'p{j}') or []
-    return out
+    if not ids:
+        return {}
+    res = batch({f'p{did}': f'crm.deal.productrows.get?id={did}' for did in ids})
+    return {did: (res[f'p{did}'] or []) for did in ids if f'p{did}' in res}
 
 
 def to_export_html(df, path):
@@ -264,37 +338,155 @@ def to_export_html(df, path):
 
 
 # ---------------- 1. VENTAS ----------------
+#
+# 29-sep-2026 (reclamo de Operaciones: Karen Cantillo -$245.000, Martha Lorena
+# Celedon -$436.000 en Individual, total ~$1.067.800 de diferencia): ademas de
+# traer las ventas, cada corrida ahora arma un CUADRE que deja por escrito, negocio
+# por negocio, todo lo que podria explicar una diferencia contra lo que ve
+# Operaciones en Bitrix:
+#   - negocios ganados cuya Fecha de facturacion esta vacia o cae fuera del mes
+#   - negocios con Fecha de facturacion en el mes en una etapa "exitosa" distinta
+#     a la que cuenta el pipeline
+#   - ventas ganadas en pipelines distintos a 1/2/4
+#   - negocios cuyo valor por productos (Precio x Cantidad) no coincide con el
+#     Ingreso (OPPORTUNITY) del negocio, o con productos en $0
+#   - consultas a Bitrix que fallaron
+# El cuadre se guarda en _automation/diag/cuadre_ventas.json y CUADRE_VENTAS.md
+# (se versiona en el repo en cada corrida).
 
-def fetch_ventas(category_id, tipo_venta, etapa_ok_name, fname):
+CATEGORIAS_VENTA = {
+    '1': ('Empresarial', 'CERRADO GANADO'),
+    '2': ('Individual', 'CERRADO GANADO'),
+    '4': ('IFT', 'CERRADO MATRICULARO'),
+}
+CAMPO_FACT = 'UF_CRM_1681152455392'
+SELECT_VENTA = ['ID', 'TITLE', 'CATEGORY_ID', 'STAGE_ID', 'STAGE_SEMANTIC_ID', 'ASSIGNED_BY_ID',
+                'CONTACT_ID', 'COMPANY_ID', 'OPPORTUNITY', 'IS_MANUAL_OPPORTUNITY', 'CLOSEDATE',
+                'DATE_MODIFY', CAMPO_FACT, 'UF_CRM_1681146110054', 'UF_CRM_1681146530307']
+
+CUADRE = {
+    'generado_utc': None,
+    'rango': None,
+    'categorias': {},
+    'fuera_por_fecha': [],       # ganados en cat. de venta, fecha fact. vacia o fuera del mes
+    'otra_etapa_exitosa': [],    # fecha fact. en el mes, etapa exitosa distinta a la contada
+    'otras_categorias': [],      # ganados con fecha fact. en el mes en pipelines != 1/2/4
+    'valor_distinto': [],        # sum(lineas) != OPPORTUNITY
+    'valor_por_ingreso': [],     # se uso OPPORTUNITY porque lineas en $0 o no se pudieron leer
+    'cantidades_raras': [],      # cantidades sospechosas (ej. precio y cantidad invertidos)
+    'por_asesor': {},
+    'batch_fallidos': 0,
+}
+
+
+def _num(x):
+    try:
+        return float(x or 0)
+    except Exception:
+        return 0.0
+
+
+def _stages(category_id):
+    cid = str(category_id)
+    if cid not in STAGE_NAME_CACHE:
+        r = call('crm.dealcategory.stage.list', {'id': cid})
+        STAGE_NAME_CACHE[cid] = {s['STATUS_ID']: s['NAME'] for s in r['result']}
+    return STAGE_NAME_CACHE[cid]
+
+
+def _resumen_negocio(d, motivo=None, extra=None):
+    r = {
+        'id': d.get('ID'),
+        'pipeline': category_name(d.get('CATEGORY_ID')),
+        'etapa': stage_name(d.get('CATEGORY_ID'), d.get('STAGE_ID')),
+        'asesor': USER_NAME_CACHE.get(d.get('ASSIGNED_BY_ID'), d.get('ASSIGNED_BY_ID')),
+        'fecha_facturacion': _fecha_local(d.get(CAMPO_FACT)) or None,
+        'fecha_cierre': _fecha_local(d.get('CLOSEDATE')) or None,
+        'ingreso': _num(d.get('OPPORTUNITY')),
+        'titulo': d.get('TITLE'),
+    }
+    if motivo:
+        r['motivo'] = motivo
+    if extra:
+        r.update(extra)
+    return r
+
+
+def fetch_ventas(category_id, tipo_venta, etapa_ok_name):
     print(f'Consultando ventas categoria {category_id} ({tipo_venta})...')
-    stage_id = None
-    r = call('crm.dealcategory.stage.list', {'id': category_id})
-    STAGE_NAME_CACHE[str(category_id)] = {s['STATUS_ID']: s['NAME'] for s in r['result']}
-    for status_id, name in STAGE_NAME_CACHE[str(category_id)].items():
-        if _norm_txt(name) == _norm_txt(etapa_ok_name):
-            stage_id = status_id
-            break
+    stages = _stages(category_id)
+    stage_id = next((sid for sid, name in stages.items()
+                     if _norm_txt(name).strip() == _norm_txt(etapa_ok_name)), None)
     if stage_id is None:
         raise RuntimeError(f'No se encontro la etapa "{etapa_ok_name}" en categoria {category_id}')
 
-    deals = list_all('crm.deal.list', filter_={
+    candidatos = list_all('crm.deal.list', filter_={
         'CATEGORY_ID': category_id,
         'STAGE_ID': stage_id,
-        '>=UF_CRM_1681152455392': FECHA_DESDE,
-        '<=UF_CRM_1681152455392': FECHA_HASTA,
-    }, select=['ID', 'TITLE', 'ASSIGNED_BY_ID', 'CONTACT_ID', 'COMPANY_ID', 'OPPORTUNITY',
-               'UF_CRM_1681152455392', 'UF_CRM_1681146110054', 'UF_CRM_1681146530307'])
-    print(f'  {len(deals)} negocios en etapa "{etapa_ok_name}" con Fecha de facturacion en rango.')
+        f'>={CAMPO_FACT}': CONSULTA_DESDE,
+        f'<={CAMPO_FACT}': CONSULTA_HASTA,
+    }, select=SELECT_VENTA)
+    deals = [d for d in candidatos if _en_rango(d.get(CAMPO_FACT))]
+    print(f'  {len(deals)} negocios en "{etapa_ok_name}" con Fecha de facturacion '
+          f'{FECHA_DESDE}..{FECHA_HASTA} (de {len(candidatos)} en la ventana ampliada).')
+
+    # --- diagnostico: ganados de esta categoria cerrados/modificados en el mes que NO entraron
+    contados = {d['ID'] for d in deals}
+    ganados_mes = list_all('crm.deal.list', filter_={
+        'CATEGORY_ID': category_id,
+        'STAGE_SEMANTIC_ID': 'S',
+        '>=DATE_MODIFY': CONSULTA_DESDE,
+    }, select=SELECT_VENTA)
+    # --- diagnostico: fecha de facturacion en el mes pero en otra etapa
+    con_fecha_mes = list_all('crm.deal.list', filter_={
+        'CATEGORY_ID': category_id,
+        f'>={CAMPO_FACT}': CONSULTA_DESDE,
+        f'<={CAMPO_FACT}': CONSULTA_HASTA,
+        '!STAGE_ID': stage_id,
+    }, select=SELECT_VENTA)
+
+    resolve_users([d.get('ASSIGNED_BY_ID') for d in deals + ganados_mes + con_fecha_mes])
+
+    for d in ganados_mes:
+        if d['ID'] in contados:
+            continue
+        f = _fecha_local(d.get(CAMPO_FACT))
+        cierre = _fecha_local(d.get('CLOSEDATE'))
+        if f and _en_rango(d.get(CAMPO_FACT)):
+            continue  # la cubre el bloque 'otra etapa' de abajo
+        if not f and not (cierre and FECHA_DESDE <= cierre <= FECHA_HASTA):
+            continue  # ganado viejo que solo se edito este mes
+        if f and not (cierre and FECHA_DESDE <= cierre <= FECHA_HASTA):
+            continue  # facturado en otro mes y cerrado en otro mes: no es de este mes
+        CUADRE['fuera_por_fecha'].append(_resumen_negocio(
+            d, 'Fecha de facturacion vacia' if not f else f'Fecha de facturacion {f} fuera del mes (cerrado {cierre})'))
+
+    etapas_otras = Counter()
+    for d in con_fecha_mes:
+        if not _en_rango(d.get(CAMPO_FACT)):
+            continue
+        nombre = stage_name(d.get('CATEGORY_ID'), d.get('STAGE_ID'))
+        etapas_otras[nombre] += 1
+        if d.get('STAGE_SEMANTIC_ID') == 'S':
+            CUADRE['otra_etapa_exitosa'].append(_resumen_negocio(d, f'Etapa "{nombre}" (no es "{etapa_ok_name}")'))
+
+    CUADRE['categorias'][str(category_id)] = {
+        'tipo_venta': tipo_venta,
+        'etapa_contada': etapa_ok_name,
+        'negocios_contados': len(deals),
+        'otras_etapas_con_fecha_en_el_mes': dict(etapas_otras),
+    }
     if not deals:
         return pd.DataFrame()
 
     deal_ids = [d['ID'] for d in deals]
-    resolve_users([d.get('ASSIGNED_BY_ID') for d in deals])
     resolve_contacts([d.get('CONTACT_ID') for d in deals])
     resolve_companies([d.get('COMPANY_ID') for d in deals])
     productrows = resolve_productrows(deal_ids)
 
     rows = []
+    suma_lineas_cat = 0.0
+    suma_ingreso_cat = 0.0
     for d in deals:
         contact = CONTACT_CACHE.get(d.get('CONTACT_ID')) or {}
         company = COMPANY_CACHE.get(d.get('COMPANY_ID')) or {}
@@ -302,11 +494,13 @@ def fetch_ventas(category_id, tipo_venta, etapa_ok_name, fname):
         servicio_utilizar = ENUM_SERVICIOS_UTILIZAR.get(str(d.get('UF_CRM_1681146110054') or ''), '')
         categoria_afiliacion = ENUM_CATEGORIA_AFILIACION.get(str(contact.get('UF_CRM_1679886333416') or ''), '')
         nit = contact.get('UF_CRM_1756067100077') or company.get('UF_CRM_1679587096910') or ''
+        asesor = USER_NAME_CACHE.get(d.get('ASSIGNED_BY_ID'), '')
+        ingreso = _num(d.get('OPPORTUNITY'))
         base = {
             'ID': d['ID'],
             'Etapa de la negociación': etapa_ok_name,
-            'Fecha de facturación': fecha_iso_a_ddmmyyyy(d.get('UF_CRM_1681152455392')),
-            'Persona responsable': USER_NAME_CACHE.get(d.get('ASSIGNED_BY_ID'), ''),
+            'Fecha de facturación': fecha_iso_a_ddmmyyyy(d.get(CAMPO_FACT)),
+            'Persona responsable': asesor,
             'Contacto: Nombre': contact.get('NAME') or '',
             'Contacto: Apellido': contact.get('LAST_NAME') or '',
             'Compañía: Nombre de la compañía': company.get('TITLE') or '',
@@ -316,8 +510,30 @@ def fetch_ventas(category_id, tipo_venta, etapa_ok_name, fname):
             'Contacto: Nit empresa': nit,
             'Compañía: Nit': company.get('UF_CRM_1679587096910') or '',
         }
-        lineas = productrows.get(d['ID']) or []
-        if lineas:
+        lineas = productrows.get(d['ID'])
+        suma_lineas = sum(_num(ln.get('PRICE')) * _num(ln.get('QUANTITY')) for ln in (lineas or []))
+        for ln in (lineas or []):
+            q = _num(ln.get('QUANTITY'))
+            if q > 100 or (0 < _num(ln.get('PRICE')) < 100):
+                CUADRE['cantidades_raras'].append(_resumen_negocio(d, 'Precio/cantidad sospechosos', {
+                    'producto': ln.get('PRODUCT_NAME'), 'precio': _num(ln.get('PRICE')), 'cantidad': q}))
+
+        usar_ingreso = False
+        if lineas is None:
+            usar_ingreso = True
+            motivo = 'No se pudieron leer los productos del negocio (error de Bitrix); se uso el Ingreso'
+        elif lineas and suma_lineas <= 0 and ingreso > 0:
+            usar_ingreso = True
+            motivo = 'Productos con valor $0; se uso el Ingreso del negocio'
+        if usar_ingreso:
+            CUADRE['valor_por_ingreso'].append(_resumen_negocio(d, motivo, {'valor_productos': suma_lineas}))
+        elif lineas and abs(suma_lineas - ingreso) > 1:
+            CUADRE['valor_distinto'].append(_resumen_negocio(d, 'Precio x Cantidad de productos != Ingreso del negocio', {
+                'valor_productos': suma_lineas, 'diferencia': round(ingreso - suma_lineas, 2),
+                'ingreso_manual': d.get('IS_MANUAL_OPPORTUNITY')}))
+
+        if lineas and not usar_ingreso:
+            valor_contado = suma_lineas
             for ln in lineas:
                 row = dict(base)
                 row['Producto'] = ln.get('PRODUCT_NAME') or ''
@@ -325,26 +541,126 @@ def fetch_ventas(category_id, tipo_venta, etapa_ok_name, fname):
                 row['Cantidad'] = ln.get('QUANTITY')
                 rows.append(row)
         else:
+            valor_contado = ingreso
             row = dict(base)
             row['Producto'] = ''
             row['Precio'] = None
             row['Cantidad'] = None
             row['Ingreso'] = d.get('OPPORTUNITY')
             rows.append(row)
+
+        suma_lineas_cat += valor_contado
+        suma_ingreso_cat += ingreso
+        pa = CUADRE['por_asesor'].setdefault(asesor or '(sin asesor)', {})
+        k = pa.setdefault(tipo_venta, {'negocios': 0, 'valor_contado': 0.0, 'ingreso_bitrix': 0.0})
+        k['negocios'] += 1
+        k['valor_contado'] += valor_contado
+        k['ingreso_bitrix'] += ingreso
+
+    CUADRE['categorias'][str(category_id)].update({
+        'valor_contado': round(suma_lineas_cat, 2),
+        'ingreso_bitrix_de_esos_negocios': round(suma_ingreso_cat, 2),
+    })
     return pd.DataFrame(rows)
+
+
+def fetch_otras_categorias():
+    """Ventas ganadas (etapa exitosa) con Fecha de facturacion en el mes que viven
+    en pipelines distintos a 1/2/4 -- no se cuentan, pero se reportan."""
+    deals = list_all('crm.deal.list', filter_={
+        '!CATEGORY_ID': list(CATEGORIAS_VENTA.keys()),
+        'STAGE_SEMANTIC_ID': 'S',
+        f'>={CAMPO_FACT}': CONSULTA_DESDE,
+        f'<={CAMPO_FACT}': CONSULTA_HASTA,
+    }, select=SELECT_VENTA)
+    deals = [d for d in deals if _en_rango(d.get(CAMPO_FACT)) and str(d.get('CATEGORY_ID')) not in CATEGORIAS_VENTA]
+    resolve_users([d.get('ASSIGNED_BY_ID') for d in deals])
+    for d in deals:
+        CUADRE['otras_categorias'].append(_resumen_negocio(d, 'Ganado en un pipeline que no es de ventas (1/2/4)'))
+
+
+def escribir_cuadre():
+    from datetime import datetime, timezone
+    base_dir = os.environ.get('PIPELINE_BASE_DIR') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    diag_dir = os.path.join(base_dir, '_automation', 'diag')
+    os.makedirs(diag_dir, exist_ok=True)
+    CUADRE['generado_utc'] = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
+    CUADRE['rango'] = {'desde': FECHA_DESDE, 'hasta': FECHA_HASTA, 'ym': YM}
+    CUADRE['batch_fallidos'] = len(BATCH_FALLIDOS)
+    for a in CUADRE['por_asesor'].values():
+        for k in a.values():
+            k['valor_contado'] = round(k['valor_contado'], 2)
+            k['ingreso_bitrix'] = round(k['ingreso_bitrix'], 2)
+    with open(os.path.join(diag_dir, 'cuadre_ventas.json'), 'w', encoding='utf-8') as f:
+        json.dump(CUADRE, f, ensure_ascii=False, indent=1)
+
+    def money(v):
+        return '$' + f'{v:,.0f}'.replace(',', '.')
+
+    L = [f'# Cuadre de ventas {YM} (corrida {CUADRE["generado_utc"]})', '',
+         f'Rango: {FECHA_DESDE} a {FECHA_HASTA}. Se cuentan los negocios en la etapa ganada de cada '
+         'pipeline de ventas con Fecha de facturacion dentro del rango.', '']
+    L.append('## Totales contados por pipeline')
+    for cid, c in CUADRE['categorias'].items():
+        L.append(f"- {c['tipo_venta']} (pipeline {cid}, etapa {c['etapa_contada']}): "
+                 f"{c['negocios_contados']} negocios, {money(c.get('valor_contado', 0))}")
+    L.append('')
+    L.append('## Por asesor (valor contado vs Ingreso en Bitrix de esos mismos negocios)')
+    L.append('| Asesor | Tipo | Negocios | Contado | Ingreso Bitrix |')
+    L.append('|---|---|---:|---:|---:|')
+    for asesor in sorted(CUADRE['por_asesor']):
+        for tipo, k in sorted(CUADRE['por_asesor'][asesor].items()):
+            L.append(f"| {asesor} | {tipo} | {k['negocios']} | {money(k['valor_contado'])} | {money(k['ingreso_bitrix'])} |")
+    secciones = [
+        ('fuera_por_fecha', 'Ganados este mes que NO se cuentan por la Fecha de facturacion'),
+        ('otra_etapa_exitosa', 'Con Fecha de facturacion en el mes pero en otra etapa exitosa'),
+        ('otras_categorias', 'Ganados con Fecha de facturacion en el mes en otros pipelines'),
+        ('valor_por_ingreso', 'Negocios contados por su Ingreso (productos en $0 o ilegibles)'),
+        ('valor_distinto', 'Negocios donde Precio x Cantidad de productos no coincide con el Ingreso'),
+        ('cantidades_raras', 'Lineas con precio/cantidad sospechosos'),
+    ]
+    for key, titulo in secciones:
+        items = CUADRE[key]
+        L.append('')
+        L.append(f'## {titulo} ({len(items)})')
+        if not items:
+            L.append('Ninguno.')
+            continue
+        L.append('| ID | Asesor | Pipeline | Etapa | F. facturacion | F. cierre | Ingreso | Detalle |')
+        L.append('|---|---|---|---|---|---|---:|---|')
+        for it in sorted(items, key=lambda x: (str(x.get('asesor')), str(x.get('id')))):
+            det = it.get('motivo') or ''
+            if 'valor_productos' in it:
+                det += f" (productos {money(it['valor_productos'])})"
+            if 'producto' in it:
+                det += f" ({it['producto']}: precio {it['precio']}, cant. {it['cantidad']})"
+            L.append(f"| {it['id']} | {it['asesor']} | {it['pipeline']} | {it['etapa']} | "
+                     f"{it['fecha_facturacion'] or '-'} | {it['fecha_cierre'] or '-'} | {money(it['ingreso'])} | {det} |")
+    L.append('')
+    L.append(f"Consultas a Bitrix que fallaron tras reintentos: {CUADRE['batch_fallidos']}")
+    with open(os.path.join(diag_dir, 'CUADRE_VENTAS.md'), 'w', encoding='utf-8') as f:
+        f.write('\n'.join(L) + '\n')
+    print(f'Cuadre escrito en {diag_dir} -- fuera_por_fecha={len(CUADRE["fuera_por_fecha"])}, '
+          f'otra_etapa_exitosa={len(CUADRE["otra_etapa_exitosa"])}, otras_categorias={len(CUADRE["otras_categorias"])}, '
+          f'valor_por_ingreso={len(CUADRE["valor_por_ingreso"])}, valor_distinto={len(CUADRE["valor_distinto"])}')
 
 
 # ---------------- 2. GESTIONES (todas las categorias, ver docstring) ----------------
 
 def fetch_gestiones(fname):
     print('Consultando gestiones (todas las categorias, campo Fecha y hora evento)...')
-    deals = list_all('crm.deal.list', filter_={
-        '>=UF_CRM_1740428746956': FECHA_DESDE,
-        '<=UF_CRM_1740428746956': FECHA_HASTA,
+    # Gestiones: solo hasta HOY (son eventos ya sucedidos), aunque ventas mire el mes
+    # completo. Misma ventana ampliada + filtro local que ventas (29-sep-2026).
+    gest_hasta = os.environ.get('FECHA_HASTA') or min(TODAY, _ultimo_dia_mes(TODAY)).isoformat()
+    candidatos = list_all('crm.deal.list', filter_={
+        '>=UF_CRM_1740428746956': CONSULTA_DESDE,
+        '<=UF_CRM_1740428746956': (date.fromisoformat(gest_hasta) + timedelta(days=3)).isoformat(),
     }, select=['ID', 'CATEGORY_ID', 'STAGE_ID', 'ASSIGNED_BY_ID', 'COMPANY_ID',
                'UF_CRM_1740428746956', 'UF_CRM_1740085404851', 'UF_CRM_1740428574274',
                'UF_CRM_1740429016'])
-    print(f'  {len(deals)} negocios con Fecha y hora evento en rango (todas las categorias).')
+    deals = [d for d in candidatos
+             if FECHA_DESDE <= _fecha_local(d.get('UF_CRM_1740428746956')) <= gest_hasta]
+    print(f'  {len(deals)} negocios con Fecha y hora evento {FECHA_DESDE}..{gest_hasta} (todas las categorias).')
 
     ETAPAS_OK = {'EJECUCION EVENTO', 'CERRADO GANADO', 'CERRADO PERDIDO'}
     filtrados = []
@@ -388,16 +704,26 @@ def fetch_gestiones(fname):
 # ---------------- main ----------------
 
 if __name__ == '__main__':
-    df_ind = fetch_ventas(2, 'Individual', 'CERRADO GANADO', 'individual.xls')
+    df_ind = fetch_ventas(2, 'Individual', 'CERRADO GANADO')
     to_export_html(df_ind, os.path.join(OUT_DIR, 'individual.xls'))
 
-    df_emp = fetch_ventas(1, 'Empresarial', 'CERRADO GANADO', 'empresarial.xls')
+    df_emp = fetch_ventas(1, 'Empresarial', 'CERRADO GANADO')
     to_export_html(df_emp, os.path.join(OUT_DIR, 'empresarial.xls'))
 
-    df_ift = fetch_ventas(4, 'IFT', 'CERRADO MATRICULARO', 'ift.xls')
+    df_ift = fetch_ventas(4, 'IFT', 'CERRADO MATRICULARO')
     to_export_html(df_ift, os.path.join(OUT_DIR, 'ift.xls'))
+
+    try:
+        fetch_otras_categorias()
+    except Exception as e:  # el diagnostico nunca debe tumbar la actualizacion
+        print('  (diagnostico otras categorias fallo:', e, ')')
 
     df_gest = fetch_gestiones('gestiones.xls')
     to_export_html(df_gest, os.path.join(OUT_DIR, 'gestiones.xls'))
+
+    try:
+        escribir_cuadre()
+    except Exception as e:
+        print('  (no se pudo escribir el cuadre:', e, ')')
 
     print('Listo. Archivos generados en', OUT_DIR)
