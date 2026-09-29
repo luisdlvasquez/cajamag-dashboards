@@ -48,7 +48,7 @@ hasta hoy), calculado con la MISMA regla de "mes en curso" que pipeline_master.p
 """
 import os, sys, json, time
 from collections import Counter
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 import urllib.request
 import urllib.parse
 
@@ -113,10 +113,53 @@ print(f'Rango de negocio: {FECHA_DESDE} -> {FECHA_HASTA} (YM={YM}); '
       f'consulta API ampliada {CONSULTA_DESDE} -> {CONSULTA_HASTA}')
 
 
+TZ_COLOMBIA = timezone(timedelta(hours=-5))  # Colombia no tiene horario de verano
+
+
 def _fecha_local(s):
-    """'2026-09-16T00:00:00-05:00' -> '2026-09-16' (la fecha calendario tal cual
-    la guarda Bitrix)."""
-    return (s or '')[:10]
+    """Fecha calendario de un campo tipo FECHA de Bitrix (Fecha de facturacion,
+    fecha de cierre), tal como la ve el usuario en la interfaz.
+
+    CAUSA RAIZ del reclamo de Operaciones (29-sep-2026: Karen Cantillo -$245.000,
+    Martha Lorena Celedon -$436.000, y antes el negocio 30843 de Maria Jose):
+    Bitrix guarda algunas de estas fechas como medianoche UTC y la API las
+    devuelve convertidas a la hora del usuario del webhook. Un negocio que en
+    Bitrix dice "01/09/2026" llega como '2026-08-31T19:00:00-05:00'. Antes se
+    tomaban los primeros 10 caracteres ('2026-08-31') y la venta caia en agosto
+    (mes ya cerrado) -> no se contaba en ningun mes. Otras fechas si llegan como
+    '2026-09-01T00:00:00-05:00'. Solucion: pasar a hora Colombia y redondear a la
+    medianoche mas cercana (19:00 del dia anterior -> dia siguiente; 00:00 ->
+    mismo dia). Funciona sin importar en que zona horaria guarde el servidor."""
+    if not s:
+        return ''
+    s = str(s)
+    if 'T' not in s:
+        return s[:10]
+    try:
+        dt = datetime.fromisoformat(s)
+    except ValueError:
+        return s[:10]
+    if dt.tzinfo is not None:
+        dt = dt.astimezone(TZ_COLOMBIA)
+    d = dt.date()
+    if dt.hour >= 12:
+        d = d + timedelta(days=1)
+    return d.isoformat()
+
+
+def _fecha_hora_local(s):
+    """Dia de un campo FECHA-HORA real (ej. 'Fecha y hora evento' de gestiones,
+    DATE_CREATE), en hora Colombia, sin redondeo."""
+    if not s:
+        return ''
+    s = str(s)
+    try:
+        dt = datetime.fromisoformat(s)
+        if dt.tzinfo is not None:
+            dt = dt.astimezone(TZ_COLOMBIA)
+        return dt.date().isoformat()
+    except ValueError:
+        return s[:10]
 
 
 def _en_rango(s):
@@ -228,11 +271,13 @@ def _norm_txt(s):
     return s
 
 
-def fecha_iso_a_ddmmyyyy(s):
+def fecha_iso_a_ddmmyyyy(s, es_fecha_hora=False):
+    """ISO de Bitrix -> 'dd/mm/aaaa'. Para campos FECHA usa _fecha_local (con la
+    correccion de zona horaria); para campos FECHA-HORA usa el dia en hora
+    Colombia."""
     if not s:
         return ''
-    # Bitrix devuelve '2026-09-16T00:00:00-05:00' o '2026-09-16'
-    d = s[:10]
+    d = _fecha_hora_local(s) if es_fecha_hora else _fecha_local(s)
     y, m, day = d.split('-')
     return f'{day}/{m}/{y}'
 
@@ -404,7 +449,7 @@ def _resumen_negocio(d, motivo=None, extra=None):
         'asesor': USER_NAME_CACHE.get(d.get('ASSIGNED_BY_ID'), d.get('ASSIGNED_BY_ID')),
         'fecha_facturacion': _fecha_local(d.get(CAMPO_FACT)) or None,
         'fecha_cierre': _fecha_local(d.get('CLOSEDATE')) or None,
-        'fecha_creacion': _fecha_local(d.get('DATE_CREATE')) or None,
+        'fecha_creacion': _fecha_hora_local(d.get('DATE_CREATE')) or None,
         'semantica': d.get('STAGE_SEMANTIC_ID'),
         'ingreso': _num(d.get('OPPORTUNITY')),
         'titulo': d.get('TITLE'),
@@ -488,7 +533,7 @@ def fetch_ventas(category_id, tipo_venta, etapa_ok_name):
     for d in movidos:
         if d['ID'] in contados or d['ID'] in ya_listados:
             continue
-        creado = _fecha_local(d.get('DATE_CREATE'))
+        creado = _fecha_hora_local(d.get('DATE_CREATE'))
         cierre = _fecha_local(d.get('CLOSEDATE'))
         en_mes = lambda x: bool(x) and FECHA_DESDE <= x <= FECHA_HASTA
         if not (en_mes(creado) or (d.get('STAGE_SEMANTIC_ID') != 'P' and en_mes(cierre))):
@@ -651,6 +696,33 @@ def escribir_cuadre():
     L = [f'# Cuadre de ventas {YM} (corrida {CUADRE["generado_utc"]})', '',
          f'Rango: {FECHA_DESDE} a {FECHA_HASTA}. Se cuentan los negocios en la etapa ganada de cada '
          'pipeline de ventas con Fecha de facturacion dentro del rango.', '']
+    riesgo = [('fuera_por_fecha', 'Ganados en el mes con Fecha de facturacion vacia o de otro mes'),
+              ('otra_etapa_exitosa', 'Facturados en el mes en otra etapa exitosa'),
+              ('otras_categorias', 'Ganados en pipelines que no son de ventas'),
+              ('valor_por_ingreso', 'Contados por Ingreso (productos en $0/ilegibles)'),
+              ('valor_distinto', 'Productos != Ingreso')]
+    L.append('## Alertas (lo primero que hay que revisar si Operaciones reporta diferencias)')
+    hay = False
+    for key, titulo in riesgo:
+        items = CUADRE.get(key) or []
+        if items:
+            hay = True
+            L.append(f"- **{titulo}: {len(items)} negocios, {money(sum(i.get('ingreso') or 0 for i in items))}**")
+    if CUADRE['batch_fallidos']:
+        hay = True
+        L.append(f"- Consultas a Bitrix fallidas: {CUADRE['batch_fallidos']}")
+    if not hay:
+        L.append('- Sin alertas: todo negocio ganado del mes quedo contado.')
+    posibles = {}
+    for key in ('fuera_por_fecha', 'otra_etapa_exitosa', 'otras_categorias'):
+        for it in CUADRE.get(key) or []:
+            posibles[it['asesor']] = posibles.get(it['asesor'], 0) + (it.get('ingreso') or 0)
+    if posibles:
+        L.append('')
+        L.append('Posibles ventas no contadas, por asesor (revisar con Operaciones):')
+        for a, v in sorted(posibles.items(), key=lambda x: -x[1]):
+            L.append(f'- {a}: {money(v)}')
+    L.append('')
     L.append('## Totales contados por pipeline')
     for cid, c in CUADRE['categorias'].items():
         L.append(f"- {c['tipo_venta']} (pipeline {cid}, etapa {c['etapa_contada']}): "
@@ -716,7 +788,7 @@ def fetch_gestiones(fname):
                'UF_CRM_1740428746956', 'UF_CRM_1740085404851', 'UF_CRM_1740428574274',
                'UF_CRM_1740429016'])
     deals = [d for d in candidatos
-             if FECHA_DESDE <= _fecha_local(d.get('UF_CRM_1740428746956')) <= gest_hasta]
+             if FECHA_DESDE <= _fecha_hora_local(d.get('UF_CRM_1740428746956')) <= gest_hasta]
     print(f'  {len(deals)} negocios con Fecha y hora evento {FECHA_DESDE}..{gest_hasta} (todas las categorias).')
 
     ETAPAS_OK = {'EJECUCION EVENTO', 'CERRADO GANADO', 'CERRADO PERDIDO'}
@@ -745,7 +817,7 @@ def fetch_gestiones(fname):
             tipo_evento_ids = [tipo_evento_ids]
         tipo_evento = '/'.join(ENUM_TIPO_EVENTO.get(str(i), '') for i in tipo_evento_ids if i)
         rows.append({
-            'Fecha y hora evento': fecha_iso_a_ddmmyyyy(d.get('UF_CRM_1740428746956')),
+            'Fecha y hora evento': fecha_iso_a_ddmmyyyy(d.get('UF_CRM_1740428746956'), es_fecha_hora=True),
             'Etapa de la negociación': d['_etapa_nombre'],
             'Persona responsable': USER_NAME_CACHE.get(d.get('ASSIGNED_BY_ID'), ''),
             'Compañía: Nombre de la compañía': company.get('TITLE') or '',

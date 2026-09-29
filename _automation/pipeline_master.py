@@ -357,6 +357,7 @@ def parse_ventas(fname, tipo_venta, categoria_default, etapa_ok, fuente_tag):
             'nit': nit_str(r.get('Contacto: Nit empresa')) or nit_str(r.get('Compañía: Nit')),
             'empresa': empresa, 'detalle': clean_str(r.get('Producto')),
             'cantidad': (r.get('Cantidad') if not pd.isna(r.get('Cantidad')) else 1),
+            'bitrix_id': (str(r.get('ID')).strip() if r.get('ID') is not None and not pd.isna(r.get('ID')) else None),
         })
     if excluded:
         print(f'  [{fname}] excluidas {excluded} filas por posible_duplicado (Supabase)')
@@ -393,7 +394,12 @@ MANUAL_VENTAS_FORZADAS = [
 for _mt in MANUAL_VENTAS_FORZADAS:
     if _mt['ym'] != YM:
         continue
-    ya_presente = any(
+    # 29-sep-2026: se compara por ID de negocio (antes por valor exacto, lo que
+    # habria duplicado la venta: el pull fresco la trae partida en 2 lineas de
+    # producto -nino y adulto- y ninguna de las dos vale $7.092.700 sola).
+    # Con la correccion de zona horaria de fetch_bitrix_data.py el negocio 30843
+    # ya deberia venir en el pull normal.
+    ya_presente = any(t.get('bitrix_id') == _mt['_bitrix_id'] for t in new_tx) or any(
         t['asesor'] == _mt['asesor'] and t['ym'] == _mt['ym']
         and abs(t['valor'] - _mt['valor']) < 1
         and (t.get('cliente') or '') == (_mt.get('cliente') or '')
