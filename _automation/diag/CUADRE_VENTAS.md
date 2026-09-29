@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-09 (corrida 2026-09-29 18:30 UTC)
+# Cuadre de ventas 2026-09 (corrida 2026-09-29 18:45 UTC)
 
 Rango: 2026-09-01 a 2026-09-30. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -94,5 +94,52 @@ Ninguno.
 | ID | Asesor | Pipeline | Etapa | F. creacion | F. facturacion | F. cierre | Ingreso | Detalle |
 |---|---|---|---|---|---|---|---:|---|
 | 30843 | Maria Jose Garcia Guaman | VENTA INDIVIDUAL | CERRADO GANADO | 2026-09-01 | 2026-09-01 | 2026-09-01 | $7.092.700 | Revision puntual [cat 2, stage C2:WON, fact. cruda '2026-08-31T19:00:00-05:00'] |
+
+## Campos de servicio en Bitrix (cuantas ventas contadas los traen llenos)
+- Fecha de prestación del servicio (UF_CRM_1679953828661, tipo date, multiple=False, 0 opciones): Individual: 90/264, Empresarial: 10/23, IFT: 0/1
+    - crudo '2026-08-31T19:00:00-05:00' -> '2026-08-31T19:00:00-05:00'
+    - crudo '2026-08-31T19:00:00-05:00' -> '2026-08-31T19:00:00-05:00'
+    - crudo '2026-08-31T19:00:00-05:00' -> '2026-08-31T19:00:00-05:00'
+- Servicios a utilizar (UF_CRM_1681146110054, tipo enumeration, multiple=True, 18 opciones): Individual: 179/264, Empresarial: 12/23, IFT: 0/1
+    - crudo [101] -> 'Alquiler de salones'
+    - crudo [99] -> 'Teyuna'
+    - crudo [97] -> 'Recreación'
+- Servicios a cotizar (UF_CRM_1681146530307, tipo enumeration, multiple=True, 28 opciones): Individual: 49/264, Empresarial: 0/23, IFT: 0/1
+    - crudo [8506] -> 'RECREACION. STA MTA'
+    - crudo [8506] -> 'RECREACION. STA MTA'
+    - crudo [8505] -> 'TEATRO CAJAMAG'
+- Lugar de prestación del servicio (UF_CRM_1681147127230, tipo string, multiple=False, 0 opciones): Individual: 0/264, Empresarial: 9/23, IFT: 0/1
+    - crudo 'VIRTUAL ' -> 'VIRTUAL '
+    - crudo 'CENTRO RECREACIONAL TEYUNA' -> 'CENTRO RECREACIONAL TEYUNA'
+    - crudo 'Centro Recreacional Teyuna' -> 'Centro Recreacional Teyuna'
+- Orden de servicio (UF_CRM_1681148244917, tipo file, multiple=False, 0 opciones): Individual: 1/264, Empresarial: 6/23, IFT: 0/1
+    - crudo {'id': 52527, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33443&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52527', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33443&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52527'} -> "{'id': 52527, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33443&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52527', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33443&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52527'}"
+    - crudo {'id': 51752, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=30303&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51752', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=30303&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51752'} -> "{'id': 51752, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=30303&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51752', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=30303&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51752'}"
+    - crudo {'id': 51152, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31239&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51152', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31239&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51152'} -> "{'id': 51152, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31239&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51152', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31239&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51152'}"
+- Cotización servicio (UF_CRM_1698765695579, tipo file, multiple=False, 0 opciones): Individual: 0/264, Empresarial: 8/23, IFT: 0/1
+    - crudo {'id': 48960, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=28047&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=48960', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=28047&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=48960'} -> "{'id': 48960, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=28047&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=48960', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=28047&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=48960'}"
+    - crudo {'id': 51259, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=30303&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51259', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=30303&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51259'} -> "{'id': 51259, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=30303&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51259', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=30303&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51259'}"
+    - crudo {'id': 51721, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31912&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51721', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31912&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51721'} -> "{'id': 51721, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31912&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51721', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31912&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51721'}"
+- Servicios (UF_CRM_1743799505479, tipo enumeration, multiple=True, 7 opciones): Individual: 0/264, Empresarial: 0/23, IFT: 0/1
+- Presentación portafolio de servicios (UF_CRM_1746571632920, tipo double, multiple=False, 0 opciones): Individual: 0/264, Empresarial: 0/23, IFT: 0/1
+- Feria de servicios (UF_CRM_1746571663870, tipo double, multiple=False, 0 opciones): Individual: 0/264, Empresarial: 0/23, IFT: 0/1
+- Charla de servicios (UF_CRM_1746571681662, tipo double, multiple=False, 0 opciones): Individual: 0/264, Empresarial: 0/23, IFT: 0/1
+- Servicio o área solicitante (UF_CRM_68B71BBA2BFC7, tipo enumeration, multiple=False, 13 opciones): Individual: 0/264, Empresarial: 0/23, IFT: 0/1
+- En cumplimiento de la Ley 1581 de 2012, autorizo que la información suministrada sea utilizada por Cajamag para realizar inscripción a su Agencia de Empleo y promoción de los servicios y actividades de la Caja.                                  (UF_CRM_1757437583566, tipo enumeration, multiple=False, 2 opciones): Individual: 0/264, Empresarial: 0/23, IFT: 0/1
+- Fecha orden de servicio (UF_CRM_1759868249553, tipo date, multiple=False, 0 opciones): Individual: 0/264, Empresarial: 16/23, IFT: 0/1
+    - crudo '2026-09-22T19:00:00-05:00' -> '2026-09-22T19:00:00-05:00'
+    - crudo '2026-09-10T19:00:00-05:00' -> '2026-09-10T19:00:00-05:00'
+    - crudo '2026-09-02T19:00:00-05:00' -> '2026-09-02T19:00:00-05:00'
+- Orden de Servicio (UF_CRM_1759868270967, tipo file, multiple=False, 0 opciones): Individual: 0/264, Empresarial: 0/23, IFT: 0/1
+- Aprobación Servicios Sociales (P) (UF_CRM_1774136849, tipo boolean, multiple=False, 0 opciones): Individual: 264/264, Empresarial: 23/23, IFT: 1/1
+    - crudo '0' -> '0'
+    - crudo '0' -> '0'
+    - crudo '0' -> '0'
+- Fecha sugerida por el servicio para iniciar la promoción (p) (UF_CRM_1775067706043, tipo date, multiple=False, 0 opciones): Individual: 0/264, Empresarial: 0/23, IFT: 0/1
+- Fecha de visto bueno del servicio (p) (UF_CRM_1776784114702, tipo date, multiple=False, 0 opciones): Individual: 0/264, Empresarial: 0/23, IFT: 0/1
+- Fecha sugerida por el servicio para iniciar promoción  (UF_CRM_1783756151828, tipo date, multiple=False, 0 opciones): Individual: 0/264, Empresarial: 0/23, IFT: 0/1
+
+## Ventas contadas por seccion del catalogo de productos de Bitrix
+Sin datos (las lineas no traen producto del catalogo).
 
 Consultas a Bitrix que fallaron tras reintentos: 1 ['crm.company.get?ID=46266']

@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-09-29 18:30 UTC",
+ "generado_utc": "2026-09-29 18:45 UTC",
  "rango": {
   "desde": "2026-09-01",
   "hasta": "2026-09-30",
@@ -475,6 +475,8 @@
  "batch_fallidos_detalle": [
   "crm.company.get?ID=46266"
  ],
+ "secciones_producto": {},
+ "lineas_sin_producto_catalogo": 0,
  "negocios_consultados": [
   {
    "id": "30843",
@@ -492,5 +494,657 @@
    "categoria_id": "2",
    "stage_id": "C2:WON"
   }
- ]
+ ],
+ "campos_servicio": {
+  "UF_CRM_1679953828661": {
+   "nombre": "Fecha de prestación del servicio",
+   "tipo": "date",
+   "multiple": false,
+   "opciones_en_lista": 0,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 90
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 10
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": [
+    {
+     "crudo": "2026-08-31T19:00:00-05:00",
+     "texto": "2026-08-31T19:00:00-05:00"
+    },
+    {
+     "crudo": "2026-08-31T19:00:00-05:00",
+     "texto": "2026-08-31T19:00:00-05:00"
+    },
+    {
+     "crudo": "2026-08-31T19:00:00-05:00",
+     "texto": "2026-08-31T19:00:00-05:00"
+    },
+    {
+     "crudo": "2026-08-31T19:00:00-05:00",
+     "texto": "2026-08-31T19:00:00-05:00"
+    },
+    {
+     "crudo": "2026-08-31T19:00:00-05:00",
+     "texto": "2026-08-31T19:00:00-05:00"
+    },
+    {
+     "crudo": "2026-09-01T19:00:00-05:00",
+     "texto": "2026-09-01T19:00:00-05:00"
+    }
+   ]
+  },
+  "UF_CRM_1681146110054": {
+   "nombre": "Servicios a utilizar",
+   "tipo": "enumeration",
+   "multiple": true,
+   "opciones_en_lista": 18,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 179
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 12
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": [
+    {
+     "crudo": [
+      101
+     ],
+     "texto": "Alquiler de salones"
+    },
+    {
+     "crudo": [
+      99
+     ],
+     "texto": "Teyuna"
+    },
+    {
+     "crudo": [
+      97
+     ],
+     "texto": "Recreación"
+    },
+    {
+     "crudo": [
+      97
+     ],
+     "texto": "Recreación"
+    },
+    {
+     "crudo": [
+      97
+     ],
+     "texto": "Recreación"
+    },
+    {
+     "crudo": [
+      102
+     ],
+     "texto": "Turismo Social"
+    }
+   ]
+  },
+  "UF_CRM_1681146530307": {
+   "nombre": "Servicios a cotizar",
+   "tipo": "enumeration",
+   "multiple": true,
+   "opciones_en_lista": 28,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 49
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 0
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": [
+    {
+     "crudo": [
+      8506
+     ],
+     "texto": "RECREACION. STA MTA"
+    },
+    {
+     "crudo": [
+      8506
+     ],
+     "texto": "RECREACION. STA MTA"
+    },
+    {
+     "crudo": [
+      8505
+     ],
+     "texto": "TEATRO CAJAMAG"
+    },
+    {
+     "crudo": [
+      8506
+     ],
+     "texto": "RECREACION. STA MTA"
+    },
+    {
+     "crudo": [
+      8506
+     ],
+     "texto": "RECREACION. STA MTA"
+    },
+    {
+     "crudo": [
+      8506
+     ],
+     "texto": "RECREACION. STA MTA"
+    }
+   ]
+  },
+  "UF_CRM_1681147127230": {
+   "nombre": "Lugar de prestación del servicio",
+   "tipo": "string",
+   "multiple": false,
+   "opciones_en_lista": 0,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 0
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 9
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": [
+    {
+     "crudo": "VIRTUAL ",
+     "texto": "VIRTUAL "
+    },
+    {
+     "crudo": "CENTRO RECREACIONAL TEYUNA",
+     "texto": "CENTRO RECREACIONAL TEYUNA"
+    },
+    {
+     "crudo": "Centro Recreacional Teyuna",
+     "texto": "Centro Recreacional Teyuna"
+    },
+    {
+     "crudo": "CENTRO RECREACIONAL TEYUNA",
+     "texto": "CENTRO RECREACIONAL TEYUNA"
+    },
+    {
+     "crudo": "CINEMARK CENTRO COMERCIAL BUENAVISTA ",
+     "texto": "CINEMARK CENTRO COMERCIAL BUENAVISTA "
+    },
+    {
+     "crudo": "UIS CENTRO HISTORICO",
+     "texto": "UIS CENTRO HISTORICO"
+    }
+   ]
+  },
+  "UF_CRM_1681148244917": {
+   "nombre": "Orden de servicio",
+   "tipo": "file",
+   "multiple": false,
+   "opciones_en_lista": 0,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 1
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 6
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": [
+    {
+     "crudo": {
+      "id": 52527,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33443&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52527",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33443&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52527"
+     },
+     "texto": "{'id': 52527, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33443&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52527', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33443&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52527'}"
+    },
+    {
+     "crudo": {
+      "id": 51752,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=30303&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51752",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=30303&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51752"
+     },
+     "texto": "{'id': 51752, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=30303&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51752', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=30303&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51752'}"
+    },
+    {
+     "crudo": {
+      "id": 51152,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31239&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51152",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31239&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51152"
+     },
+     "texto": "{'id': 51152, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31239&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51152', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31239&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51152'}"
+    },
+    {
+     "crudo": {
+      "id": 51637,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31972&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51637",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31972&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51637"
+     },
+     "texto": "{'id': 51637, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31972&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51637', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31972&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51637'}"
+    },
+    {
+     "crudo": {
+      "id": 52827,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33660&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52827",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33660&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52827"
+     },
+     "texto": "{'id': 52827, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33660&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52827', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33660&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52827'}"
+    },
+    {
+     "crudo": {
+      "id": 52830,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33661&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52830",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33661&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52830"
+     },
+     "texto": "{'id': 52830, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33661&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52830', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33661&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52830'}"
+    }
+   ]
+  },
+  "UF_CRM_1698765695579": {
+   "nombre": "Cotización servicio",
+   "tipo": "file",
+   "multiple": false,
+   "opciones_en_lista": 0,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 0
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 8
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": [
+    {
+     "crudo": {
+      "id": 48960,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=28047&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=48960",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=28047&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=48960"
+     },
+     "texto": "{'id': 48960, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=28047&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=48960', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=28047&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=48960'}"
+    },
+    {
+     "crudo": {
+      "id": 51259,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=30303&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51259",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=30303&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51259"
+     },
+     "texto": "{'id': 51259, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=30303&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51259', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=30303&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51259'}"
+    },
+    {
+     "crudo": {
+      "id": 51721,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31912&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51721",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31912&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51721"
+     },
+     "texto": "{'id': 51721, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31912&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51721', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31912&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51721'}"
+    },
+    {
+     "crudo": {
+      "id": 51605,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31930&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51605",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31930&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51605"
+     },
+     "texto": "{'id': 51605, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31930&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51605', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31930&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51605'}"
+    },
+    {
+     "crudo": {
+      "id": 52362,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33260&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52362",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33260&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52362"
+     },
+     "texto": "{'id': 52362, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33260&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52362', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33260&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52362'}"
+    },
+    {
+     "crudo": {
+      "id": 52825,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33660&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52825",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33660&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52825"
+     },
+     "texto": "{'id': 52825, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33660&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52825', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33660&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52825'}"
+    }
+   ]
+  },
+  "UF_CRM_1743799505479": {
+   "nombre": "Servicios",
+   "tipo": "enumeration",
+   "multiple": true,
+   "opciones_en_lista": 7,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 0
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 0
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": []
+  },
+  "UF_CRM_1746571632920": {
+   "nombre": "Presentación portafolio de servicios",
+   "tipo": "double",
+   "multiple": false,
+   "opciones_en_lista": 0,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 0
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 0
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": []
+  },
+  "UF_CRM_1746571663870": {
+   "nombre": "Feria de servicios",
+   "tipo": "double",
+   "multiple": false,
+   "opciones_en_lista": 0,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 0
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 0
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": []
+  },
+  "UF_CRM_1746571681662": {
+   "nombre": "Charla de servicios",
+   "tipo": "double",
+   "multiple": false,
+   "opciones_en_lista": 0,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 0
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 0
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": []
+  },
+  "UF_CRM_68B71BBA2BFC7": {
+   "nombre": "Servicio o área solicitante",
+   "tipo": "enumeration",
+   "multiple": false,
+   "opciones_en_lista": 13,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 0
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 0
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": []
+  },
+  "UF_CRM_1757437583566": {
+   "nombre": "En cumplimiento de la Ley 1581 de 2012, autorizo que la información suministrada sea utilizada por Cajamag para realizar inscripción a su Agencia de Empleo y promoción de los servicios y actividades de la Caja.                                 ",
+   "tipo": "enumeration",
+   "multiple": false,
+   "opciones_en_lista": 2,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 0
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 0
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": []
+  },
+  "UF_CRM_1759868249553": {
+   "nombre": "Fecha orden de servicio",
+   "tipo": "date",
+   "multiple": false,
+   "opciones_en_lista": 0,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 0
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 16
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": [
+    {
+     "crudo": "2026-09-22T19:00:00-05:00",
+     "texto": "2026-09-22T19:00:00-05:00"
+    },
+    {
+     "crudo": "2026-09-10T19:00:00-05:00",
+     "texto": "2026-09-10T19:00:00-05:00"
+    },
+    {
+     "crudo": "2026-09-02T19:00:00-05:00",
+     "texto": "2026-09-02T19:00:00-05:00"
+    },
+    {
+     "crudo": "2026-09-02T19:00:00-05:00",
+     "texto": "2026-09-02T19:00:00-05:00"
+    },
+    {
+     "crudo": "2026-09-08T19:00:00-05:00",
+     "texto": "2026-09-08T19:00:00-05:00"
+    },
+    {
+     "crudo": "2026-09-08T19:00:00-05:00",
+     "texto": "2026-09-08T19:00:00-05:00"
+    }
+   ]
+  },
+  "UF_CRM_1759868270967": {
+   "nombre": "Orden de Servicio",
+   "tipo": "file",
+   "multiple": false,
+   "opciones_en_lista": 0,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 0
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 0
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": []
+  },
+  "UF_CRM_1774136849": {
+   "nombre": "Aprobación Servicios Sociales (P)",
+   "tipo": "boolean",
+   "multiple": false,
+   "opciones_en_lista": 0,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 264
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 23
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 1
+    }
+   },
+   "ejemplos": [
+    {
+     "crudo": "0",
+     "texto": "0"
+    },
+    {
+     "crudo": "0",
+     "texto": "0"
+    },
+    {
+     "crudo": "0",
+     "texto": "0"
+    },
+    {
+     "crudo": "0",
+     "texto": "0"
+    },
+    {
+     "crudo": "0",
+     "texto": "0"
+    },
+    {
+     "crudo": "0",
+     "texto": "0"
+    }
+   ]
+  },
+  "UF_CRM_1775067706043": {
+   "nombre": "Fecha sugerida por el servicio para iniciar la promoción (p)",
+   "tipo": "date",
+   "multiple": false,
+   "opciones_en_lista": 0,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 0
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 0
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": []
+  },
+  "UF_CRM_1776784114702": {
+   "nombre": "Fecha de visto bueno del servicio (p)",
+   "tipo": "date",
+   "multiple": false,
+   "opciones_en_lista": 0,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 0
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 0
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": []
+  },
+  "UF_CRM_1783756151828": {
+   "nombre": "Fecha sugerida por el servicio para iniciar promoción ",
+   "tipo": "date",
+   "multiple": false,
+   "opciones_en_lista": 0,
+   "por_tipo_venta": {
+    "Individual": {
+     "ventas": 264,
+     "con_valor": 0
+    },
+    "Empresarial": {
+     "ventas": 23,
+     "con_valor": 0
+    },
+    "IFT": {
+     "ventas": 1,
+     "con_valor": 0
+    }
+   },
+   "ejemplos": []
+  }
+ }
 }
