@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-09-29 16:31 UTC",
+ "generado_utc": "2026-09-29 18:30 UTC",
  "rango": {
   "desde": "2026-09-01",
   "hasta": "2026-09-30",
@@ -9,10 +9,10 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 242,
+   "negocios_contados": 264,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 25119672.0,
-   "ingreso_bitrix_de_esos_negocios": 25119672.0
+   "valor_contado": 33866772.0,
+   "ingreso_bitrix_de_esos_negocios": 33866772.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -33,186 +33,134 @@
  },
  "fuera_por_fecha": [
   {
+   "id": "24725",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Martha Cabrera Montes",
+   "fecha_facturacion": "2026-06-28",
+   "fecha_cierre": "2026-09-01",
+   "fecha_creacion": "2026-06-30",
+   "semantica": "S",
+   "ingreso": 72800.0,
+   "titulo": " (24725)",
+   "motivo": "Fecha de facturacion 2026-06-28 fuera del mes (cerrado 2026-09-01)"
+  },
+  {
    "id": "27540",
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO GANADO",
    "asesor": "Jessica Luque Garcia",
-   "fecha_facturacion": "2026-08-06",
-   "fecha_cierre": "2026-09-15",
+   "fecha_facturacion": "2026-08-07",
+   "fecha_cierre": "2026-09-16",
    "fecha_creacion": "2026-08-03",
    "semantica": "S",
    "ingreso": 140300.0,
    "titulo": " (27540)",
-   "motivo": "Fecha de facturacion 2026-08-06 fuera del mes (cerrado 2026-09-15)"
-  },
-  {
-   "id": "30989",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Martha Lorena Celedon de la Rosa",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-09-01",
-   "fecha_creacion": "2026-09-02",
-   "semantica": "S",
-   "ingreso": 252000.0,
-   "titulo": " (30989)",
-   "motivo": "Fecha de facturacion 2026-08-31 fuera del mes (cerrado 2026-09-01)"
-  },
-  {
-   "id": "30993",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Martha Lorena Celedon de la Rosa",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-09-01",
-   "fecha_creacion": "2026-09-02",
-   "semantica": "S",
-   "ingreso": 92000.0,
-   "titulo": " (30993)",
-   "motivo": "Fecha de facturacion 2026-08-31 fuera del mes (cerrado 2026-09-01)"
+   "motivo": "Fecha de facturacion 2026-08-07 fuera del mes (cerrado 2026-09-16)"
   },
   {
    "id": "31060",
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO GANADO",
    "asesor": "Marvis Yarima Gonzalez Gil",
-   "fecha_facturacion": "2026-08-26",
-   "fecha_cierre": "2026-09-01",
+   "fecha_facturacion": "2026-08-27",
+   "fecha_cierre": "2026-09-02",
    "fecha_creacion": "2026-09-02",
    "semantica": "S",
    "ingreso": 361000.0,
    "titulo": " (31060)",
-   "motivo": "Fecha de facturacion 2026-08-26 fuera del mes (cerrado 2026-09-01)"
-  },
-  {
-   "id": "31308",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Marvis Yarima Gonzalez Gil",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-09-02",
-   "fecha_creacion": "2026-09-03",
-   "semantica": "S",
-   "ingreso": 69000.0,
-   "titulo": " (31308)",
-   "motivo": "Fecha de facturacion 2026-08-31 fuera del mes (cerrado 2026-09-02)"
-  },
-  {
-   "id": "31717",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Holman Marin Romero",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-09-06",
-   "fecha_creacion": "2026-09-07",
-   "semantica": "S",
-   "ingreso": 28000.0,
-   "titulo": " (31717)",
-   "motivo": "Fecha de facturacion 2026-08-31 fuera del mes (cerrado 2026-09-06)"
+   "motivo": "Fecha de facturacion 2026-08-27 fuera del mes (cerrado 2026-09-02)"
   },
   {
    "id": "31960",
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO GANADO",
    "asesor": "Karen Patricia Ballesteros Paba",
-   "fecha_facturacion": "2026-08-15",
-   "fecha_cierre": "2026-09-09",
+   "fecha_facturacion": "2026-08-16",
+   "fecha_cierre": "2026-09-10",
    "fecha_creacion": "2026-09-10",
    "semantica": "S",
    "ingreso": 46000.0,
    "titulo": " (31960)",
-   "motivo": "Fecha de facturacion 2026-08-15 fuera del mes (cerrado 2026-09-09)"
+   "motivo": "Fecha de facturacion 2026-08-16 fuera del mes (cerrado 2026-09-10)"
   },
   {
    "id": "31963",
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO GANADO",
    "asesor": "Karen Patricia Ballesteros Paba",
-   "fecha_facturacion": "2026-08-20",
-   "fecha_cierre": "2026-09-09",
+   "fecha_facturacion": "2026-08-21",
+   "fecha_cierre": "2026-09-10",
    "fecha_creacion": "2026-09-10",
    "semantica": "S",
    "ingreso": 28000.0,
    "titulo": " (31963)",
-   "motivo": "Fecha de facturacion 2026-08-20 fuera del mes (cerrado 2026-09-09)"
+   "motivo": "Fecha de facturacion 2026-08-21 fuera del mes (cerrado 2026-09-10)"
   },
   {
    "id": "31964",
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO GANADO",
    "asesor": "Oriana Yadith Felizzola Ortega",
-   "fecha_facturacion": "2026-08-10",
-   "fecha_cierre": "2026-09-09",
+   "fecha_facturacion": "2026-08-11",
+   "fecha_cierre": "2026-09-10",
    "fecha_creacion": "2026-09-10",
    "semantica": "S",
    "ingreso": 46000.0,
    "titulo": " (31964)",
-   "motivo": "Fecha de facturacion 2026-08-10 fuera del mes (cerrado 2026-09-09)"
+   "motivo": "Fecha de facturacion 2026-08-11 fuera del mes (cerrado 2026-09-10)"
   },
   {
    "id": "31965",
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO GANADO",
    "asesor": "Karen Patricia Ballesteros Paba",
-   "fecha_facturacion": "2026-08-26",
-   "fecha_cierre": "2026-09-09",
+   "fecha_facturacion": "2026-08-27",
+   "fecha_cierre": "2026-09-10",
    "fecha_creacion": "2026-09-10",
    "semantica": "S",
    "ingreso": 28000.0,
    "titulo": " (31965)",
-   "motivo": "Fecha de facturacion 2026-08-26 fuera del mes (cerrado 2026-09-09)"
+   "motivo": "Fecha de facturacion 2026-08-27 fuera del mes (cerrado 2026-09-10)"
   },
   {
    "id": "31967",
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO GANADO",
    "asesor": "Oriana Yadith Felizzola Ortega",
-   "fecha_facturacion": "2026-07-31",
-   "fecha_cierre": "2026-09-09",
+   "fecha_facturacion": "2026-08-01",
+   "fecha_cierre": "2026-09-10",
    "fecha_creacion": "2026-09-10",
    "semantica": "S",
    "ingreso": 115000.0,
    "titulo": " (31967)",
-   "motivo": "Fecha de facturacion 2026-07-31 fuera del mes (cerrado 2026-09-09)"
+   "motivo": "Fecha de facturacion 2026-08-01 fuera del mes (cerrado 2026-09-10)"
   },
   {
    "id": "31969",
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO GANADO",
    "asesor": "Oriana Yadith Felizzola Ortega",
-   "fecha_facturacion": "2026-08-20",
-   "fecha_cierre": "2026-09-09",
+   "fecha_facturacion": "2026-08-21",
+   "fecha_cierre": "2026-09-10",
    "fecha_creacion": "2026-09-10",
    "semantica": "S",
    "ingreso": 46000.0,
    "titulo": " (31969)",
-   "motivo": "Fecha de facturacion 2026-08-20 fuera del mes (cerrado 2026-09-09)"
+   "motivo": "Fecha de facturacion 2026-08-21 fuera del mes (cerrado 2026-09-10)"
   },
   {
    "id": "31970",
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO GANADO",
    "asesor": "Oriana Yadith Felizzola Ortega",
-   "fecha_facturacion": "2026-08-02",
-   "fecha_cierre": "2026-09-09",
+   "fecha_facturacion": "2026-08-03",
+   "fecha_cierre": "2026-09-10",
    "fecha_creacion": "2026-09-10",
    "semantica": "S",
    "ingreso": 23000.0,
    "titulo": " (31970)",
-   "motivo": "Fecha de facturacion 2026-08-02 fuera del mes (cerrado 2026-09-09)"
-  },
-  {
-   "id": "33210",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Marvis Yarima Gonzalez Gil",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-09-16",
-   "fecha_creacion": "2026-09-17",
-   "semantica": "S",
-   "ingreso": 96000.0,
-   "titulo": " (33210)",
-   "motivo": "Fecha de facturacion 2026-08-31 fuera del mes (cerrado 2026-09-16)"
+   "motivo": "Fecha de facturacion 2026-08-03 fuera del mes (cerrado 2026-09-10)"
   }
  ],
  "otra_etapa_exitosa": [],
@@ -225,8 +173,8 @@
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO GANADO",
    "asesor": "Karen Liseth Cantillo De la Cruz",
-   "fecha_facturacion": "2026-09-17",
-   "fecha_cierre": "2026-09-20",
+   "fecha_facturacion": "2026-09-18",
+   "fecha_cierre": "2026-09-21",
    "fecha_creacion": "2026-09-21",
    "semantica": "S",
    "ingreso": 60000.0,
@@ -241,8 +189,8 @@
    "pipeline": "VENTA EMPRESARIAL",
    "etapa": "CERRADO GANADO",
    "asesor": "Holman Marin Romero",
-   "fecha_facturacion": "2026-09-13",
-   "fecha_cierre": "2026-09-15",
+   "fecha_facturacion": "2026-09-14",
+   "fecha_cierre": "2026-09-16",
    "fecha_creacion": "2026-09-16",
    "semantica": "S",
    "ingreso": 2437700.0,
@@ -260,167 +208,11 @@
    "etapa": "CERRADO PERDIDO",
    "asesor": "Oriana Yadith Felizzola Ortega",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-14",
+   "fecha_cierre": "2026-09-15",
    "fecha_creacion": "2026-07-27",
    "semantica": "F",
    "ingreso": 1391100.0,
    "titulo": " (26938)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "30831",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Oriana Yadith Felizzola Ortega",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-08-31",
-   "fecha_creacion": "2026-09-01",
-   "semantica": "S",
-   "ingreso": 60000.0,
-   "titulo": " (30831)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "30837",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Oriana Yadith Felizzola Ortega",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-08-31",
-   "fecha_creacion": "2026-09-01",
-   "semantica": "S",
-   "ingreso": 15000.0,
-   "titulo": " (30837)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "30839",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Oriana Yadith Felizzola Ortega",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-08-31",
-   "fecha_creacion": "2026-09-01",
-   "semantica": "S",
-   "ingreso": 45000.0,
-   "titulo": " (30839)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "30843",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Maria Jose Garcia Guaman",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-08-31",
-   "fecha_creacion": "2026-09-01",
-   "semantica": "S",
-   "ingreso": 7092700.0,
-   "titulo": " (30843)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "30864",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Martha Lorena Celedon de la Rosa",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-08-31",
-   "fecha_creacion": "2026-09-01",
-   "semantica": "S",
-   "ingreso": 92000.0,
-   "titulo": " (30864)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "30885",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Martha Cabrera Montes",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-08-31",
-   "fecha_creacion": "2026-09-01",
-   "semantica": "S",
-   "ingreso": 46000.0,
-   "titulo": " (30885)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "30955",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Jessica Luque Garcia",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-08-31",
-   "fecha_creacion": "2026-09-01",
-   "semantica": "S",
-   "ingreso": 213000.0,
-   "titulo": " (30955)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "30959",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Victoria Manjarres Jimenez",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-08-31",
-   "fecha_creacion": "2026-09-01",
-   "semantica": "S",
-   "ingreso": 201400.0,
-   "titulo": " (30959)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "30965",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Karen Liseth Cantillo De la Cruz",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-08-31",
-   "fecha_creacion": "2026-09-01",
-   "semantica": "S",
-   "ingreso": 69000.0,
-   "titulo": " (30965)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "30968",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Karen Liseth Cantillo De la Cruz",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-08-31",
-   "fecha_creacion": "2026-09-01",
-   "semantica": "S",
-   "ingreso": 84000.0,
-   "titulo": " (30968)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "30970",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Karen Liseth Cantillo De la Cruz",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-08-31",
-   "fecha_creacion": "2026-09-01",
-   "semantica": "S",
-   "ingreso": 92000.0,
-   "titulo": " (30970)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "30979",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Oriana Yadith Felizzola Ortega",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-08-31",
-   "fecha_creacion": "2026-09-01",
-   "semantica": "S",
-   "ingreso": 45000.0,
-   "titulo": " (30979)",
    "motivo": "No esta en la etapa ganada"
   },
   {
@@ -429,7 +221,7 @@
    "etapa": "NUEVA OPORTUNIDAD",
    "asesor": "Jessica Luque Garcia",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-23",
+   "fecha_cierre": "2026-09-24",
    "fecha_creacion": "2026-09-24",
    "semantica": "P",
    "ingreso": 4400.0,
@@ -442,7 +234,7 @@
    "etapa": "APLAZADO",
    "asesor": "Oriana Yadith Felizzola Ortega",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-13",
+   "fecha_cierre": "2026-09-14",
    "fecha_creacion": "2026-08-11",
    "semantica": "F",
    "ingreso": 718500.0,
@@ -455,7 +247,7 @@
    "etapa": "CERRADO PERDIDO",
    "asesor": "Karen Liseth Cantillo De la Cruz",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-17",
+   "fecha_cierre": "2026-09-18",
    "fecha_creacion": "2026-08-12",
    "semantica": "F",
    "ingreso": 4302900.0,
@@ -468,7 +260,7 @@
    "etapa": "EN ESPERA DE OC",
    "asesor": "Bienvenida Lopez Hurtado",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-04",
+   "fecha_cierre": "2026-09-05",
    "fecha_creacion": "2026-09-05",
    "semantica": "P",
    "ingreso": 1302500.0,
@@ -481,7 +273,7 @@
    "etapa": "EN ESPERA DE OC",
    "asesor": "Bienvenida Lopez Hurtado",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-04",
+   "fecha_cierre": "2026-09-05",
    "fecha_creacion": "2026-09-05",
    "semantica": "P",
    "ingreso": 1197500.0,
@@ -494,7 +286,7 @@
    "etapa": "PROPUESTA ENVIADA",
    "asesor": "Karen Liseth Cantillo De la Cruz",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-08",
+   "fecha_cierre": "2026-09-09",
    "fecha_creacion": "2026-09-09",
    "semantica": "P",
    "ingreso": 732600.0,
@@ -507,7 +299,7 @@
    "etapa": "EN ESPERA DE OC",
    "asesor": "Holman Marin Romero",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-12",
+   "fecha_cierre": "2026-09-13",
    "fecha_creacion": "2026-09-11",
    "semantica": "P",
    "ingreso": 280900.0,
@@ -520,7 +312,7 @@
    "etapa": "EN ESPERA DE OC",
    "asesor": "Holman Marin Romero",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-12",
+   "fecha_cierre": "2026-09-13",
    "fecha_creacion": "2026-09-11",
    "semantica": "P",
    "ingreso": 161000.0,
@@ -533,7 +325,7 @@
    "etapa": "PROPUESTA ENVIADA",
    "asesor": "Oriana Yadith Felizzola Ortega",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-27",
+   "fecha_cierre": "2026-09-28",
    "fecha_creacion": "2026-09-28",
    "semantica": "P",
    "ingreso": 549600.0,
@@ -544,16 +336,23 @@
  "por_asesor": {
   "Oriana Yadith Felizzola Ortega": {
    "Individual": {
-    "negocios": 64,
-    "valor_contado": 7571972.0,
-    "ingreso_bitrix": 7571972.0
+    "negocios": 72,
+    "valor_contado": 7861972.0,
+    "ingreso_bitrix": 7861972.0
+   }
+  },
+  "Maria Jose Garcia Guaman": {
+   "Individual": {
+    "negocios": 8,
+    "valor_contado": 11571200.0,
+    "ingreso_bitrix": 11571200.0
    }
   },
   "Martha Lorena Celedon de la Rosa": {
    "Individual": {
-    "negocios": 11,
-    "valor_contado": 1147100.0,
-    "ingreso_bitrix": 1147100.0
+    "negocios": 14,
+    "valor_contado": 1583100.0,
+    "ingreso_bitrix": 1583100.0
    },
    "Empresarial": {
     "negocios": 1,
@@ -561,18 +360,52 @@
     "ingreso_bitrix": 3300000.0
    }
   },
-  "Maria Jose Garcia Guaman": {
+  "Martha Cabrera Montes": {
    "Individual": {
-    "negocios": 7,
-    "valor_contado": 4478500.0,
-    "ingreso_bitrix": 4478500.0
+    "negocios": 10,
+    "valor_contado": 542000.0,
+    "ingreso_bitrix": 542000.0
+   },
+   "Empresarial": {
+    "negocios": 3,
+    "valor_contado": 3382500.0,
+    "ingreso_bitrix": 3382500.0
    }
   },
   "Jessica Luque Garcia": {
    "Individual": {
-    "negocios": 19,
-    "valor_contado": 1190800.0,
-    "ingreso_bitrix": 1190800.0
+    "negocios": 20,
+    "valor_contado": 1403800.0,
+    "ingreso_bitrix": 1403800.0
+   }
+  },
+  "Victoria Manjarres Jimenez": {
+   "Individual": {
+    "negocios": 1,
+    "valor_contado": 201400.0,
+    "ingreso_bitrix": 201400.0
+   },
+   "Empresarial": {
+    "negocios": 3,
+    "valor_contado": 12786400.0,
+    "ingreso_bitrix": 12786400.0
+   },
+   "IFT": {
+    "negocios": 1,
+    "valor_contado": 1449700.0,
+    "ingreso_bitrix": 1449700.0
+   }
+  },
+  "Karen Liseth Cantillo De la Cruz": {
+   "Individual": {
+    "negocios": 16,
+    "valor_contado": 1065400.0,
+    "ingreso_bitrix": 1065400.0
+   },
+   "Empresarial": {
+    "negocios": 1,
+    "valor_contado": 660200.0,
+    "ingreso_bitrix": 660200.0
    }
   },
   "Bienvenida Lopez Hurtado": {
@@ -589,9 +422,9 @@
   },
   "Marvis Yarima Gonzalez Gil": {
    "Individual": {
-    "negocios": 19,
-    "valor_contado": 1548600.0,
-    "ingreso_bitrix": 1548600.0
+    "negocios": 21,
+    "valor_contado": 1713600.0,
+    "ingreso_bitrix": 1713600.0
    },
    "Empresarial": {
     "negocios": 2,
@@ -601,26 +434,14 @@
   },
   "Karen Patricia Ballesteros Paba": {
    "Individual": {
-    "negocios": 13,
-    "valor_contado": 1069200.0,
-    "ingreso_bitrix": 1069200.0
+    "negocios": 14,
+    "valor_contado": 1099200.0,
+    "ingreso_bitrix": 1099200.0
    },
    "Empresarial": {
     "negocios": 3,
     "valor_contado": 4234400.0,
     "ingreso_bitrix": 4234400.0
-   }
-  },
-  "Karen Liseth Cantillo De la Cruz": {
-   "Individual": {
-    "negocios": 13,
-    "valor_contado": 820400.0,
-    "ingreso_bitrix": 820400.0
-   },
-   "Empresarial": {
-    "negocios": 1,
-    "valor_contado": 660200.0,
-    "ingreso_bitrix": 660200.0
    }
   },
   "Nelvis Paola Meza Saenz": {
@@ -632,38 +453,14 @@
   },
   "Holman Marin Romero": {
    "Individual": {
-    "negocios": 24,
-    "valor_contado": 1679100.0,
-    "ingreso_bitrix": 1679100.0
+    "negocios": 25,
+    "valor_contado": 1707100.0,
+    "ingreso_bitrix": 1707100.0
    },
    "Empresarial": {
     "negocios": 2,
     "valor_contado": 2966700.0,
     "ingreso_bitrix": 2966700.0
-   }
-  },
-  "Martha Cabrera Montes": {
-   "Individual": {
-    "negocios": 9,
-    "valor_contado": 496000.0,
-    "ingreso_bitrix": 496000.0
-   },
-   "Empresarial": {
-    "negocios": 3,
-    "valor_contado": 3382500.0,
-    "ingreso_bitrix": 3382500.0
-   }
-  },
-  "Victoria Manjarres Jimenez": {
-   "Empresarial": {
-    "negocios": 3,
-    "valor_contado": 12786400.0,
-    "ingreso_bitrix": 12786400.0
-   },
-   "IFT": {
-    "negocios": 1,
-    "valor_contado": 1449700.0,
-    "ingreso_bitrix": 1449700.0
    }
   },
   "Eliana Del Socorro Atuesta Oñate": {
@@ -684,8 +481,8 @@
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO GANADO",
    "asesor": "Maria Jose Garcia Guaman",
-   "fecha_facturacion": "2026-08-31",
-   "fecha_cierre": "2026-08-31",
+   "fecha_facturacion": "2026-09-01",
+   "fecha_cierre": "2026-09-01",
    "fecha_creacion": "2026-09-01",
    "semantica": "S",
    "ingreso": 7092700.0,
