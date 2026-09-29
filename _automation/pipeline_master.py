@@ -466,6 +466,22 @@ def _norm_cli(x):
     x = ''.join(c for c in x if unicodedata.category(c) != 'Mn')
     return re.sub(r'[^A-Z0-9]', '', x)
 
+def _mismo_cliente(a, b):
+    """Compara nombres de cliente tolerando distinto orden/formato: en los exports
+    manuales viejos sale 'LAURA RIVADENEIRA PINTO' y por la API 'RIVADENEIRA PINTO
+    LAURA LISBETH RIVADENEIRA PINTO' (misma persona). Coincide si las palabras del
+    nombre mas corto estan todas en el mas largo, o si comparten 2+ palabras."""
+    if not a or not b:
+        return True
+    def _tok(x):
+        x = ''.join(c for c in unicodedata.normalize('NFD', x.upper()) if unicodedata.category(c) != 'Mn')
+        return {w for w in re.split(r'[^A-Z0-9]+', x) if len(w) > 1}
+    ta, tb = _tok(a), _tok(b)
+    if not ta or not tb:
+        return True
+    corto, largo = (ta, tb) if len(ta) <= len(tb) else (tb, ta)
+    return corto <= largo or len(ta & tb) >= 2
+
 def _dias(a, b):
     return abs((datetime.strptime(a, '%Y-%m-%d') - datetime.strptime(b, '%Y-%m-%d')).days)
 
@@ -480,6 +496,19 @@ for _fn, _tv, _cat, _et in [('tardias_individual.xls', 'Individual', 'A', 'CERRA
 _por_negocio = defaultdict(list)
 for _r in _tardias_rows:
     _por_negocio[_r.get('bitrix_id')].append(_r)
+# Cada corrida reevalua desde cero las tardias que siguen apareciendo en Bitrix:
+# se quitan las que se habian sumado antes y se vuelve a decidir (asi una decision
+# equivocada -ej. el duplicado de 24725 del 29-sep- se corrige sola). Las tardias
+# de corridas anteriores que ya no aparecen se dejan tal cual.
+_antes = len(DATA['ventas']['transacciones'])
+_quitadas_meses = {t['ym'] for t in DATA['ventas']['transacciones']
+                   if t['ym'] != YM and 'venta registrada tarde' in (t.get('fuente') or '') and t.get('bitrix_id') in _por_negocio}
+DATA['ventas']['transacciones'] = [t for t in DATA['ventas']['transacciones']
+                                   if not (t['ym'] != YM and 'venta registrada tarde' in (t.get('fuente') or '')
+                                           and t.get('bitrix_id') in _por_negocio)]
+MESES_CON_TARDIAS |= _quitadas_meses
+if len(DATA['ventas']['transacciones']) != _antes:
+    print(f"  [tardia] reevaluando {_antes - len(DATA['ventas']['transacciones'])} lineas tardias sumadas en corridas anteriores")
 for _id, _rows in _por_negocio.items():
     _ym = _rows[0]['ym']
     _info = {'negocio': _id, 'asesor': _rows[0]['asesor'], 'mes_facturacion': _ym,
@@ -498,7 +527,7 @@ for _id, _rows in _por_negocio.items():
     _coinc = []
     for r in _rows:
         m = next((t for t in _pool if abs(t['valor'] - r['valor']) < 1 and _dias(t['fecha'], r['fecha']) <= 1
-                  and (not t.get('cliente') or not r.get('cliente') or _norm_cli(t['cliente']) == _norm_cli(r['cliente']))), None)
+                  and _mismo_cliente(t.get('cliente'), r.get('cliente'))), None)
         if m is None:
             _todas = False
             break
