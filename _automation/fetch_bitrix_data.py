@@ -293,8 +293,38 @@ def _enum_map(fields_dict, code):
     items = fields_dict.get(code, {}).get('items', [])
     return {str(it['ID']): it['VALUE'] for it in items}
 
+def enum_valor(enum, raw):
+    """Traduce el valor crudo de un campo lista de Bitrix a su texto. 29-sep-2026:
+    los campos 'Servicios a cotizar/utilizar' pueden ser de seleccion MULTIPLE
+    (la API devuelve una lista ['1234', '1240']) -- antes se hacia str(lista) y no
+    coincidia con nada, por eso en septiembre NINGUNA venta traia servicio y el
+    tablero caia al nombre del producto. Tambien acepta un valor unico o un
+    texto libre (si el campo no es de tipo lista se devuelve tal cual)."""
+    if raw is None or raw is False or raw == '':
+        return ''
+    vals = raw if isinstance(raw, (list, tuple)) else [raw]
+    out = []
+    for v in vals:
+        if v is None or v == '':
+            continue
+        txt = enum.get(str(v))
+        if txt is None and not enum:
+            txt = str(v)  # campo de texto libre
+        if txt and txt not in out:
+            out.append(txt)
+    return ' / '.join(out)
+
+
 ENUM_SERVICIOS_UTILIZAR = _enum_map(DEAL_FIELDS, 'UF_CRM_1681146110054')
 ENUM_SERVICIOS_COTIZAR = _enum_map(DEAL_FIELDS, 'UF_CRM_1681146530307')
+
+# Todos los campos de negocio cuyo nombre mencione "servicio" (para el diagnostico
+# del cuadre y por si el contrato nuevo registra el servicio en un campo nuevo).
+def _label(f):
+    return (f.get('formLabel') or f.get('listLabel') or f.get('filterLabel') or f.get('title') or '')
+
+CAMPOS_SERVICIO = {code: f for code, f in DEAL_FIELDS.items()
+                   if code.startswith('UF_') and 'SERVIC' in _norm_txt(_label(f))}
 ENUM_TIPO_ACTIVIDAD = _enum_map(DEAL_FIELDS, 'UF_CRM_1740085404851')
 ENUM_TIPO_EVENTO = _enum_map(DEAL_FIELDS, 'UF_CRM_1740428574274')
 ENUM_CATEGORIA_AFILIACION = _enum_map(CONTACT_FIELDS, 'UF_CRM_1679886333416')
@@ -408,6 +438,54 @@ CAMPO_FACT = 'UF_CRM_1681152455392'
 SELECT_VENTA = ['ID', 'TITLE', 'CATEGORY_ID', 'STAGE_ID', 'STAGE_SEMANTIC_ID', 'ASSIGNED_BY_ID',
                 'CONTACT_ID', 'COMPANY_ID', 'OPPORTUNITY', 'IS_MANUAL_OPPORTUNITY', 'CLOSEDATE',
                 'DATE_MODIFY', 'DATE_CREATE', CAMPO_FACT, 'UF_CRM_1681146110054', 'UF_CRM_1681146530307']
+SELECT_VENTA += [c for c in CAMPOS_SERVICIO if c not in SELECT_VENTA]
+
+# Diagnostico de campos de servicio: cuantas ventas contadas traen cada campo lleno
+# y ejemplos de valores crudos/traducidos (se guarda en el cuadre).
+DIAG_SERVICIO = {}
+PRODUCTOS_VISTOS = {}  # PRODUCT_ID -> agregados (para ver la seccion del catalogo de cada producto)
+
+
+def diagnosticar_secciones_producto():
+    """Resume las ventas contadas por SECCION del catalogo de productos de Bitrix
+    (posible fuente del 'servicio' si el contrato nuevo no llena el campo)."""
+    ids = list(PRODUCTOS_VISTOS)[:400]
+    if not ids:
+        CUADRE['secciones_producto'] = {}
+        CUADRE['lineas_sin_producto_catalogo'] = 0
+        return
+    prods = batch({f'p{i}': f'crm.product.get?id={i}' for i in ids})
+    secc_ids = sorted({str((prods.get(f'p{i}') or {}).get('SECTION_ID') or '') for i in ids} - {''})
+    secs = batch({f's{i}': f'crm.productsection.get?id={i}' for i in secc_ids}) if secc_ids else {}
+    out = {}
+    for i in ids:
+        pr = prods.get(f'p{i}') or {}
+        sid = str(pr.get('SECTION_ID') or '')
+        nombre_sec = (secs.get(f's{sid}') or {}).get('NAME') if sid else None
+        nombre_sec = nombre_sec or '(sin seccion)'
+        a = out.setdefault(nombre_sec, {'productos': 0, 'lineas': 0, 'valor': 0.0, 'ejemplos': []})
+        agg = PRODUCTOS_VISTOS[i]
+        a['productos'] += 1
+        a['lineas'] += agg['lineas']
+        a['valor'] = round(a['valor'] + agg['valor'], 2)
+        if len(a['ejemplos']) < 5:
+            a['ejemplos'].append(agg['nombre'])
+    CUADRE['secciones_producto'] = out
+
+
+def _diag_servicio(d, tipo_venta):
+    for code, f in CAMPOS_SERVICIO.items():
+        info = DIAG_SERVICIO.setdefault(code, {
+            'nombre': _label(f), 'tipo': f.get('type'), 'multiple': f.get('isMultiple'),
+            'opciones_en_lista': len(f.get('items') or []), 'por_tipo_venta': {}, 'ejemplos': []})
+        t = info['por_tipo_venta'].setdefault(tipo_venta, {'ventas': 0, 'con_valor': 0})
+        t['ventas'] += 1
+        raw = d.get(code)
+        if raw not in (None, '', [], False):
+            t['con_valor'] += 1
+            if len(info['ejemplos']) < 6:
+                info['ejemplos'].append({'crudo': raw, 'texto': enum_valor(_enum_map(DEAL_FIELDS, code), raw)})
+
 
 CUADRE = {
     'generado_utc': None,
@@ -562,8 +640,11 @@ def fetch_ventas(category_id, tipo_venta, etapa_ok_name):
     for d in deals:
         contact = CONTACT_CACHE.get(d.get('CONTACT_ID')) or {}
         company = COMPANY_CACHE.get(d.get('COMPANY_ID')) or {}
-        servicio_cotizar = ENUM_SERVICIOS_COTIZAR.get(str(d.get('UF_CRM_1681146530307') or ''), '')
-        servicio_utilizar = ENUM_SERVICIOS_UTILIZAR.get(str(d.get('UF_CRM_1681146110054') or ''), '')
+        # Si el campo trae varios servicios se usa el primero (el catalogo oficial
+        # del tablero clasifica un servicio por venta); el diagnostico guarda todos.
+        servicio_cotizar = enum_valor(ENUM_SERVICIOS_COTIZAR, d.get('UF_CRM_1681146530307')).split(' / ')[0]
+        servicio_utilizar = enum_valor(ENUM_SERVICIOS_UTILIZAR, d.get('UF_CRM_1681146110054')).split(' / ')[0]
+        _diag_servicio(d, tipo_venta)
         categoria_afiliacion = ENUM_CATEGORIA_AFILIACION.get(str(contact.get('UF_CRM_1679886333416') or ''), '')
         nit = contact.get('UF_CRM_1756067100077') or company.get('UF_CRM_1679587096910') or ''
         asesor = USER_NAME_CACHE.get(d.get('ASSIGNED_BY_ID'), '')
@@ -583,6 +664,13 @@ def fetch_ventas(category_id, tipo_venta, etapa_ok_name):
             'Compañía: Nit': company.get('UF_CRM_1679587096910') or '',
         }
         lineas = productrows.get(d['ID'])
+        for ln in (lineas or []):
+            pid = str(ln.get('PRODUCT_ID') or '')
+            if pid and pid != '0':
+                agg = PRODUCTOS_VISTOS.setdefault(pid, {'lineas': 0, 'valor': 0.0, 'nombre': ln.get('PRODUCT_NAME'), 'tipos': set()})
+                agg['lineas'] += 1
+                agg['valor'] += _num(ln.get('PRICE')) * _num(ln.get('QUANTITY'))
+                agg['tipos'].add(tipo_venta)
         suma_lineas = sum(_num(ln.get('PRICE')) * _num(ln.get('QUANTITY')) for ln in (lineas or []))
         for ln in (lineas or []):
             q = _num(ln.get('QUANTITY'))
@@ -682,6 +770,7 @@ def escribir_cuadre():
     CUADRE['generado_utc'] = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
     CUADRE['rango'] = {'desde': FECHA_DESDE, 'hasta': FECHA_HASTA, 'ym': YM}
     CUADRE['batch_fallidos'] = len(BATCH_FALLIDOS)
+    CUADRE['campos_servicio'] = DIAG_SERVICIO
     CUADRE['batch_fallidos_detalle'] = [c.split('?')[0] + '?' + c.split('?')[1][:40] for c in BATCH_FALLIDOS][:50]
     for a in CUADRE['por_asesor'].values():
         for k in a.values():
@@ -764,6 +853,23 @@ def escribir_cuadre():
                 det = (det + f" [cat {it.get('categoria_id')}, stage {it.get('stage_id')}, fact. cruda {it.get('fecha_facturacion_cruda')!r}]").strip()
             L.append(f"| {it['id']} | {it['asesor']} | {it['pipeline']} | {it['etapa']} | "
                      f"{it.get('fecha_creacion') or '-'} | {it['fecha_facturacion'] or '-'} | {it['fecha_cierre'] or '-'} | {money(it['ingreso'])} | {det} |")
+    L.append('')
+    L.append('## Campos de servicio en Bitrix (cuantas ventas contadas los traen llenos)')
+    if not DIAG_SERVICIO:
+        L.append('No se encontro ningun campo de negocio con "servicio" en el nombre.')
+    for code, info in DIAG_SERVICIO.items():
+        llenos = ', '.join(f"{tv}: {x['con_valor']}/{x['ventas']}" for tv, x in info['por_tipo_venta'].items())
+        L.append(f"- {info['nombre']} ({code}, tipo {info['tipo']}, multiple={info['multiple']}, "
+                 f"{info['opciones_en_lista']} opciones): {llenos}")
+        for ej in info['ejemplos'][:3]:
+            L.append(f"    - crudo {ej['crudo']!r} -> {ej['texto']!r}")
+    L.append('')
+    L.append('## Ventas contadas por seccion del catalogo de productos de Bitrix')
+    secs = CUADRE.get('secciones_producto') or {}
+    if not secs:
+        L.append('Sin datos (las lineas no traen producto del catalogo).')
+    for nombre, a in sorted(secs.items(), key=lambda x: -x[1]['valor']):
+        L.append(f"- {nombre}: {a['lineas']} lineas, {money(a['valor'])} (ej.: {', '.join(str(e) for e in a['ejemplos'][:3])})")
     L.append('')
     L.append(f"Consultas a Bitrix que fallaron tras reintentos: {CUADRE['batch_fallidos']} "
              f"{CUADRE['batch_fallidos_detalle']}")
@@ -849,6 +955,11 @@ if __name__ == '__main__':
 
     df_gest = fetch_gestiones('gestiones.xls')
     to_export_html(df_gest, os.path.join(OUT_DIR, 'gestiones.xls'))
+
+    try:
+        diagnosticar_secciones_producto()
+    except Exception as e:
+        print('  (diagnostico de secciones de producto fallo:', e, ')')
 
     try:
         diagnosticar_negocios()
