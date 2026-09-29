@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-09-29 16:24 UTC",
+ "generado_utc": "2026-09-29 16:31 UTC",
  "rango": {
   "desde": "2026-09-01",
   "hasta": "2026-09-30",
@@ -39,6 +39,8 @@
    "asesor": "Jessica Luque Garcia",
    "fecha_facturacion": "2026-08-06",
    "fecha_cierre": "2026-09-15",
+   "fecha_creacion": "2026-08-03",
+   "semantica": "S",
    "ingreso": 140300.0,
    "titulo": " (27540)",
    "motivo": "Fecha de facturacion 2026-08-06 fuera del mes (cerrado 2026-09-15)"
@@ -50,6 +52,8 @@
    "asesor": "Martha Lorena Celedon de la Rosa",
    "fecha_facturacion": "2026-08-31",
    "fecha_cierre": "2026-09-01",
+   "fecha_creacion": "2026-09-02",
+   "semantica": "S",
    "ingreso": 252000.0,
    "titulo": " (30989)",
    "motivo": "Fecha de facturacion 2026-08-31 fuera del mes (cerrado 2026-09-01)"
@@ -61,6 +65,8 @@
    "asesor": "Martha Lorena Celedon de la Rosa",
    "fecha_facturacion": "2026-08-31",
    "fecha_cierre": "2026-09-01",
+   "fecha_creacion": "2026-09-02",
+   "semantica": "S",
    "ingreso": 92000.0,
    "titulo": " (30993)",
    "motivo": "Fecha de facturacion 2026-08-31 fuera del mes (cerrado 2026-09-01)"
@@ -72,6 +78,8 @@
    "asesor": "Marvis Yarima Gonzalez Gil",
    "fecha_facturacion": "2026-08-26",
    "fecha_cierre": "2026-09-01",
+   "fecha_creacion": "2026-09-02",
+   "semantica": "S",
    "ingreso": 361000.0,
    "titulo": " (31060)",
    "motivo": "Fecha de facturacion 2026-08-26 fuera del mes (cerrado 2026-09-01)"
@@ -83,6 +91,8 @@
    "asesor": "Marvis Yarima Gonzalez Gil",
    "fecha_facturacion": "2026-08-31",
    "fecha_cierre": "2026-09-02",
+   "fecha_creacion": "2026-09-03",
+   "semantica": "S",
    "ingreso": 69000.0,
    "titulo": " (31308)",
    "motivo": "Fecha de facturacion 2026-08-31 fuera del mes (cerrado 2026-09-02)"
@@ -94,6 +104,8 @@
    "asesor": "Holman Marin Romero",
    "fecha_facturacion": "2026-08-31",
    "fecha_cierre": "2026-09-06",
+   "fecha_creacion": "2026-09-07",
+   "semantica": "S",
    "ingreso": 28000.0,
    "titulo": " (31717)",
    "motivo": "Fecha de facturacion 2026-08-31 fuera del mes (cerrado 2026-09-06)"
@@ -105,6 +117,8 @@
    "asesor": "Karen Patricia Ballesteros Paba",
    "fecha_facturacion": "2026-08-15",
    "fecha_cierre": "2026-09-09",
+   "fecha_creacion": "2026-09-10",
+   "semantica": "S",
    "ingreso": 46000.0,
    "titulo": " (31960)",
    "motivo": "Fecha de facturacion 2026-08-15 fuera del mes (cerrado 2026-09-09)"
@@ -116,6 +130,8 @@
    "asesor": "Karen Patricia Ballesteros Paba",
    "fecha_facturacion": "2026-08-20",
    "fecha_cierre": "2026-09-09",
+   "fecha_creacion": "2026-09-10",
+   "semantica": "S",
    "ingreso": 28000.0,
    "titulo": " (31963)",
    "motivo": "Fecha de facturacion 2026-08-20 fuera del mes (cerrado 2026-09-09)"
@@ -127,6 +143,8 @@
    "asesor": "Oriana Yadith Felizzola Ortega",
    "fecha_facturacion": "2026-08-10",
    "fecha_cierre": "2026-09-09",
+   "fecha_creacion": "2026-09-10",
+   "semantica": "S",
    "ingreso": 46000.0,
    "titulo": " (31964)",
    "motivo": "Fecha de facturacion 2026-08-10 fuera del mes (cerrado 2026-09-09)"
@@ -138,6 +156,8 @@
    "asesor": "Karen Patricia Ballesteros Paba",
    "fecha_facturacion": "2026-08-26",
    "fecha_cierre": "2026-09-09",
+   "fecha_creacion": "2026-09-10",
+   "semantica": "S",
    "ingreso": 28000.0,
    "titulo": " (31965)",
    "motivo": "Fecha de facturacion 2026-08-26 fuera del mes (cerrado 2026-09-09)"
@@ -149,6 +169,8 @@
    "asesor": "Oriana Yadith Felizzola Ortega",
    "fecha_facturacion": "2026-07-31",
    "fecha_cierre": "2026-09-09",
+   "fecha_creacion": "2026-09-10",
+   "semantica": "S",
    "ingreso": 115000.0,
    "titulo": " (31967)",
    "motivo": "Fecha de facturacion 2026-07-31 fuera del mes (cerrado 2026-09-09)"
@@ -160,6 +182,8 @@
    "asesor": "Oriana Yadith Felizzola Ortega",
    "fecha_facturacion": "2026-08-20",
    "fecha_cierre": "2026-09-09",
+   "fecha_creacion": "2026-09-10",
+   "semantica": "S",
    "ingreso": 46000.0,
    "titulo": " (31969)",
    "motivo": "Fecha de facturacion 2026-08-20 fuera del mes (cerrado 2026-09-09)"
@@ -171,6 +195,8 @@
    "asesor": "Oriana Yadith Felizzola Ortega",
    "fecha_facturacion": "2026-08-02",
    "fecha_cierre": "2026-09-09",
+   "fecha_creacion": "2026-09-10",
+   "semantica": "S",
    "ingreso": 23000.0,
    "titulo": " (31970)",
    "motivo": "Fecha de facturacion 2026-08-02 fuera del mes (cerrado 2026-09-09)"
@@ -182,6 +208,8 @@
    "asesor": "Marvis Yarima Gonzalez Gil",
    "fecha_facturacion": "2026-08-31",
    "fecha_cierre": "2026-09-16",
+   "fecha_creacion": "2026-09-17",
+   "semantica": "S",
    "ingreso": 96000.0,
    "titulo": " (33210)",
    "motivo": "Fecha de facturacion 2026-08-31 fuera del mes (cerrado 2026-09-16)"
@@ -199,6 +227,8 @@
    "asesor": "Karen Liseth Cantillo De la Cruz",
    "fecha_facturacion": "2026-09-17",
    "fecha_cierre": "2026-09-20",
+   "fecha_creacion": "2026-09-21",
+   "semantica": "S",
    "ingreso": 60000.0,
    "titulo": " (33401)",
    "motivo": "Precio/cantidad sospechosos",
@@ -213,12 +243,302 @@
    "asesor": "Holman Marin Romero",
    "fecha_facturacion": "2026-09-13",
    "fecha_cierre": "2026-09-15",
+   "fecha_creacion": "2026-09-16",
+   "semantica": "S",
    "ingreso": 2437700.0,
    "titulo": "AIR E SAS ESP (33070)",
    "motivo": "Precio/cantidad sospechosos",
    "producto": "Capacitacion lenguaje de seña 20 horas, para 25 personas",
    "precio": 1.0,
    "cantidad": 2437700.0
+  }
+ ],
+ "no_ganados_del_mes": [
+  {
+   "id": "26938",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO PERDIDO",
+   "asesor": "Oriana Yadith Felizzola Ortega",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-09-14",
+   "fecha_creacion": "2026-07-27",
+   "semantica": "F",
+   "ingreso": 1391100.0,
+   "titulo": " (26938)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "30831",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Oriana Yadith Felizzola Ortega",
+   "fecha_facturacion": "2026-08-31",
+   "fecha_cierre": "2026-08-31",
+   "fecha_creacion": "2026-09-01",
+   "semantica": "S",
+   "ingreso": 60000.0,
+   "titulo": " (30831)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "30837",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Oriana Yadith Felizzola Ortega",
+   "fecha_facturacion": "2026-08-31",
+   "fecha_cierre": "2026-08-31",
+   "fecha_creacion": "2026-09-01",
+   "semantica": "S",
+   "ingreso": 15000.0,
+   "titulo": " (30837)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "30839",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Oriana Yadith Felizzola Ortega",
+   "fecha_facturacion": "2026-08-31",
+   "fecha_cierre": "2026-08-31",
+   "fecha_creacion": "2026-09-01",
+   "semantica": "S",
+   "ingreso": 45000.0,
+   "titulo": " (30839)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "30843",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Maria Jose Garcia Guaman",
+   "fecha_facturacion": "2026-08-31",
+   "fecha_cierre": "2026-08-31",
+   "fecha_creacion": "2026-09-01",
+   "semantica": "S",
+   "ingreso": 7092700.0,
+   "titulo": " (30843)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "30864",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Martha Lorena Celedon de la Rosa",
+   "fecha_facturacion": "2026-08-31",
+   "fecha_cierre": "2026-08-31",
+   "fecha_creacion": "2026-09-01",
+   "semantica": "S",
+   "ingreso": 92000.0,
+   "titulo": " (30864)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "30885",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Martha Cabrera Montes",
+   "fecha_facturacion": "2026-08-31",
+   "fecha_cierre": "2026-08-31",
+   "fecha_creacion": "2026-09-01",
+   "semantica": "S",
+   "ingreso": 46000.0,
+   "titulo": " (30885)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "30955",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Jessica Luque Garcia",
+   "fecha_facturacion": "2026-08-31",
+   "fecha_cierre": "2026-08-31",
+   "fecha_creacion": "2026-09-01",
+   "semantica": "S",
+   "ingreso": 213000.0,
+   "titulo": " (30955)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "30959",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Victoria Manjarres Jimenez",
+   "fecha_facturacion": "2026-08-31",
+   "fecha_cierre": "2026-08-31",
+   "fecha_creacion": "2026-09-01",
+   "semantica": "S",
+   "ingreso": 201400.0,
+   "titulo": " (30959)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "30965",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Karen Liseth Cantillo De la Cruz",
+   "fecha_facturacion": "2026-08-31",
+   "fecha_cierre": "2026-08-31",
+   "fecha_creacion": "2026-09-01",
+   "semantica": "S",
+   "ingreso": 69000.0,
+   "titulo": " (30965)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "30968",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Karen Liseth Cantillo De la Cruz",
+   "fecha_facturacion": "2026-08-31",
+   "fecha_cierre": "2026-08-31",
+   "fecha_creacion": "2026-09-01",
+   "semantica": "S",
+   "ingreso": 84000.0,
+   "titulo": " (30968)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "30970",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Karen Liseth Cantillo De la Cruz",
+   "fecha_facturacion": "2026-08-31",
+   "fecha_cierre": "2026-08-31",
+   "fecha_creacion": "2026-09-01",
+   "semantica": "S",
+   "ingreso": 92000.0,
+   "titulo": " (30970)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "30979",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Oriana Yadith Felizzola Ortega",
+   "fecha_facturacion": "2026-08-31",
+   "fecha_cierre": "2026-08-31",
+   "fecha_creacion": "2026-09-01",
+   "semantica": "S",
+   "ingreso": 45000.0,
+   "titulo": " (30979)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "33688",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "NUEVA OPORTUNIDAD",
+   "asesor": "Jessica Luque Garcia",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-09-23",
+   "fecha_creacion": "2026-09-24",
+   "semantica": "P",
+   "ingreso": 4400.0,
+   "titulo": " (33688)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "28490",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "APLAZADO",
+   "asesor": "Oriana Yadith Felizzola Ortega",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-09-13",
+   "fecha_creacion": "2026-08-11",
+   "semantica": "F",
+   "ingreso": 718500.0,
+   "titulo": "TRANSFERPORT S.A.S. (28490)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "28528",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "CERRADO PERDIDO",
+   "asesor": "Karen Liseth Cantillo De la Cruz",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-09-17",
+   "fecha_creacion": "2026-08-12",
+   "semantica": "F",
+   "ingreso": 4302900.0,
+   "titulo": "FUNDACION MUSEO DEL MAR (28528)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "31546",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "EN ESPERA DE OC",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-09-04",
+   "fecha_creacion": "2026-09-05",
+   "semantica": "P",
+   "ingreso": 1302500.0,
+   "titulo": "CITECNICAS BALTIME DE COLOMBIA SA (31546)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "31548",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "EN ESPERA DE OC",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-09-04",
+   "fecha_creacion": "2026-09-05",
+   "semantica": "P",
+   "ingreso": 1197500.0,
+   "titulo": "CITECNICAS BALTIME DE COLOMBIA SA (31548)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "31877",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "PROPUESTA ENVIADA",
+   "asesor": "Karen Liseth Cantillo De la Cruz",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-09-08",
+   "fecha_creacion": "2026-09-09",
+   "semantica": "P",
+   "ingreso": 732600.0,
+   "titulo": "SUPER NUEVO MILENIO S.A. (31877)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "32192",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "EN ESPERA DE OC",
+   "asesor": "Holman Marin Romero",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-09-12",
+   "fecha_creacion": "2026-09-11",
+   "semantica": "P",
+   "ingreso": 280900.0,
+   "titulo": "ASOCIACION DE PADRES DE FAMILIA DE HOGARES COMUNITARIOS DE BIENESTAR JUAN XXIII (32192)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "32201",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "EN ESPERA DE OC",
+   "asesor": "Holman Marin Romero",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-09-12",
+   "fecha_creacion": "2026-09-11",
+   "semantica": "P",
+   "ingreso": 161000.0,
+   "titulo": "TRANSPORTES ESPECIALES MACO TOURS SAS (32201)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "33941",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "PROPUESTA ENVIADA",
+   "asesor": "Oriana Yadith Felizzola Ortega",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-09-27",
+   "fecha_creacion": "2026-09-28",
+   "semantica": "P",
+   "ingreso": 549600.0,
+   "titulo": "UNIVERSAL GAS S A S (33941)",
+   "motivo": "No esta en la etapa ganada"
   }
  ],
  "por_asesor": {
@@ -354,5 +674,26 @@
    }
   }
  },
- "batch_fallidos": 1
+ "batch_fallidos": 1,
+ "batch_fallidos_detalle": [
+  "crm.company.get?ID=46266"
+ ],
+ "negocios_consultados": [
+  {
+   "id": "30843",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Maria Jose Garcia Guaman",
+   "fecha_facturacion": "2026-08-31",
+   "fecha_cierre": "2026-08-31",
+   "fecha_creacion": "2026-09-01",
+   "semantica": "S",
+   "ingreso": 7092700.0,
+   "titulo": " (30843)",
+   "motivo": "Revision puntual",
+   "fecha_facturacion_cruda": "2026-08-31T19:00:00-05:00",
+   "categoria_id": "2",
+   "stage_id": "C2:WON"
+  }
+ ]
 }
