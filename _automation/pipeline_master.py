@@ -319,7 +319,7 @@ DEDUP_DEAL_IDS = {'29104', '29033'}  # corregido 11-sep-2026: se retira 29197 (f
 # Los otros 3 (29197, 29104, 29033) siguen excluidos hasta confirmar con Luis si
 # tambien son falsos positivos del mismo lote del 18-ago.
 
-def parse_ventas(fname, tipo_venta, categoria_default, etapa_ok, fuente_tag):
+def parse_ventas(fname, tipo_venta, categoria_default, etapa_ok, fuente_tag, solo_mes=True):
     path = os.path.join(DL, fname)
     # 29-sep-2026: un export sin negocios (ej. IFT sin matriculas aun en el mes)
     # sale como tabla vacia y read_html no la reconoce -> antes tumbaba TODA la
@@ -340,7 +340,7 @@ def parse_ventas(fname, tipo_venta, categoria_default, etapa_ok, fuente_tag):
             etapa_val = r.get('Etapa')
         if etapa_val != etapa_ok: continue
         fecha = parse_date_ddmmyyyy(r.get('Fecha de facturación'))
-        if fecha is None or not fecha.startswith(YM): continue
+        if fecha is None or (solo_mes and not fecha.startswith(YM)): continue
         asesor = clean_str(r.get('Persona responsable')) or clean_str(r.get('Responsable'))
         cliente = ' '.join([p for p in [clean_str(r.get('Contacto: Nombre')) or clean_str(r.get('Contacto: Primer nombre')), clean_str(r.get('Contacto: Apellido'))] if p]) or None
         empresa = clean_str(r.get('Compañía: Nombre de la compañía'))
@@ -451,6 +451,83 @@ print('gestiones nuevas (mes en curso):', len(new_raw_gestiones))
 new_raw_gestiones_sorted = sorted(new_raw_gestiones, key=lambda r: r['fecha'], reverse=True)
 DATA['gestiones']['raw_gestiones'] = new_raw_gestiones_sorted + DATA['gestiones']['raw_gestiones']
 DATA['ventas']['transacciones'] = DATA['ventas']['transacciones'] + new_tx
+
+# ============ 4b. Ventas registradas tarde (29-sep-2026) ============
+# Regla confirmada por Luis: el mes de una venta lo define su FECHA DE FACTURACION.
+# Cuando una venta se gana en el mes en curso pero su facturacion es de un mes ya
+# cerrado (ej. el asesor la cargo tarde), fetch_bitrix_data.py la exporta en
+# tardias_*.xls y aqui se suma a SU mes de facturacion -- pero solo si ese mes no
+# la tiene ya (mismo asesor, cliente, valor por linea y fecha +-1 dia). Esa
+# verificacion es clave: el 11-sep-2026 se recuperaron 19 negocios de agosto por
+# API y varios de estos "tardios" ya estan contados alli; sumarlos otra vez los
+# duplicaria. Cada decision queda registrada en _automation/diag/ventas_tardias.json.
+def _norm_cli(x):
+    x = unicodedata.normalize('NFD', (x or '').upper())
+    x = ''.join(c for c in x if unicodedata.category(c) != 'Mn')
+    return re.sub(r'[^A-Z0-9]', '', x)
+
+def _dias(a, b):
+    return abs((datetime.strptime(a, '%Y-%m-%d') - datetime.strptime(b, '%Y-%m-%d')).days)
+
+MESES_CON_TARDIAS = set()
+_log_tardias = []
+_tardias_rows = []
+for _fn, _tv, _cat, _et in [('tardias_individual.xls', 'Individual', 'A', 'CERRADO GANADO'),
+                            ('tardias_empresarial.xls', 'Empresarial', 'E', 'CERRADO GANADO'),
+                            ('tardias_ift.xls', 'IFT', 'Formación para el trabajo (IFT)', 'CERRADO MATRICULARO')]:
+    if os.path.exists(os.path.join(DL, _fn)):
+        _tardias_rows += parse_ventas(_fn, _tv, _cat, _et, f'Bitrix ({_tv}) - venta registrada tarde', solo_mes=False)
+_por_negocio = defaultdict(list)
+for _r in _tardias_rows:
+    _por_negocio[_r.get('bitrix_id')].append(_r)
+for _id, _rows in _por_negocio.items():
+    _ym = _rows[0]['ym']
+    _info = {'negocio': _id, 'asesor': _rows[0]['asesor'], 'mes_facturacion': _ym,
+             'fecha_facturacion': _rows[0]['fecha'], 'valor': round(sum(r['valor'] for r in _rows), 2)}
+    if _ym == YM:
+        continue  # ya lo trae el pull normal del mes en curso
+    if _ym not in DATA['ventas']['meses_order']:
+        _info['decision'] = 'no se suma: mes de facturacion anterior al historico del tablero'
+        _log_tardias.append(_info); continue
+    _exist = [t for t in DATA['ventas']['transacciones'] if t['ym'] == _ym and t.get('asesor') == _rows[0]['asesor']]
+    if any(t.get('bitrix_id') == _id for t in _exist):
+        _info['decision'] = 'ya contada en su mes (mismo ID de negocio)'
+        _log_tardias.append(_info); continue
+    _pool = list(_exist)
+    _todas = True
+    _coinc = []
+    for r in _rows:
+        m = next((t for t in _pool if abs(t['valor'] - r['valor']) < 1 and _dias(t['fecha'], r['fecha']) <= 1
+                  and (not t.get('cliente') or not r.get('cliente') or _norm_cli(t['cliente']) == _norm_cli(r['cliente']))), None)
+        if m is None:
+            _todas = False
+            break
+        _pool.remove(m)
+        _coinc.append({'fecha': m['fecha'], 'valor': m['valor'], 'detalle': m.get('detalle'), 'cliente': m.get('cliente')})
+    if _todas:
+        _info['decision'] = 'ya contada en su mes (coincide asesor, cliente, valor y fecha)'
+        _info['coincide_con'] = _coinc
+        _log_tardias.append(_info); continue
+    for r in _rows:
+        r['fuente'] = f"Bitrix ({r['tipo_venta']}) - venta registrada tarde (negocio {_id}, facturacion {r['fecha']})"
+        DATA['ventas']['transacciones'].append(r)
+    MESES_CON_TARDIAS.add(_ym)
+    _info['decision'] = f'SUMADA a {_ym}'
+    _log_tardias.append(_info)
+    print(f"  [tardia] negocio {_id} ({_rows[0]['asesor']}, ${_info['valor']:,.0f}) sumado a {_ym} por su fecha de facturacion")
+# El total mensual guardado (tendencia) de esos meses se ajusta YA, antes de que se
+# guarde el master en el paso 6 (el ranking/categorias del TV se ajustan en el paso 7).
+for _ym in MESES_CON_TARDIAS:
+    for _t in DATA['ventas']['tendencia']:
+        if _t['ym'] == _ym:
+            _t['ventas'] = sum(t['valor'] for t in DATA['ventas']['transacciones'] if t['ym'] == _ym)
+try:
+    _diag_dir = os.path.join(AUTO, 'diag')
+    os.makedirs(_diag_dir, exist_ok=True)
+    with open(os.path.join(_diag_dir, 'ventas_tardias.json'), 'w', encoding='utf-8') as _f:
+        json.dump({'corrida_mes': YM, 'negocios': _log_tardias}, _f, ensure_ascii=False, indent=1)
+except Exception as _e:
+    print('  (no se pudo escribir ventas_tardias.json:', _e, ')')
 
 if YM not in DATA['gestiones']['months']:
     DATA['gestiones']['months'].append(YM)
@@ -677,6 +754,27 @@ for r in TVDATA['ranking_by_period']['acumulado']:
         r['total'] = total
         r['cumpl'] = round(total/r['meta']*100, 1)
 TVDATA['ventas_categoria_by_period']['acumulado'] = vc_acum
+
+# ---- Meses cerrados que recibieron ventas tardias (ver paso 4b): recalcular sus
+# totales guardados (tendencia, ranking y ventas por categoria de ese mes).
+for _ym in sorted(MESES_CON_TARDIAS):
+    _tx_ym = [t for t in DATA['ventas']['transacciones'] if t['ym'] == _ym]
+    _tot = Counter(); _tipo = Counter(); _siva = Counter()
+    for t in _tx_ym:
+        if t.get('asesor'):
+            _tot[t['asesor']] += t['valor']
+            if t.get('tipo_venta') in ('Empresarial', 'Individual'):
+                _tipo[(t['asesor'], t['tipo_venta'])] += t['valor']
+                _siva[t['asesor']] += valor_sin_iva(t)
+    for r in TVDATA.get('ranking_by_period', {}).get(_ym, []):
+        r['total'] = _tot.get(r['asesor'], 0.0)
+        r['cumpl'] = round(r['total']/r['meta']*100, 1) if r.get('meta') else r.get('cumpl')
+    for r in TVDATA.get('ventas_categoria_by_period', {}).get(_ym, []):
+        emp = round(_tipo.get((r['asesor'], 'Empresarial'), 0.0), 2)
+        ind = round(_tipo.get((r['asesor'], 'Individual'), 0.0), 2)
+        r.update({'empresarial': emp, 'individual': ind, 'total': round(emp + ind, 2),
+                  'sin_iva': round(_siva.get(r['asesor'], 0.0), 2)})
+    print(f'  [tardia] totales de {_ym} recalculados (tendencia, ranking y categorias)')
 
 entries = []
 for a in af:

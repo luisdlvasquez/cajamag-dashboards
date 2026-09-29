@@ -597,6 +597,11 @@ def fetch_ventas(category_id, tipo_venta, etapa_ok_name):
             continue  # facturado en otro mes y cerrado en otro mes: no es de este mes
         CUADRE['fuera_por_fecha'].append(_resumen_negocio(
             d, 'Fecha de facturacion vacia' if not f else f'Fecha de facturacion {f} fuera del mes (cerrado {cierre})'))
+        # Regla de Luis (29-sep-2026): manda la FECHA DE FACTURACION. Una venta ganada
+        # este mes con facturacion de un mes anterior (ya cerrado) pertenece a ese mes;
+        # se exporta aparte y pipeline_master.py la suma a su mes si no estaba ya.
+        if f and f < FECHA_DESDE and d.get('STAGE_ID') == stage_id:
+            TARDIAS.setdefault(tipo_venta, []).append(d)
 
     etapas_otras = Counter()
     for d in con_fecha_mes:
@@ -721,6 +726,54 @@ def fetch_ventas(category_id, tipo_venta, etapa_ok_name):
         'valor_contado': round(suma_lineas_cat, 2),
         'ingreso_bitrix_de_esos_negocios': round(suma_ingreso_cat, 2),
     })
+    return pd.DataFrame(rows)
+
+
+TARDIAS = {}  # tipo_venta -> [negocios ganados este mes con facturacion de un mes anterior]
+
+
+def filas_tardias(tipo_venta, etapa_ok_name):
+    """Mismas columnas que individual/empresarial/ift.xls, para las ventas tardias."""
+    deals = TARDIAS.get(tipo_venta) or []
+    if not deals:
+        return pd.DataFrame()
+    resolve_contacts([d.get('CONTACT_ID') for d in deals])
+    resolve_companies([d.get('COMPANY_ID') for d in deals])
+    productrows = resolve_productrows([d['ID'] for d in deals])
+    rows = []
+    for d in deals:
+        contact = CONTACT_CACHE.get(d.get('CONTACT_ID')) or {}
+        company = COMPANY_CACHE.get(d.get('COMPANY_ID')) or {}
+        base = {
+            'ID': d['ID'],
+            'Etapa de la negociación': etapa_ok_name,
+            'Fecha de facturación': fecha_iso_a_ddmmyyyy(d.get(CAMPO_FACT)),
+            'Persona responsable': USER_NAME_CACHE.get(d.get('ASSIGNED_BY_ID'), ''),
+            'Contacto: Nombre': contact.get('NAME') or '',
+            'Contacto: Apellido': contact.get('LAST_NAME') or '',
+            'Compañía: Nombre de la compañía': company.get('TITLE') or '',
+            'Servicios a cotizar': enum_valor(ENUM_SERVICIOS_COTIZAR, d.get('UF_CRM_1681146530307')).split(' / ')[0],
+            'Servicios a utilizar': enum_valor(ENUM_SERVICIOS_UTILIZAR, d.get('UF_CRM_1681146110054')).split(' / ')[0],
+            'Contacto: Categoría de afiliación': ENUM_CATEGORIA_AFILIACION.get(str(contact.get('UF_CRM_1679886333416') or ''), ''),
+            'Contacto: Nit empresa': contact.get('UF_CRM_1756067100077') or company.get('UF_CRM_1679587096910') or '',
+            'Compañía: Nit': company.get('UF_CRM_1679587096910') or '',
+        }
+        lineas = productrows.get(d['ID'])
+        suma = sum(_num(ln.get('PRICE')) * _num(ln.get('QUANTITY')) for ln in (lineas or []))
+        if lineas and suma > 0:
+            for ln in lineas:
+                row = dict(base)
+                row['Producto'] = ln.get('PRODUCT_NAME') or ''
+                row['Precio'] = ln.get('PRICE')
+                row['Cantidad'] = ln.get('QUANTITY')
+                rows.append(row)
+        else:
+            row = dict(base)
+            row['Producto'] = ''
+            row['Precio'] = None
+            row['Cantidad'] = None
+            row['Ingreso'] = d.get('OPPORTUNITY')
+            rows.append(row)
     return pd.DataFrame(rows)
 
 
@@ -947,6 +1000,15 @@ if __name__ == '__main__':
 
     df_ift = fetch_ventas(4, 'IFT', 'CERRADO MATRICULARO')
     to_export_html(df_ift, os.path.join(OUT_DIR, 'ift.xls'))
+
+    for _tv, _etapa, _fn in [('Individual', 'CERRADO GANADO', 'tardias_individual.xls'),
+                             ('Empresarial', 'CERRADO GANADO', 'tardias_empresarial.xls'),
+                             ('IFT', 'CERRADO MATRICULARO', 'tardias_ift.xls')]:
+        try:
+            to_export_html(filas_tardias(_tv, _etapa), os.path.join(OUT_DIR, _fn))
+        except Exception as e:
+            print(f'  (no se pudieron exportar ventas tardias {_tv}:', e, ')')
+            to_export_html(pd.DataFrame(), os.path.join(OUT_DIR, _fn))
 
     try:
         fetch_otras_categorias()
