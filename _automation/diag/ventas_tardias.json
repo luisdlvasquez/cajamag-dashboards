@@ -7,7 +7,15 @@
    "mes_facturacion": "2026-06",
    "fecha_facturacion": "2026-06-28",
    "valor": 72800.0,
-   "decision": "SUMADA a 2026-06"
+   "decision": "ya contada en su mes (coincide asesor, cliente, valor y fecha)",
+   "coincide_con": [
+    {
+     "fecha": "2026-06-28",
+     "valor": 72800.0,
+     "detalle": "VENTA DE ENTRADAS A PANACA VIAJERO PRIMER FIN DE SEMANA",
+     "cliente": "LAURA RIVADENEIRA PINTO"
+    }
+   ]
   },
   {
    "negocio": "27540",
