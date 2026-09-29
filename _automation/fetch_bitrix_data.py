@@ -362,7 +362,7 @@ CATEGORIAS_VENTA = {
 CAMPO_FACT = 'UF_CRM_1681152455392'
 SELECT_VENTA = ['ID', 'TITLE', 'CATEGORY_ID', 'STAGE_ID', 'STAGE_SEMANTIC_ID', 'ASSIGNED_BY_ID',
                 'CONTACT_ID', 'COMPANY_ID', 'OPPORTUNITY', 'IS_MANUAL_OPPORTUNITY', 'CLOSEDATE',
-                'DATE_MODIFY', CAMPO_FACT, 'UF_CRM_1681146110054', 'UF_CRM_1681146530307']
+                'DATE_MODIFY', 'DATE_CREATE', CAMPO_FACT, 'UF_CRM_1681146110054', 'UF_CRM_1681146530307']
 
 CUADRE = {
     'generado_utc': None,
@@ -374,8 +374,10 @@ CUADRE = {
     'valor_distinto': [],        # sum(lineas) != OPPORTUNITY
     'valor_por_ingreso': [],     # se uso OPPORTUNITY porque lineas en $0 o no se pudieron leer
     'cantidades_raras': [],      # cantidades sospechosas (ej. precio y cantidad invertidos)
+    'no_ganados_del_mes': [],    # negocios creados/cerrados en el mes que NO estan en la etapa ganada
     'por_asesor': {},
     'batch_fallidos': 0,
+    'batch_fallidos_detalle': [],
 }
 
 
@@ -402,6 +404,8 @@ def _resumen_negocio(d, motivo=None, extra=None):
         'asesor': USER_NAME_CACHE.get(d.get('ASSIGNED_BY_ID'), d.get('ASSIGNED_BY_ID')),
         'fecha_facturacion': _fecha_local(d.get(CAMPO_FACT)) or None,
         'fecha_cierre': _fecha_local(d.get('CLOSEDATE')) or None,
+        'fecha_creacion': _fecha_local(d.get('DATE_CREATE')) or None,
+        'semantica': d.get('STAGE_SEMANTIC_ID'),
         'ingreso': _num(d.get('OPPORTUNITY')),
         'titulo': d.get('TITLE'),
     }
@@ -445,7 +449,17 @@ def fetch_ventas(category_id, tipo_venta, etapa_ok_name):
         '!STAGE_ID': stage_id,
     }, select=SELECT_VENTA)
 
-    resolve_users([d.get('ASSIGNED_BY_ID') for d in deals + ganados_mes + con_fecha_mes])
+    # --- diagnostico: TODO negocio de la categoria creado o cerrado en el mes que no
+    # quedo contado (cualquier etapa, abiertos y perdidos incluidos). Sirve para
+    # cuadrar contra reportes de Operaciones que usan otro criterio (fecha de
+    # cierre, pagos, etc.).
+    movidos = list_all('crm.deal.list', filter_={
+        'CATEGORY_ID': category_id,
+        '>=DATE_MODIFY': CONSULTA_DESDE,
+    }, select=SELECT_VENTA)
+
+    resolve_users([d.get('ASSIGNED_BY_ID') for d in deals + ganados_mes + con_fecha_mes + movidos])
+
 
     for d in ganados_mes:
         if d['ID'] in contados:
@@ -469,6 +483,19 @@ def fetch_ventas(category_id, tipo_venta, etapa_ok_name):
         etapas_otras[nombre] += 1
         if d.get('STAGE_SEMANTIC_ID') == 'S':
             CUADRE['otra_etapa_exitosa'].append(_resumen_negocio(d, f'Etapa "{nombre}" (no es "{etapa_ok_name}")'))
+
+    ya_listados = {x['id'] for k in ('fuera_por_fecha', 'otra_etapa_exitosa') for x in CUADRE[k]}
+    for d in movidos:
+        if d['ID'] in contados or d['ID'] in ya_listados:
+            continue
+        creado = _fecha_local(d.get('DATE_CREATE'))
+        cierre = _fecha_local(d.get('CLOSEDATE'))
+        en_mes = lambda x: bool(x) and FECHA_DESDE <= x <= FECHA_HASTA
+        if not (en_mes(creado) or (d.get('STAGE_SEMANTIC_ID') != 'P' and en_mes(cierre))):
+            continue
+        if _num(d.get('OPPORTUNITY')) <= 0:
+            continue
+        CUADRE['no_ganados_del_mes'].append(_resumen_negocio(d, 'No esta en la etapa ganada'))
 
     CUADRE['categorias'][str(category_id)] = {
         'tipo_venta': tipo_venta,
@@ -579,6 +606,29 @@ def fetch_otras_categorias():
         CUADRE['otras_categorias'].append(_resumen_negocio(d, 'Ganado en un pipeline que no es de ventas (1/2/4)'))
 
 
+# Negocios puntuales a revisar en cada cuadre (ej. reclamos de Operaciones). Se
+# pueden agregar mas IDs aqui o via la variable de entorno DIAG_DEAL_IDS="1,2,3".
+DIAG_DEAL_IDS = ['30843']
+
+
+def diagnosticar_negocios():
+    ids = [x.strip() for x in (os.environ.get('DIAG_DEAL_IDS') or '').split(',') if x.strip()] or DIAG_DEAL_IDS
+    res = batch({f'd{i}': f'crm.deal.get?id={i}' for i in ids})
+    out = []
+    for i in ids:
+        d = res.get(f'd{i}')
+        if not d:
+            out.append({'id': i, 'motivo': 'No se pudo leer (no existe o sin permiso)'})
+            continue
+        resolve_users([d.get('ASSIGNED_BY_ID')])
+        r = _resumen_negocio(d, 'Revision puntual', {
+            'fecha_facturacion_cruda': d.get(CAMPO_FACT),
+            'categoria_id': d.get('CATEGORY_ID'), 'stage_id': d.get('STAGE_ID'),
+        })
+        out.append(r)
+    CUADRE['negocios_consultados'] = out
+
+
 def escribir_cuadre():
     from datetime import datetime, timezone
     base_dir = os.environ.get('PIPELINE_BASE_DIR') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -587,6 +637,7 @@ def escribir_cuadre():
     CUADRE['generado_utc'] = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
     CUADRE['rango'] = {'desde': FECHA_DESDE, 'hasta': FECHA_HASTA, 'ym': YM}
     CUADRE['batch_fallidos'] = len(BATCH_FALLIDOS)
+    CUADRE['batch_fallidos_detalle'] = [c.split('?')[0] + '?' + c.split('?')[1][:40] for c in BATCH_FALLIDOS][:50]
     for a in CUADRE['por_asesor'].values():
         for k in a.values():
             k['valor_contado'] = round(k['valor_contado'], 2)
@@ -618,26 +669,32 @@ def escribir_cuadre():
         ('valor_por_ingreso', 'Negocios contados por su Ingreso (productos en $0 o ilegibles)'),
         ('valor_distinto', 'Negocios donde Precio x Cantidad de productos no coincide con el Ingreso'),
         ('cantidades_raras', 'Lineas con precio/cantidad sospechosos'),
+        ('no_ganados_del_mes', 'Negocios creados o cerrados en el mes que NO estan ganados (abiertos o perdidos, con valor)'),
+        ('negocios_consultados', 'Revision puntual de negocios'),
     ]
     for key, titulo in secciones:
-        items = CUADRE[key]
+        items = CUADRE.get(key) or []
         L.append('')
         L.append(f'## {titulo} ({len(items)})')
         if not items:
             L.append('Ninguno.')
             continue
-        L.append('| ID | Asesor | Pipeline | Etapa | F. facturacion | F. cierre | Ingreso | Detalle |')
-        L.append('|---|---|---|---|---|---|---:|---|')
+        L.append('| ID | Asesor | Pipeline | Etapa | F. creacion | F. facturacion | F. cierre | Ingreso | Detalle |')
+        L.append('|---|---|---|---|---|---|---|---:|---|')
         for it in sorted(items, key=lambda x: (str(x.get('asesor')), str(x.get('id')))):
             det = it.get('motivo') or ''
             if 'valor_productos' in it:
                 det += f" (productos {money(it['valor_productos'])})"
             if 'producto' in it:
                 det += f" ({it['producto']}: precio {it['precio']}, cant. {it['cantidad']})"
+            it = {**{'asesor': '-', 'pipeline': '-', 'etapa': '-', 'fecha_facturacion': None, 'fecha_cierre': None, 'ingreso': 0}, **it}
+            if it.get('fecha_facturacion_cruda') is not None or 'stage_id' in it:
+                det = (det + f" [cat {it.get('categoria_id')}, stage {it.get('stage_id')}, fact. cruda {it.get('fecha_facturacion_cruda')!r}]").strip()
             L.append(f"| {it['id']} | {it['asesor']} | {it['pipeline']} | {it['etapa']} | "
-                     f"{it['fecha_facturacion'] or '-'} | {it['fecha_cierre'] or '-'} | {money(it['ingreso'])} | {det} |")
+                     f"{it.get('fecha_creacion') or '-'} | {it['fecha_facturacion'] or '-'} | {it['fecha_cierre'] or '-'} | {money(it['ingreso'])} | {det} |")
     L.append('')
-    L.append(f"Consultas a Bitrix que fallaron tras reintentos: {CUADRE['batch_fallidos']}")
+    L.append(f"Consultas a Bitrix que fallaron tras reintentos: {CUADRE['batch_fallidos']} "
+             f"{CUADRE['batch_fallidos_detalle']}")
     with open(os.path.join(diag_dir, 'CUADRE_VENTAS.md'), 'w', encoding='utf-8') as f:
         f.write('\n'.join(L) + '\n')
     print(f'Cuadre escrito en {diag_dir} -- fuera_por_fecha={len(CUADRE["fuera_por_fecha"])}, '
@@ -720,6 +777,11 @@ if __name__ == '__main__':
 
     df_gest = fetch_gestiones('gestiones.xls')
     to_export_html(df_gest, os.path.join(OUT_DIR, 'gestiones.xls'))
+
+    try:
+        diagnosticar_negocios()
+    except Exception as e:
+        print('  (diagnostico de negocios puntuales fallo:', e, ')')
 
     try:
         escribir_cuadre()
