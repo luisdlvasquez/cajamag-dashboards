@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-09-30 00:22 UTC",
+ "generado_utc": "2026-09-30 16:50 UTC",
  "rango": {
   "desde": "2026-09-01",
   "hasta": "2026-09-30",
@@ -9,10 +9,10 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 287,
+   "negocios_contados": 300,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 34742972.0,
-   "ingreso_bitrix_de_esos_negocios": 34742972.0
+   "valor_contado": 36511572.0,
+   "ingreso_bitrix_de_esos_negocios": 36511572.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -336,23 +336,23 @@
  "por_asesor": {
   "Oriana Yadith Felizzola Ortega": {
    "Individual": {
-    "negocios": 86,
-    "valor_contado": 8368372.0,
-    "ingreso_bitrix": 8368372.0
+    "negocios": 87,
+    "valor_contado": 9620372.0,
+    "ingreso_bitrix": 9620372.0
    }
   },
   "Maria Jose Garcia Guaman": {
    "Individual": {
-    "negocios": 10,
-    "valor_contado": 11677200.0,
-    "ingreso_bitrix": 11677200.0
+    "negocios": 11,
+    "valor_contado": 11745200.0,
+    "ingreso_bitrix": 11745200.0
    }
   },
   "Martha Lorena Celedon de la Rosa": {
    "Individual": {
-    "negocios": 14,
-    "valor_contado": 1583100.0,
-    "ingreso_bitrix": 1583100.0
+    "negocios": 16,
+    "valor_contado": 1643100.0,
+    "ingreso_bitrix": 1643100.0
    },
    "Empresarial": {
     "negocios": 1,
@@ -374,9 +374,9 @@
   },
   "Jessica Luque Garcia": {
    "Individual": {
-    "negocios": 24,
-    "valor_contado": 1473700.0,
-    "ingreso_bitrix": 1473700.0
+    "negocios": 30,
+    "valor_contado": 1637300.0,
+    "ingreso_bitrix": 1637300.0
    }
   },
   "Victoria Manjarres Jimenez": {
@@ -398,9 +398,9 @@
   },
   "Karen Liseth Cantillo De la Cruz": {
    "Individual": {
-    "negocios": 17,
-    "valor_contado": 1080400.0,
-    "ingreso_bitrix": 1080400.0
+    "negocios": 20,
+    "valor_contado": 1305400.0,
+    "ingreso_bitrix": 1305400.0
    },
    "Empresarial": {
     "negocios": 1,
@@ -503,8 +503,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
-     "con_valor": 91
+     "ventas": 300,
+     "con_valor": 96
     },
     "Empresarial": {
      "ventas": 23,
@@ -549,8 +549,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
-     "con_valor": 196
+     "ventas": 300,
+     "con_valor": 203
     },
     "Empresarial": {
      "ventas": 23,
@@ -562,6 +562,12 @@
     }
    },
    "ejemplos": [
+    {
+     "crudo": [
+      102
+     ],
+     "texto": "Turismo Social"
+    },
     {
      "crudo": [
       101
@@ -591,12 +597,6 @@
       97
      ],
      "texto": "Recreación"
-    },
-    {
-     "crudo": [
-      102
-     ],
-     "texto": "Turismo Social"
     }
    ]
   },
@@ -607,7 +607,7 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
+     "ventas": 300,
      "con_valor": 49
     },
     "Empresarial": {
@@ -665,7 +665,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
+     "ventas": 300,
      "con_valor": 0
     },
     "Empresarial": {
@@ -711,8 +711,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
-     "con_valor": 1
+     "ventas": 300,
+     "con_valor": 2
     },
     "Empresarial": {
      "ventas": 23,
@@ -724,6 +724,14 @@
     }
    },
    "ejemplos": [
+    {
+     "crudo": {
+      "id": 53295,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=27418&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=53295",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=27418&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=53295"
+     },
+     "texto": "{'id': 53295, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=27418&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=53295', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=27418&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=53295'}"
+    },
     {
      "crudo": {
       "id": 52527,
@@ -763,14 +771,6 @@
       "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33660&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52827"
      },
      "texto": "{'id': 52827, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33660&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52827', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33660&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52827'}"
-    },
-    {
-     "crudo": {
-      "id": 52830,
-      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33661&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52830",
-      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33661&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52830"
-     },
-     "texto": "{'id': 52830, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33661&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52830', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33661&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52830'}"
     }
    ]
   },
@@ -781,7 +781,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
+     "ventas": 300,
      "con_valor": 0
     },
     "Empresarial": {
@@ -851,7 +851,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
+     "ventas": 300,
      "con_valor": 0
     },
     "Empresarial": {
@@ -872,7 +872,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
+     "ventas": 300,
      "con_valor": 0
     },
     "Empresarial": {
@@ -893,7 +893,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
+     "ventas": 300,
      "con_valor": 0
     },
     "Empresarial": {
@@ -914,7 +914,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
+     "ventas": 300,
      "con_valor": 0
     },
     "Empresarial": {
@@ -935,7 +935,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
+     "ventas": 300,
      "con_valor": 0
     },
     "Empresarial": {
@@ -956,7 +956,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
+     "ventas": 300,
      "con_valor": 0
     },
     "Empresarial": {
@@ -977,7 +977,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
+     "ventas": 300,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1023,7 +1023,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
+     "ventas": 300,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1044,8 +1044,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
-     "con_valor": 287
+     "ventas": 300,
+     "con_valor": 300
     },
     "Empresarial": {
      "ventas": 23,
@@ -1090,7 +1090,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
+     "ventas": 300,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1111,7 +1111,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
+     "ventas": 300,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1132,7 +1132,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 287,
+     "ventas": 300,
      "con_valor": 0
     },
     "Empresarial": {
