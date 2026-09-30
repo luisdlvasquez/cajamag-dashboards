@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-09-29 18:59 UTC",
+ "generado_utc": "2026-09-30 00:22 UTC",
  "rango": {
   "desde": "2026-09-01",
   "hasta": "2026-09-30",
@@ -9,10 +9,10 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 264,
+   "negocios_contados": 287,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 33866772.0,
-   "ingreso_bitrix_de_esos_negocios": 33866772.0
+   "valor_contado": 34742972.0,
+   "ingreso_bitrix_de_esos_negocios": 34742972.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -336,16 +336,16 @@
  "por_asesor": {
   "Oriana Yadith Felizzola Ortega": {
    "Individual": {
-    "negocios": 72,
-    "valor_contado": 7861972.0,
-    "ingreso_bitrix": 7861972.0
+    "negocios": 86,
+    "valor_contado": 8368372.0,
+    "ingreso_bitrix": 8368372.0
    }
   },
   "Maria Jose Garcia Guaman": {
    "Individual": {
-    "negocios": 8,
-    "valor_contado": 11571200.0,
-    "ingreso_bitrix": 11571200.0
+    "negocios": 10,
+    "valor_contado": 11677200.0,
+    "ingreso_bitrix": 11677200.0
    }
   },
   "Martha Lorena Celedon de la Rosa": {
@@ -374,16 +374,16 @@
   },
   "Jessica Luque Garcia": {
    "Individual": {
-    "negocios": 20,
-    "valor_contado": 1403800.0,
-    "ingreso_bitrix": 1403800.0
+    "negocios": 24,
+    "valor_contado": 1473700.0,
+    "ingreso_bitrix": 1473700.0
    }
   },
   "Victoria Manjarres Jimenez": {
    "Individual": {
-    "negocios": 1,
-    "valor_contado": 201400.0,
-    "ingreso_bitrix": 201400.0
+    "negocios": 2,
+    "valor_contado": 335300.0,
+    "ingreso_bitrix": 335300.0
    },
    "Empresarial": {
     "negocios": 3,
@@ -398,9 +398,9 @@
   },
   "Karen Liseth Cantillo De la Cruz": {
    "Individual": {
-    "negocios": 16,
-    "valor_contado": 1065400.0,
-    "ingreso_bitrix": 1065400.0
+    "negocios": 17,
+    "valor_contado": 1080400.0,
+    "ingreso_bitrix": 1080400.0
    },
    "Empresarial": {
     "negocios": 1,
@@ -422,9 +422,9 @@
   },
   "Marvis Yarima Gonzalez Gil": {
    "Individual": {
-    "negocios": 21,
-    "valor_contado": 1713600.0,
-    "ingreso_bitrix": 1713600.0
+    "negocios": 22,
+    "valor_contado": 1758600.0,
+    "ingreso_bitrix": 1758600.0
    },
    "Empresarial": {
     "negocios": 2,
@@ -503,8 +503,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
-     "con_valor": 90
+     "ventas": 287,
+     "con_valor": 91
     },
     "Empresarial": {
      "ventas": 23,
@@ -549,8 +549,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
-     "con_valor": 179
+     "ventas": 287,
+     "con_valor": 196
     },
     "Empresarial": {
      "ventas": 23,
@@ -607,7 +607,7 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 49
     },
     "Empresarial": {
@@ -665,7 +665,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 0
     },
     "Empresarial": {
@@ -711,7 +711,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 1
     },
     "Empresarial": {
@@ -781,7 +781,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 0
     },
     "Empresarial": {
@@ -851,7 +851,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 0
     },
     "Empresarial": {
@@ -872,7 +872,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 0
     },
     "Empresarial": {
@@ -893,7 +893,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 0
     },
     "Empresarial": {
@@ -914,7 +914,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 0
     },
     "Empresarial": {
@@ -935,7 +935,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 0
     },
     "Empresarial": {
@@ -956,7 +956,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 0
     },
     "Empresarial": {
@@ -977,7 +977,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1023,7 +1023,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1044,8 +1044,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
-     "con_valor": 264
+     "ventas": 287,
+     "con_valor": 287
     },
     "Empresarial": {
      "ventas": 23,
@@ -1090,7 +1090,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1111,7 +1111,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1132,7 +1132,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 287,
      "con_valor": 0
     },
     "Empresarial": {
