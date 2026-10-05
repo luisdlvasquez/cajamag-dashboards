@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-10-04 23:58 UTC",
+ "generado_utc": "2026-10-05 19:48 UTC",
  "rango": {
   "desde": "2026-09-01",
   "hasta": "2026-09-30",
@@ -17,12 +17,12 @@
   "1": {
    "tipo_venta": "Empresarial",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 24,
+   "negocios_contados": 27,
    "otras_etapas_con_fecha_en_el_mes": {
     "CERRADO PERDIDO": 1
    },
-   "valor_contado": 41607200.0,
-   "ingreso_bitrix_de_esos_negocios": 41607200.0
+   "valor_contado": 46673700.0,
+   "ingreso_bitrix_de_esos_negocios": 46673700.0
   },
   "4": {
    "tipo_venta": "IFT",
@@ -387,9 +387,9 @@
     "ingreso_bitrix": 942000.0
    },
    "Empresarial": {
-    "negocios": 3,
-    "valor_contado": 3382500.0,
-    "ingreso_bitrix": 3382500.0
+    "negocios": 5,
+    "valor_contado": 3976200.0,
+    "ingreso_bitrix": 3976200.0
    }
   },
   "Jessica Luque Garcia": {
@@ -406,9 +406,9 @@
     "ingreso_bitrix": 335300.0
    },
    "Empresarial": {
-    "negocios": 3,
-    "valor_contado": 12786400.0,
-    "ingreso_bitrix": 12786400.0
+    "negocios": 4,
+    "valor_contado": 17259200.0,
+    "ingreso_bitrix": 17259200.0
    },
    "IFT": {
     "negocios": 1,
@@ -534,7 +534,7 @@
      "con_valor": 115
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 9
     },
     "IFT": {
@@ -580,8 +580,8 @@
      "con_valor": 236
     },
     "Empresarial": {
-     "ventas": 24,
-     "con_valor": 11
+     "ventas": 27,
+     "con_valor": 13
     },
     "IFT": {
      "ventas": 1,
@@ -638,7 +638,7 @@
      "con_valor": 65
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 0
     },
     "IFT": {
@@ -696,7 +696,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 8
     },
     "IFT": {
@@ -742,8 +742,8 @@
      "con_valor": 2
     },
     "Empresarial": {
-     "ventas": 24,
-     "con_valor": 5
+     "ventas": 27,
+     "con_valor": 6
     },
     "IFT": {
      "ventas": 1,
@@ -812,7 +812,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 7
     },
     "IFT": {
@@ -882,7 +882,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 0
     },
     "IFT": {
@@ -903,7 +903,7 @@
      "con_valor": 1
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 0
     },
     "IFT": {
@@ -929,7 +929,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 0
     },
     "IFT": {
@@ -950,7 +950,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 0
     },
     "IFT": {
@@ -971,7 +971,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 0
     },
     "IFT": {
@@ -992,7 +992,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 0
     },
     "IFT": {
@@ -1013,7 +1013,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 18
     },
     "IFT": {
@@ -1059,7 +1059,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 0
     },
     "IFT": {
@@ -1080,8 +1080,8 @@
      "con_valor": 346
     },
     "Empresarial": {
-     "ventas": 24,
-     "con_valor": 24
+     "ventas": 27,
+     "con_valor": 27
     },
     "IFT": {
      "ventas": 1,
@@ -1126,7 +1126,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 0
     },
     "IFT": {
@@ -1147,7 +1147,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 0
     },
     "IFT": {
@@ -1168,7 +1168,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 24,
+     "ventas": 27,
      "con_valor": 0
     },
     "IFT": {
