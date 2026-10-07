@@ -3,25 +3,25 @@
  "total_retirado": 5066500.0,
  "negocios": [
   {
-   "id": "34433",
-   "motivo": "Duplicado del negocio 32156 (CER SAS, $4.472.800). El original ya esta en el informe de cierre del contrato 2026-239 como Venta de Gerencia. Cargado el 5-oct-2026.",
-   "asesor": "Victoria Manjarres Jimenez",
+   "id": "32156",
+   "motivo": "Venta de CER SAS ($4.472.800) cargada a nombre de Eliana Atuesta, que no debia cargarla. La venta valida es la que cargo la asesora: negocio 34433 (Victoria Manjarres). Confirmado por Luis el 7-oct-2026.",
+   "asesor": "Eliana Del Socorro Atuesta Oñate",
    "tipo_venta": "Empresarial",
-   "fecha_facturacion": "2026-09-10",
+   "fecha_facturacion": "2026-09-11",
    "valor": 4472800.0
   },
   {
-   "id": "34470",
-   "motivo": "Duplicado del negocio 32163 (CER SAS, $253.200). Cargado el 5-oct-2026.",
-   "asesor": "Martha Cabrera Montes",
+   "id": "32163",
+   "motivo": "Venta de CER SAS ($253.200) cargada a nombre de Eliana Atuesta. La venta valida es el negocio 34470 (Martha Cabrera). Confirmado por Luis el 7-oct-2026.",
+   "asesor": "Eliana Del Socorro Atuesta Oñate",
    "tipo_venta": "Empresarial",
    "fecha_facturacion": "2026-09-11",
    "valor": 253200.0
   },
   {
-   "id": "34475",
-   "motivo": "Duplicado del negocio 32173 (CER SAS, $340.500). Cargado el 5-oct-2026.",
-   "asesor": "Martha Cabrera Montes",
+   "id": "32173",
+   "motivo": "Venta de CER SAS ($340.500) cargada a nombre de Eliana Atuesta. La venta valida es el negocio 34475 (Martha Cabrera). Confirmado por Luis el 7-oct-2026.",
+   "asesor": "Eliana Del Socorro Atuesta Oñate",
    "tipo_venta": "Empresarial",
    "fecha_facturacion": "2026-09-11",
    "valor": 340500.0

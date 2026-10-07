@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-09 (corrida 2026-10-07 16:48 UTC)
+# Cuadre de ventas 2026-09 (corrida 2026-10-07 17:07 UTC)
 
 Rango: 2026-09-01 a 2026-09-30. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -15,9 +15,20 @@ Posibles ventas no contadas, por asesor (revisar con Operaciones):
 
 ## Retirados del tablero por auditoria: 3 negocios, $5.066.500
 Siguen ganados en Bitrix y por eso estan en los totales de abajo, pero el tablero NO los suma.
-- #34433 Victoria Manjarres Jimenez: $4.472.800. Duplicado del negocio 32156 (CER SAS, $4.472.800). El original ya esta en el informe de cierre del contrato 2026-239 como Venta de Gerencia. Cargado el 5-oct-2026.
-- #34470 Martha Cabrera Montes: $253.200. Duplicado del negocio 32163 (CER SAS, $253.200). Cargado el 5-oct-2026.
-- #34475 Martha Cabrera Montes: $340.500. Duplicado del negocio 32173 (CER SAS, $340.500). Cargado el 5-oct-2026.
+- #32156 Eliana Del Socorro Atuesta Oñate: $4.472.800. Venta de CER SAS ($4.472.800) cargada a nombre de Eliana Atuesta, que no debia cargarla. La venta valida es la que cargo la asesora: negocio 34433 (Victoria Manjarres). Confirmado por Luis el 7-oct-2026.
+- #32163 Eliana Del Socorro Atuesta Oñate: $253.200. Venta de CER SAS ($253.200) cargada a nombre de Eliana Atuesta. La venta valida es el negocio 34470 (Martha Cabrera). Confirmado por Luis el 7-oct-2026.
+- #32173 Eliana Del Socorro Atuesta Oñate: $340.500. Venta de CER SAS ($340.500) cargada a nombre de Eliana Atuesta. La venta valida es el negocio 34475 (Martha Cabrera). Confirmado por Luis el 7-oct-2026.
+
+## El mismo soporte de pago en mas de un negocio: 8 casos (4 con el mismo valor)
+Mismo archivo y mismo valor = casi seguro venta duplicada. Mismo archivo con valores distintos suele ser un solo pago para varias compras.
+- **MISMO VALOR** #32156 Eliana Del Socorro Atuesta Oñate $4.472.800 (2026-09-11); #34433 Victoria Manjarres Jimenez $4.472.800 (2026-09-10)
+- **MISMO VALOR** #32163 Eliana Del Socorro Atuesta Oñate $253.200 (2026-09-11); #34470 Martha Cabrera Montes $253.200 (2026-09-11)
+- **MISMO VALOR** #32173 Eliana Del Socorro Atuesta Oñate $340.500 (2026-09-11); #34475 Martha Cabrera Montes $340.500 (2026-09-11)
+- **MISMO VALOR** #33734 Karen Liseth Cantillo De la Cruz $45.000 (2026-09-24); #33742 Jessica Luque Garcia $45.000 (2026-09-24)
+- #32087 Bienvenida Lopez Hurtado $46.000 (2026-09-10); #33654 Bienvenida Lopez Hurtado $30.000 (2026-09-21)
+- #33619 Jessica Luque Garcia $22.900 (2026-09-23); #34127 Jessica Luque Garcia $24.200 (2026-09-22)
+- #33638 Holman Marin Romero $115.000 (2026-09-22); #33647 Holman Marin Romero $40.500 (2026-09-24)
+- #34255 Holman Marin Romero $30.000 (2026-09-29); #34257 Holman Marin Romero $92.000 (2026-09-30)
 
 ## Totales contados por pipeline
 - Individual (pipeline 2, etapa CERRADO GANADO): 347 negocios, $40.690.572
