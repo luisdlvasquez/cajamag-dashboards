@@ -1,163 +1,237 @@
 {
- "corrida_mes": "2026-09",
+ "corrida_mes": "2026-10",
  "negocios": [
   {
-   "negocio": "24725",
+   "negocio": "34264",
    "asesor": "Martha Cabrera Montes",
-   "mes_facturacion": "2026-06",
-   "fecha_facturacion": "2026-06-28",
-   "valor": 72800.0,
-   "decision": "ya contada en su mes (coincide asesor, cliente, valor y fecha)",
-   "coincide_con": [
-    {
-     "fecha": "2026-06-28",
-     "valor": 72800.0,
-     "detalle": "VENTA DE ENTRADAS A PANACA VIAJERO PRIMER FIN DE SEMANA",
-     "cliente": "LAURA RIVADENEIRA PINTO"
-    }
-   ]
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 110000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
   },
   {
-   "negocio": "27540",
-   "asesor": "Jessica Luque Garcia",
-   "mes_facturacion": "2026-08",
-   "fecha_facturacion": "2026-08-07",
-   "valor": 140300.0,
-   "decision": "SUMADA a 2026-08"
+   "negocio": "34270",
+   "asesor": "Martha Cabrera Montes",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 70000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
   },
   {
-   "negocio": "31060",
+   "negocio": "34272",
+   "asesor": "Martha Cabrera Montes",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 110000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34274",
+   "asesor": "Martha Cabrera Montes",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 110000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34321",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-29",
+   "valor": 15000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34323",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-29",
+   "valor": 15000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34325",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-29",
+   "valor": 30000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34327",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-29",
+   "valor": 126000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34329",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 15000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34331",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 15000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34333",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 15000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34335",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 15000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34337",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 20000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34339",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 15000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34341",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 20000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34343",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 15000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34345",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 34500.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34347",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 56400.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34349",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 10400.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34376",
+   "asesor": "Elicenith Carvajalino Del Toro",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 220000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34404",
+   "asesor": "Holman Marin Romero",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-16",
+   "valor": 114600.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34406",
+   "asesor": "Holman Marin Romero",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-16",
+   "valor": 114600.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34407",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 40500.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
+  },
+  {
+   "negocio": "34660",
    "asesor": "Marvis Yarima Gonzalez Gil",
-   "mes_facturacion": "2026-08",
-   "fecha_facturacion": "2026-08-27",
-   "valor": 361000.0,
-   "decision": "ya contada en su mes (coincide asesor, cliente, valor y fecha)",
-   "coincide_con": [
-    {
-     "fecha": "2026-08-27",
-     "valor": 76300.0,
-     "detalle": "PASADIA CARIBE AVENTURA NIÑO",
-     "cliente": "CORREA FONSECA FELIPE ANTONIO CORREA FONSECA"
-    },
-    {
-     "fecha": "2026-08-27",
-     "valor": 284700.0,
-     "detalle": "PASADIA CARIBE AVENTURA ADULTO",
-     "cliente": "CORREA FONSECA FELIPE ANTONIO CORREA FONSECA"
-    }
-   ]
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-30",
+   "valor": 40500.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
   },
   {
-   "negocio": "31960",
-   "asesor": "Karen Patricia Ballesteros Paba",
-   "mes_facturacion": "2026-08",
-   "fecha_facturacion": "2026-08-16",
-   "valor": 46000.0,
-   "decision": "ya contada en su mes (coincide asesor, cliente, valor y fecha)",
-   "coincide_con": [
-    {
-     "fecha": "2026-08-16",
-     "valor": 46000.0,
-     "detalle": "CINEMARK",
-     "cliente": "MARA LUCIA PADILLA MONTES"
-    }
-   ]
+   "negocio": "34390",
+   "asesor": "Maria Jose Garcia Guaman",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-21",
+   "valor": 661000.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
   },
   {
-   "negocio": "31963",
-   "asesor": "Karen Patricia Ballesteros Paba",
-   "mes_facturacion": "2026-08",
-   "fecha_facturacion": "2026-08-21",
-   "valor": 28000.0,
-   "decision": "ya contada en su mes (coincide asesor, cliente, valor y fecha)",
-   "coincide_con": [
-    {
-     "fecha": "2026-08-21",
-     "valor": 28000.0,
-     "detalle": "CINEMARK",
-     "cliente": "ALEXANDER CALDERON BARON"
-    }
-   ]
+   "negocio": "34392",
+   "asesor": "Maria Jose Garcia Guaman",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-21",
+   "valor": 264400.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
   },
   {
-   "negocio": "31964",
-   "asesor": "Oriana Yadith Felizzola Ortega",
-   "mes_facturacion": "2026-08",
-   "fecha_facturacion": "2026-08-11",
-   "valor": 46000.0,
-   "decision": "ya contada en su mes (coincide asesor, cliente, valor y fecha)",
-   "coincide_con": [
-    {
-     "fecha": "2026-08-11",
-     "valor": 46000.0,
-     "detalle": "BONO CINEMARK",
-     "cliente": "SANDRY LUZ PADILLA BORREGO"
-    }
-   ]
+   "negocio": "34433",
+   "asesor": "Victoria Manjarres Jimenez",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-10",
+   "valor": 4472800.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
   },
   {
-   "negocio": "31965",
-   "asesor": "Karen Patricia Ballesteros Paba",
-   "mes_facturacion": "2026-08",
-   "fecha_facturacion": "2026-08-27",
-   "valor": 28000.0,
-   "decision": "ya contada en su mes (coincide asesor, cliente, valor y fecha)",
-   "coincide_con": [
-    {
-     "fecha": "2026-08-27",
-     "valor": 28000.0,
-     "detalle": "CINEMARK",
-     "cliente": "BEATRIZ ELENA POSADA PALACIO"
-    }
-   ]
+   "negocio": "34470",
+   "asesor": "Martha Cabrera Montes",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-11",
+   "valor": 253200.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
   },
   {
-   "negocio": "31967",
-   "asesor": "Oriana Yadith Felizzola Ortega",
-   "mes_facturacion": "2026-08",
-   "fecha_facturacion": "2026-08-01",
-   "valor": 115000.0,
-   "decision": "ya contada en su mes (coincide asesor, cliente, valor y fecha)",
-   "coincide_con": [
-    {
-     "fecha": "2026-08-01",
-     "valor": 115000.0,
-     "detalle": "BONO CINEMARK",
-     "cliente": "DARLYN YOHANA RUIZ OROZCO"
-    }
-   ]
-  },
-  {
-   "negocio": "31969",
-   "asesor": "Oriana Yadith Felizzola Ortega",
-   "mes_facturacion": "2026-08",
-   "fecha_facturacion": "2026-08-21",
-   "valor": 46000.0,
-   "decision": "ya contada en su mes (coincide asesor, cliente, valor y fecha)",
-   "coincide_con": [
-    {
-     "fecha": "2026-08-21",
-     "valor": 46000.0,
-     "detalle": "BONO CINEMARK",
-     "cliente": "YEIFER HADID GOMEZ VILORIA"
-    }
-   ]
-  },
-  {
-   "negocio": "31970",
-   "asesor": "Oriana Yadith Felizzola Ortega",
-   "mes_facturacion": "2026-08",
-   "fecha_facturacion": "2026-08-03",
-   "valor": 23000.0,
-   "decision": "ya contada en su mes (coincide asesor, cliente, valor y fecha)",
-   "coincide_con": [
-    {
-     "fecha": "2026-08-03",
-     "valor": 23000.0,
-     "detalle": "BONO CINEMARK",
-     "cliente": "YURANYS YOHANA SERNA SEVILLA"
-    }
-   ]
+   "negocio": "34475",
+   "asesor": "Martha Cabrera Montes",
+   "mes_facturacion": "2026-09",
+   "fecha_facturacion": "2026-09-11",
+   "valor": 340500.0,
+   "decision": "ya contada en su mes (mismo ID de negocio)"
   }
  ]
 }

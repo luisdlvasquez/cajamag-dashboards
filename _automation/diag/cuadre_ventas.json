@@ -1,324 +1,458 @@
 {
- "generado_utc": "2026-10-07 00:39 UTC",
+ "generado_utc": "2026-10-07 14:19 UTC",
  "rango": {
-  "desde": "2026-09-01",
-  "hasta": "2026-09-30",
-  "ym": "2026-09"
+  "desde": "2026-10-01",
+  "hasta": "2026-10-31",
+  "ym": "2026-10"
  },
  "categorias": {
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 347,
+   "negocios_contados": 119,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 40690572.0,
-   "ingreso_bitrix_de_esos_negocios": 40690572.0
+   "valor_contado": 19561582.0,
+   "ingreso_bitrix_de_esos_negocios": 19561582.0
   },
   "1": {
    "tipo_venta": "Empresarial",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 27,
-   "otras_etapas_con_fecha_en_el_mes": {
-    "CERRADO PERDIDO": 1
-   },
-   "valor_contado": 46673700.0,
-   "ingreso_bitrix_de_esos_negocios": 46673700.0
+   "negocios_contados": 2,
+   "otras_etapas_con_fecha_en_el_mes": {},
+   "valor_contado": 2154000.0,
+   "ingreso_bitrix_de_esos_negocios": 2154000.0
   },
   "4": {
    "tipo_venta": "IFT",
    "etapa_contada": "CERRADO MATRICULARO",
-   "negocios_contados": 1,
+   "negocios_contados": 4,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 1449700.0,
-   "ingreso_bitrix_de_esos_negocios": 1449700.0
+   "valor_contado": 3347900.0,
+   "ingreso_bitrix_de_esos_negocios": 3347900.0
   }
  },
  "fuera_por_fecha": [
   {
-   "id": "24725",
+   "id": "34264",
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO GANADO",
    "asesor": "Martha Cabrera Montes",
-   "fecha_facturacion": "2026-06-28",
-   "fecha_cierre": "2026-09-01",
-   "fecha_creacion": "2026-06-30",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-01",
+   "fecha_creacion": "2026-10-01",
    "semantica": "S",
-   "ingreso": 72800.0,
-   "titulo": " (24725)",
-   "motivo": "Fecha de facturacion 2026-06-28 fuera del mes (cerrado 2026-09-01)"
+   "ingreso": 110000.0,
+   "titulo": " (34264)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-01)"
   },
   {
-   "id": "27540",
+   "id": "34270",
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO GANADO",
-   "asesor": "Jessica Luque Garcia",
-   "fecha_facturacion": "2026-08-07",
-   "fecha_cierre": "2026-09-16",
-   "fecha_creacion": "2026-08-03",
+   "asesor": "Martha Cabrera Montes",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-01",
+   "fecha_creacion": "2026-10-01",
    "semantica": "S",
-   "ingreso": 140300.0,
-   "titulo": " (27540)",
-   "motivo": "Fecha de facturacion 2026-08-07 fuera del mes (cerrado 2026-09-16)"
+   "ingreso": 70000.0,
+   "titulo": " (34270)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-01)"
   },
   {
-   "id": "31060",
+   "id": "34272",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Martha Cabrera Montes",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-01",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 110000.0,
+   "titulo": " (34272)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-01)"
+  },
+  {
+   "id": "34274",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Martha Cabrera Montes",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-01",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 110000.0,
+   "titulo": " (34274)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-01)"
+  },
+  {
+   "id": "34321",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-29",
+   "fecha_cierre": "2026-10-02",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 15000.0,
+   "titulo": " (34321)",
+   "motivo": "Fecha de facturacion 2026-09-29 fuera del mes (cerrado 2026-10-02)"
+  },
+  {
+   "id": "34323",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-29",
+   "fecha_cierre": "2026-10-02",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 15000.0,
+   "titulo": " (34323)",
+   "motivo": "Fecha de facturacion 2026-09-29 fuera del mes (cerrado 2026-10-02)"
+  },
+  {
+   "id": "34325",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-29",
+   "fecha_cierre": "2026-10-02",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 30000.0,
+   "titulo": " (34325)",
+   "motivo": "Fecha de facturacion 2026-09-29 fuera del mes (cerrado 2026-10-02)"
+  },
+  {
+   "id": "34327",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-29",
+   "fecha_cierre": "2026-10-02",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 126000.0,
+   "titulo": " (34327)",
+   "motivo": "Fecha de facturacion 2026-09-29 fuera del mes (cerrado 2026-10-02)"
+  },
+  {
+   "id": "34329",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-02",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 15000.0,
+   "titulo": " (34329)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-02)"
+  },
+  {
+   "id": "34331",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-02",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 15000.0,
+   "titulo": " (34331)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-02)"
+  },
+  {
+   "id": "34333",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-02",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 15000.0,
+   "titulo": " (34333)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-02)"
+  },
+  {
+   "id": "34335",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-02",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 15000.0,
+   "titulo": " (34335)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-02)"
+  },
+  {
+   "id": "34337",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-01",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 20000.0,
+   "titulo": " (34337)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-01)"
+  },
+  {
+   "id": "34339",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-01",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 15000.0,
+   "titulo": " (34339)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-01)"
+  },
+  {
+   "id": "34341",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-01",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 20000.0,
+   "titulo": " (34341)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-01)"
+  },
+  {
+   "id": "34343",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-01",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 15000.0,
+   "titulo": " (34343)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-01)"
+  },
+  {
+   "id": "34345",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-01",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 34500.0,
+   "titulo": " (34345)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-01)"
+  },
+  {
+   "id": "34347",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-01",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 56400.0,
+   "titulo": " (34347)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-01)"
+  },
+  {
+   "id": "34349",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-01",
+   "fecha_creacion": "2026-10-01",
+   "semantica": "S",
+   "ingreso": 10400.0,
+   "titulo": " (34349)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-01)"
+  },
+  {
+   "id": "34376",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Elicenith Carvajalino Del Toro",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-02",
+   "fecha_creacion": "2026-10-02",
+   "semantica": "S",
+   "ingreso": 220000.0,
+   "titulo": " (34376)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-02)"
+  },
+  {
+   "id": "34404",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Holman Marin Romero",
+   "fecha_facturacion": "2026-09-16",
+   "fecha_cierre": "2026-10-02",
+   "fecha_creacion": "2026-10-02",
+   "semantica": "S",
+   "ingreso": 114600.0,
+   "titulo": " (34404)",
+   "motivo": "Fecha de facturacion 2026-09-16 fuera del mes (cerrado 2026-10-02)"
+  },
+  {
+   "id": "34406",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Holman Marin Romero",
+   "fecha_facturacion": "2026-09-16",
+   "fecha_cierre": "2026-10-02",
+   "fecha_creacion": "2026-10-02",
+   "semantica": "S",
+   "ingreso": 114600.0,
+   "titulo": " (34406)",
+   "motivo": "Fecha de facturacion 2026-09-16 fuera del mes (cerrado 2026-10-02)"
+  },
+  {
+   "id": "34407",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "CERRADO GANADO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-02",
+   "fecha_creacion": "2026-10-02",
+   "semantica": "S",
+   "ingreso": 40500.0,
+   "titulo": " (34407)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-02)"
+  },
+  {
+   "id": "34660",
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO GANADO",
    "asesor": "Marvis Yarima Gonzalez Gil",
-   "fecha_facturacion": "2026-08-27",
-   "fecha_cierre": "2026-09-02",
-   "fecha_creacion": "2026-09-02",
+   "fecha_facturacion": "2026-09-30",
+   "fecha_cierre": "2026-10-06",
+   "fecha_creacion": "2026-10-06",
    "semantica": "S",
-   "ingreso": 361000.0,
-   "titulo": " (31060)",
-   "motivo": "Fecha de facturacion 2026-08-27 fuera del mes (cerrado 2026-09-02)"
+   "ingreso": 40500.0,
+   "titulo": " (34660)",
+   "motivo": "Fecha de facturacion 2026-09-30 fuera del mes (cerrado 2026-10-06)"
   },
   {
-   "id": "31960",
-   "pipeline": "VENTA INDIVIDUAL",
+   "id": "34390",
+   "pipeline": "VENTA EMPRESARIAL",
    "etapa": "CERRADO GANADO",
-   "asesor": "Karen Patricia Ballesteros Paba",
-   "fecha_facturacion": "2026-08-16",
-   "fecha_cierre": "2026-09-10",
-   "fecha_creacion": "2026-09-10",
+   "asesor": "Maria Jose Garcia Guaman",
+   "fecha_facturacion": "2026-09-21",
+   "fecha_cierre": "2026-10-02",
+   "fecha_creacion": "2026-10-02",
    "semantica": "S",
-   "ingreso": 46000.0,
-   "titulo": " (31960)",
-   "motivo": "Fecha de facturacion 2026-08-16 fuera del mes (cerrado 2026-09-10)"
+   "ingreso": 661000.0,
+   "titulo": "EDIFICIO TORRE PUERTO SOADO (34390)",
+   "motivo": "Fecha de facturacion 2026-09-21 fuera del mes (cerrado 2026-10-02)"
   },
   {
-   "id": "31963",
-   "pipeline": "VENTA INDIVIDUAL",
+   "id": "34392",
+   "pipeline": "VENTA EMPRESARIAL",
    "etapa": "CERRADO GANADO",
-   "asesor": "Karen Patricia Ballesteros Paba",
-   "fecha_facturacion": "2026-08-21",
-   "fecha_cierre": "2026-09-10",
-   "fecha_creacion": "2026-09-10",
+   "asesor": "Maria Jose Garcia Guaman",
+   "fecha_facturacion": "2026-09-21",
+   "fecha_cierre": "2026-10-02",
+   "fecha_creacion": "2026-10-02",
    "semantica": "S",
-   "ingreso": 28000.0,
-   "titulo": " (31963)",
-   "motivo": "Fecha de facturacion 2026-08-21 fuera del mes (cerrado 2026-09-10)"
+   "ingreso": 264400.0,
+   "titulo": "ORGANIZACION AGAPE SERVICIOS SAS (34392)",
+   "motivo": "Fecha de facturacion 2026-09-21 fuera del mes (cerrado 2026-10-02)"
   },
   {
-   "id": "31964",
-   "pipeline": "VENTA INDIVIDUAL",
+   "id": "34433",
+   "pipeline": "VENTA EMPRESARIAL",
    "etapa": "CERRADO GANADO",
-   "asesor": "Oriana Yadith Felizzola Ortega",
-   "fecha_facturacion": "2026-08-11",
-   "fecha_cierre": "2026-09-10",
-   "fecha_creacion": "2026-09-10",
+   "asesor": "Victoria Manjarres Jimenez",
+   "fecha_facturacion": "2026-09-10",
+   "fecha_cierre": "2026-10-05",
+   "fecha_creacion": "2026-10-05",
    "semantica": "S",
-   "ingreso": 46000.0,
-   "titulo": " (31964)",
-   "motivo": "Fecha de facturacion 2026-08-11 fuera del mes (cerrado 2026-09-10)"
+   "ingreso": 4472800.0,
+   "titulo": "CENTRO DE EXPERIENCIA Y RELACIONAMIENTO CER SAS (34433)",
+   "motivo": "Fecha de facturacion 2026-09-10 fuera del mes (cerrado 2026-10-05)"
   },
   {
-   "id": "31965",
-   "pipeline": "VENTA INDIVIDUAL",
+   "id": "34470",
+   "pipeline": "VENTA EMPRESARIAL",
    "etapa": "CERRADO GANADO",
-   "asesor": "Karen Patricia Ballesteros Paba",
-   "fecha_facturacion": "2026-08-27",
-   "fecha_cierre": "2026-09-10",
-   "fecha_creacion": "2026-09-10",
+   "asesor": "Martha Cabrera Montes",
+   "fecha_facturacion": "2026-09-11",
+   "fecha_cierre": "2026-10-05",
+   "fecha_creacion": "2026-10-05",
    "semantica": "S",
-   "ingreso": 28000.0,
-   "titulo": " (31965)",
-   "motivo": "Fecha de facturacion 2026-08-27 fuera del mes (cerrado 2026-09-10)"
+   "ingreso": 253200.0,
+   "titulo": "CENTRO DE EXPERIENCIA Y RELACIONAMIENTO CER SAS (34470)",
+   "motivo": "Fecha de facturacion 2026-09-11 fuera del mes (cerrado 2026-10-05)"
   },
   {
-   "id": "31967",
-   "pipeline": "VENTA INDIVIDUAL",
+   "id": "34475",
+   "pipeline": "VENTA EMPRESARIAL",
    "etapa": "CERRADO GANADO",
-   "asesor": "Oriana Yadith Felizzola Ortega",
-   "fecha_facturacion": "2026-08-01",
-   "fecha_cierre": "2026-09-10",
-   "fecha_creacion": "2026-09-10",
+   "asesor": "Martha Cabrera Montes",
+   "fecha_facturacion": "2026-09-11",
+   "fecha_cierre": "2026-10-05",
+   "fecha_creacion": "2026-10-05",
    "semantica": "S",
-   "ingreso": 115000.0,
-   "titulo": " (31967)",
-   "motivo": "Fecha de facturacion 2026-08-01 fuera del mes (cerrado 2026-09-10)"
-  },
-  {
-   "id": "31969",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Oriana Yadith Felizzola Ortega",
-   "fecha_facturacion": "2026-08-21",
-   "fecha_cierre": "2026-09-10",
-   "fecha_creacion": "2026-09-10",
-   "semantica": "S",
-   "ingreso": 46000.0,
-   "titulo": " (31969)",
-   "motivo": "Fecha de facturacion 2026-08-21 fuera del mes (cerrado 2026-09-10)"
-  },
-  {
-   "id": "31970",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Oriana Yadith Felizzola Ortega",
-   "fecha_facturacion": "2026-08-03",
-   "fecha_cierre": "2026-09-10",
-   "fecha_creacion": "2026-09-10",
-   "semantica": "S",
-   "ingreso": 23000.0,
-   "titulo": " (31970)",
-   "motivo": "Fecha de facturacion 2026-08-03 fuera del mes (cerrado 2026-09-10)"
+   "ingreso": 340500.0,
+   "titulo": "CENTRO DE EXPERIENCIA Y RELACIONAMIENTO CER SAS (34475)",
+   "motivo": "Fecha de facturacion 2026-09-11 fuera del mes (cerrado 2026-10-05)"
   }
  ],
  "otra_etapa_exitosa": [],
  "otras_categorias": [],
  "valor_distinto": [],
  "valor_por_ingreso": [],
- "cantidades_raras": [
-  {
-   "id": "33401",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Karen Liseth Cantillo De la Cruz",
-   "fecha_facturacion": "2026-09-18",
-   "fecha_cierre": "2026-09-21",
-   "fecha_creacion": "2026-09-21",
-   "semantica": "S",
-   "ingreso": 60000.0,
-   "titulo": " (33401)",
-   "motivo": "Precio/cantidad sospechosos",
-   "producto": "BOLETAS DIA DEL AFILIADO",
-   "precio": 4.0,
-   "cantidad": 15000.0
-  },
-  {
-   "id": "33070",
-   "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Holman Marin Romero",
-   "fecha_facturacion": "2026-09-14",
-   "fecha_cierre": "2026-09-16",
-   "fecha_creacion": "2026-09-16",
-   "semantica": "S",
-   "ingreso": 2437700.0,
-   "titulo": "AIR E SAS ESP (33070)",
-   "motivo": "Precio/cantidad sospechosos",
-   "producto": "Capacitacion lenguaje de seña 20 horas, para 25 personas",
-   "precio": 1.0,
-   "cantidad": 2437700.0
-  }
- ],
+ "cantidades_raras": [],
  "no_ganados_del_mes": [
   {
-   "id": "26938",
+   "id": "26008",
    "pipeline": "VENTA INDIVIDUAL",
    "etapa": "CERRADO PERDIDO",
-   "asesor": "Oriana Yadith Felizzola Ortega",
+   "asesor": "Bienvenida Lopez Hurtado",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-15",
-   "fecha_creacion": "2026-07-27",
-   "semantica": "F",
-   "ingreso": 1391100.0,
-   "titulo": " (26938)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "33688",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "CERRADO GANADO",
-   "asesor": "Jessica Luque Garcia",
-   "fecha_facturacion": "2026-10-05",
    "fecha_cierre": "2026-10-06",
-   "fecha_creacion": "2026-09-24",
-   "semantica": "S",
-   "ingreso": 4400.0,
-   "titulo": " (33688)",
+   "fecha_creacion": "2026-07-13",
+   "semantica": "F",
+   "ingreso": 400400.0,
+   "titulo": " (26008)",
    "motivo": "No esta en la etapa ganada"
   },
   {
-   "id": "28490",
-   "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "APLAZADO",
+   "id": "34563",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "NUEVA OPORTUNIDAD",
    "asesor": "Oriana Yadith Felizzola Ortega",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-14",
-   "fecha_creacion": "2026-08-11",
-   "semantica": "F",
-   "ingreso": 718500.0,
-   "titulo": "TRANSFERPORT S.A.S. (28490)",
+   "fecha_cierre": "2026-10-13",
+   "fecha_creacion": "2026-10-06",
+   "semantica": "P",
+   "ingreso": 8600.0,
+   "titulo": " (34563)",
    "motivo": "No esta en la etapa ganada"
   },
   {
-   "id": "28528",
-   "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "CERRADO PERDIDO",
-   "asesor": "Karen Liseth Cantillo De la Cruz",
-   "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-18",
-   "fecha_creacion": "2026-08-12",
-   "semantica": "F",
-   "ingreso": 4302900.0,
-   "titulo": "FUNDACION MUSEO DEL MAR (28528)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "31546",
-   "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "EN ESPERA DE OC",
+   "id": "34726",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "NUEVA OPORTUNIDAD",
    "asesor": "Bienvenida Lopez Hurtado",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-05",
-   "fecha_creacion": "2026-09-05",
+   "fecha_cierre": "2026-10-07",
+   "fecha_creacion": "2026-10-07",
    "semantica": "P",
-   "ingreso": 1302500.0,
-   "titulo": "CITECNICAS BALTIME DE COLOMBIA SA (31546)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "31548",
-   "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "EN ESPERA DE OC",
-   "asesor": "Bienvenida Lopez Hurtado",
-   "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-05",
-   "fecha_creacion": "2026-09-05",
-   "semantica": "P",
-   "ingreso": 1197500.0,
-   "titulo": "CITECNICAS BALTIME DE COLOMBIA SA (31548)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "31877",
-   "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "PROPUESTA ENVIADA",
-   "asesor": "Karen Liseth Cantillo De la Cruz",
-   "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-09",
-   "fecha_creacion": "2026-09-09",
-   "semantica": "P",
-   "ingreso": 732600.0,
-   "titulo": "SUPER NUEVO MILENIO S.A. (31877)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "32192",
-   "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "EN ESPERA DE OC",
-   "asesor": "Holman Marin Romero",
-   "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-13",
-   "fecha_creacion": "2026-09-11",
-   "semantica": "P",
-   "ingreso": 280900.0,
-   "titulo": "ASOCIACION DE PADRES DE FAMILIA DE HOGARES COMUNITARIOS DE BIENESTAR JUAN XXIII (32192)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "32201",
-   "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "EN ESPERA DE OC",
-   "asesor": "Holman Marin Romero",
-   "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-13",
-   "fecha_creacion": "2026-09-11",
-   "semantica": "P",
-   "ingreso": 161000.0,
-   "titulo": "TRANSPORTES ESPECIALES MACO TOURS SAS (32201)",
+   "ingreso": 30000.0,
+   "titulo": " (34726)",
    "motivo": "No esta en la etapa ganada"
   },
   {
@@ -335,172 +469,118 @@
    "motivo": "No esta en la etapa ganada"
   },
   {
-   "id": "33941",
+   "id": "34652",
    "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "PROPUESTA ENVIADA",
-   "asesor": "Oriana Yadith Felizzola Ortega",
+   "etapa": "EN ESPERA DE OC",
+   "asesor": "Marvis Yarima Gonzalez Gil",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-09-28",
-   "fecha_creacion": "2026-09-28",
+   "fecha_cierre": "2026-10-06",
+   "fecha_creacion": "2026-10-06",
    "semantica": "P",
-   "ingreso": 549600.0,
-   "titulo": "UNIVERSAL GAS S A S (33941)",
+   "ingreso": 1280500.0,
+   "titulo": "COMERCIALIZADORA DE SERVICIOS FINANCIEROS S A S (34652)",
    "motivo": "No esta en la etapa ganada"
   }
  ],
  "por_asesor": {
-  "Oriana Yadith Felizzola Ortega": {
-   "Individual": {
-    "negocios": 93,
-    "valor_contado": 9830572.0,
-    "ingreso_bitrix": 9830572.0
-   }
-  },
-  "Maria Jose Garcia Guaman": {
+  "Jessica Luque Garcia": {
    "Individual": {
     "negocios": 12,
-    "valor_contado": 11971600.0,
-    "ingreso_bitrix": 11971600.0
-   },
-   "Empresarial": {
-    "negocios": 2,
-    "valor_contado": 925400.0,
-    "ingreso_bitrix": 925400.0
-   }
-  },
-  "Martha Lorena Celedon de la Rosa": {
-   "Individual": {
-    "negocios": 16,
-    "valor_contado": 1643100.0,
-    "ingreso_bitrix": 1643100.0
-   },
-   "Empresarial": {
-    "negocios": 1,
-    "valor_contado": 3300000.0,
-    "ingreso_bitrix": 3300000.0
+    "valor_contado": 265000.0,
+    "ingreso_bitrix": 265000.0
    }
   },
   "Martha Cabrera Montes": {
    "Individual": {
-    "negocios": 14,
-    "valor_contado": 942000.0,
-    "ingreso_bitrix": 942000.0
-   },
-   "Empresarial": {
-    "negocios": 5,
-    "valor_contado": 3976200.0,
-    "ingreso_bitrix": 3976200.0
-   }
-  },
-  "Jessica Luque Garcia": {
-   "Individual": {
-    "negocios": 32,
-    "valor_contado": 1868100.0,
-    "ingreso_bitrix": 1868100.0
-   }
-  },
-  "Victoria Manjarres Jimenez": {
-   "Individual": {
-    "negocios": 2,
-    "valor_contado": 335300.0,
-    "ingreso_bitrix": 335300.0
-   },
-   "Empresarial": {
-    "negocios": 4,
-    "valor_contado": 17259200.0,
-    "ingreso_bitrix": 17259200.0
-   },
-   "IFT": {
-    "negocios": 1,
-    "valor_contado": 1449700.0,
-    "ingreso_bitrix": 1449700.0
-   }
-  },
-  "Karen Liseth Cantillo De la Cruz": {
-   "Individual": {
-    "negocios": 20,
-    "valor_contado": 1305400.0,
-    "ingreso_bitrix": 1305400.0
+    "negocios": 9,
+    "valor_contado": 266000.0,
+    "ingreso_bitrix": 266000.0
    },
    "Empresarial": {
     "negocios": 1,
-    "valor_contado": 660200.0,
-    "ingreso_bitrix": 660200.0
+    "valor_contado": 2016000.0,
+    "ingreso_bitrix": 2016000.0
    }
   },
-  "Bienvenida Lopez Hurtado": {
+  "Oriana Yadith Felizzola Ortega": {
    "Individual": {
-    "negocios": 64,
-    "valor_contado": 4296300.0,
-    "ingreso_bitrix": 4296300.0
-   },
-   "Empresarial": {
-    "negocios": 4,
-    "valor_contado": 6630400.0,
-    "ingreso_bitrix": 6630400.0
+    "negocios": 30,
+    "valor_contado": 2096300.0,
+    "ingreso_bitrix": 2096300.0
    }
   },
-  "Marvis Yarima Gonzalez Gil": {
+  "Maria Jose Garcia Guaman": {
    "Individual": {
-    "negocios": 25,
-    "valor_contado": 1839100.0,
-    "ingreso_bitrix": 1839100.0
-   },
-   "Empresarial": {
-    "negocios": 2,
-    "valor_contado": 1654700.0,
-    "ingreso_bitrix": 1654700.0
+    "negocios": 11,
+    "valor_contado": 7787200.0,
+    "ingreso_bitrix": 7787200.0
    }
   },
   "Karen Patricia Ballesteros Paba": {
    "Individual": {
-    "negocios": 17,
-    "valor_contado": 1421600.0,
-    "ingreso_bitrix": 1421600.0
-   },
-   "Empresarial": {
-    "negocios": 3,
-    "valor_contado": 4234400.0,
-    "ingreso_bitrix": 4234400.0
+    "negocios": 10,
+    "valor_contado": 1368300.0,
+    "ingreso_bitrix": 1368300.0
    }
   },
-  "Nelvis Paola Meza Saenz": {
+  "Karen Liseth Cantillo De la Cruz": {
    "Individual": {
-    "negocios": 15,
-    "valor_contado": 1279500.0,
-    "ingreso_bitrix": 1279500.0
+    "negocios": 10,
+    "valor_contado": 598000.0,
+    "ingreso_bitrix": 598000.0
+   }
+  },
+  "Marvis Yarima Gonzalez Gil": {
+   "Individual": {
+    "negocios": 5,
+    "valor_contado": 257700.0,
+    "ingreso_bitrix": 257700.0
+   }
+  },
+  "Martha Lorena Celedon de la Rosa": {
+   "Individual": {
+    "negocios": 2,
+    "valor_contado": 75000.0,
+    "ingreso_bitrix": 75000.0
    }
   },
   "Holman Marin Romero": {
    "Individual": {
-    "negocios": 33,
-    "valor_contado": 2168300.0,
-    "ingreso_bitrix": 2168300.0
+    "negocios": 17,
+    "valor_contado": 4859582.0,
+    "ingreso_bitrix": 4859582.0
    },
    "Empresarial": {
-    "negocios": 2,
-    "valor_contado": 2966700.0,
-    "ingreso_bitrix": 2966700.0
+    "negocios": 1,
+    "valor_contado": 138000.0,
+    "ingreso_bitrix": 138000.0
    }
   },
   "Elicenith Carvajalino Del Toro": {
    "Individual": {
-    "negocios": 4,
-    "valor_contado": 1789700.0,
-    "ingreso_bitrix": 1789700.0
+    "negocios": 1,
+    "valor_contado": 60000.0,
+    "ingreso_bitrix": 60000.0
    }
   },
-  "Eliana Del Socorro Atuesta Oñate": {
-   "Empresarial": {
-    "negocios": 3,
-    "valor_contado": 5066500.0,
-    "ingreso_bitrix": 5066500.0
+  "Bienvenida Lopez Hurtado": {
+   "Individual": {
+    "negocios": 12,
+    "valor_contado": 1928500.0,
+    "ingreso_bitrix": 1928500.0
+   }
+  },
+  "Victoria Manjarres Jimenez": {
+   "IFT": {
+    "negocios": 4,
+    "valor_contado": 3347900.0,
+    "ingreso_bitrix": 3347900.0
    }
   }
  },
  "batch_fallidos": 1,
  "batch_fallidos_detalle": [
-  "crm.company.get?ID=46266"
+  "crm.company.get?ID=8956"
  ],
  "secciones_producto": {},
  "lineas_sin_producto_catalogo": 0,
@@ -530,42 +610,42 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
-     "con_valor": 115
+     "ventas": 119,
+     "con_valor": 34
     },
     "Empresarial": {
-     "ventas": 27,
-     "con_valor": 9
+     "ventas": 2,
+     "con_valor": 1
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
    "ejemplos": [
     {
-     "crudo": "2026-08-31T19:00:00-05:00",
-     "texto": "2026-08-31T19:00:00-05:00"
+     "crudo": "2026-09-30T19:00:00-05:00",
+     "texto": "2026-09-30T19:00:00-05:00"
     },
     {
-     "crudo": "2026-08-31T19:00:00-05:00",
-     "texto": "2026-08-31T19:00:00-05:00"
+     "crudo": "2026-09-30T19:00:00-05:00",
+     "texto": "2026-09-30T19:00:00-05:00"
     },
     {
-     "crudo": "2026-08-31T19:00:00-05:00",
-     "texto": "2026-08-31T19:00:00-05:00"
+     "crudo": "2026-09-30T19:00:00-05:00",
+     "texto": "2026-09-30T19:00:00-05:00"
     },
     {
-     "crudo": "2026-08-31T19:00:00-05:00",
-     "texto": "2026-08-31T19:00:00-05:00"
+     "crudo": "2026-09-30T19:00:00-05:00",
+     "texto": "2026-09-30T19:00:00-05:00"
     },
     {
-     "crudo": "2026-08-31T19:00:00-05:00",
-     "texto": "2026-08-31T19:00:00-05:00"
+     "crudo": "2026-09-30T19:00:00-05:00",
+     "texto": "2026-09-30T19:00:00-05:00"
     },
     {
-     "crudo": "2026-09-01T19:00:00-05:00",
-     "texto": "2026-09-01T19:00:00-05:00"
+     "crudo": "2026-10-01T19:00:00-05:00",
+     "texto": "2026-10-01T19:00:00-05:00"
     }
    ]
   },
@@ -576,36 +656,36 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
-     "con_valor": 236
+     "ventas": 119,
+     "con_valor": 82
     },
     "Empresarial": {
-     "ventas": 27,
-     "con_valor": 13
+     "ventas": 2,
+     "con_valor": 1
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
    "ejemplos": [
     {
      "crudo": [
-      102
+      97
      ],
-     "texto": "Turismo Social"
+     "texto": "Recreación"
     },
     {
      "crudo": [
-      101
+      97
      ],
-     "texto": "Alquiler de salones"
+     "texto": "Recreación"
     },
     {
      "crudo": [
-      99
+      97
      ],
-     "texto": "Teyuna"
+     "texto": "Recreación"
     },
     {
      "crudo": [
@@ -634,15 +714,15 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
-     "con_valor": 65
+     "ventas": 119,
+     "con_valor": 12
     },
     "Empresarial": {
-     "ventas": 27,
+     "ventas": 2,
      "con_valor": 0
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -655,9 +735,9 @@
     },
     {
      "crudo": [
-      8506
+      8509
      ],
-     "texto": "RECREACION. STA MTA"
+     "texto": "CENTRO RECREC.TEYUNA"
     },
     {
      "crudo": [
@@ -667,21 +747,21 @@
     },
     {
      "crudo": [
-      8506
+      8505
      ],
-     "texto": "RECREACION. STA MTA"
+     "texto": "TEATRO CAJAMAG"
     },
     {
      "crudo": [
-      8506
+      8505
      ],
-     "texto": "RECREACION. STA MTA"
+     "texto": "TEATRO CAJAMAG"
     },
     {
      "crudo": [
-      8506
+      8505
      ],
-     "texto": "RECREACION. STA MTA"
+     "texto": "TEATRO CAJAMAG"
     }
    ]
   },
@@ -692,42 +772,22 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
+     "ventas": 119,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 27,
-     "con_valor": 8
+     "ventas": 2,
+     "con_valor": 1
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
    "ejemplos": [
     {
-     "crudo": "VIRTUAL ",
-     "texto": "VIRTUAL "
-    },
-    {
      "crudo": "CENTRO RECREACIONAL TEYUNA",
      "texto": "CENTRO RECREACIONAL TEYUNA"
-    },
-    {
-     "crudo": "Centro Recreacional Teyuna",
-     "texto": "Centro Recreacional Teyuna"
-    },
-    {
-     "crudo": "CENTRO RECREACIONAL TEYUNA",
-     "texto": "CENTRO RECREACIONAL TEYUNA"
-    },
-    {
-     "crudo": "CINEMARK CENTRO COMERCIAL BUENAVISTA ",
-     "texto": "CINEMARK CENTRO COMERCIAL BUENAVISTA "
-    },
-    {
-     "crudo": "UIS CENTRO HISTORICO",
-     "texto": "UIS CENTRO HISTORICO"
     }
    ]
   },
@@ -738,68 +798,19 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
-     "con_valor": 2
+     "ventas": 119,
+     "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 27,
-     "con_valor": 6
+     "ventas": 2,
+     "con_valor": 0
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
-   "ejemplos": [
-    {
-     "crudo": {
-      "id": 53295,
-      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=27418&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=53295",
-      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=27418&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=53295"
-     },
-     "texto": "{'id': 53295, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=27418&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=53295', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=27418&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=53295'}"
-    },
-    {
-     "crudo": {
-      "id": 52527,
-      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33443&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52527",
-      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33443&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52527"
-     },
-     "texto": "{'id': 52527, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33443&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52527', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33443&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52527'}"
-    },
-    {
-     "crudo": {
-      "id": 51752,
-      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=30303&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51752",
-      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=30303&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51752"
-     },
-     "texto": "{'id': 51752, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=30303&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51752', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=30303&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51752'}"
-    },
-    {
-     "crudo": {
-      "id": 51152,
-      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31239&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51152",
-      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31239&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51152"
-     },
-     "texto": "{'id': 51152, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31239&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51152', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31239&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51152'}"
-    },
-    {
-     "crudo": {
-      "id": 51637,
-      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31972&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51637",
-      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31972&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51637"
-     },
-     "texto": "{'id': 51637, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31972&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51637', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31972&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=51637'}"
-    },
-    {
-     "crudo": {
-      "id": 52830,
-      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33661&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52830",
-      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33661&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52830"
-     },
-     "texto": "{'id': 52830, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33661&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52830', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33661&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=52830'}"
-    }
-   ]
+   "ejemplos": []
   },
   "UF_CRM_1698765695579": {
    "nombre": "Cotización servicio",
@@ -808,66 +819,26 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
+     "ventas": 119,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 27,
-     "con_valor": 7
+     "ventas": 2,
+     "con_valor": 1
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
    "ejemplos": [
     {
      "crudo": {
-      "id": 48960,
-      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=28047&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=48960",
-      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=28047&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=48960"
+      "id": 53654,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=34445&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=53654",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=34445&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=53654"
      },
-     "texto": "{'id': 48960, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=28047&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=48960', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=28047&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=48960'}"
-    },
-    {
-     "crudo": {
-      "id": 51259,
-      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=30303&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51259",
-      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=30303&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51259"
-     },
-     "texto": "{'id': 51259, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=30303&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51259', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=30303&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51259'}"
-    },
-    {
-     "crudo": {
-      "id": 51721,
-      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31912&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51721",
-      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31912&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51721"
-     },
-     "texto": "{'id': 51721, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31912&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51721', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31912&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51721'}"
-    },
-    {
-     "crudo": {
-      "id": 51605,
-      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31930&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51605",
-      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31930&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51605"
-     },
-     "texto": "{'id': 51605, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=31930&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51605', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=31930&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=51605'}"
-    },
-    {
-     "crudo": {
-      "id": 52362,
-      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33260&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52362",
-      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33260&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52362"
-     },
-     "texto": "{'id': 52362, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33260&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52362', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33260&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52362'}"
-    },
-    {
-     "crudo": {
-      "id": 52829,
-      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33661&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52829",
-      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33661&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52829"
-     },
-     "texto": "{'id': 52829, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=33661&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52829', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=33661&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=52829'}"
+     "texto": "{'id': 53654, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=34445&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=53654', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=34445&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=53654'}"
     }
    ]
   },
@@ -878,15 +849,15 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
+     "ventas": 119,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 27,
+     "ventas": 2,
      "con_valor": 0
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -899,24 +870,19 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
-     "con_valor": 1
+     "ventas": 119,
+     "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 27,
+     "ventas": 2,
      "con_valor": 0
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
-   "ejemplos": [
-    {
-     "crudo": "1",
-     "texto": "1"
-    }
-   ]
+   "ejemplos": []
   },
   "UF_CRM_1746571663870": {
    "nombre": "Feria de servicios",
@@ -925,15 +891,15 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
+     "ventas": 119,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 27,
+     "ventas": 2,
      "con_valor": 0
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -946,15 +912,15 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
+     "ventas": 119,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 27,
+     "ventas": 2,
      "con_valor": 0
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -967,15 +933,15 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
+     "ventas": 119,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 27,
+     "ventas": 2,
      "con_valor": 0
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -988,15 +954,15 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
+     "ventas": 119,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 27,
+     "ventas": 2,
      "con_valor": 0
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -1009,44 +975,19 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
+     "ventas": 119,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 27,
-     "con_valor": 18
+     "ventas": 2,
+     "con_valor": 0
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
-   "ejemplos": [
-    {
-     "crudo": "2026-09-22T19:00:00-05:00",
-     "texto": "2026-09-22T19:00:00-05:00"
-    },
-    {
-     "crudo": "2026-09-10T19:00:00-05:00",
-     "texto": "2026-09-10T19:00:00-05:00"
-    },
-    {
-     "crudo": "2026-09-02T19:00:00-05:00",
-     "texto": "2026-09-02T19:00:00-05:00"
-    },
-    {
-     "crudo": "2026-09-02T19:00:00-05:00",
-     "texto": "2026-09-02T19:00:00-05:00"
-    },
-    {
-     "crudo": "2026-09-08T19:00:00-05:00",
-     "texto": "2026-09-08T19:00:00-05:00"
-    },
-    {
-     "crudo": "2026-09-08T19:00:00-05:00",
-     "texto": "2026-09-08T19:00:00-05:00"
-    }
-   ]
+   "ejemplos": []
   },
   "UF_CRM_1759868270967": {
    "nombre": "Orden de Servicio",
@@ -1055,15 +996,15 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
+     "ventas": 119,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 27,
+     "ventas": 2,
      "con_valor": 0
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -1076,16 +1017,16 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
-     "con_valor": 347
+     "ventas": 119,
+     "con_valor": 119
     },
     "Empresarial": {
-     "ventas": 27,
-     "con_valor": 27
+     "ventas": 2,
+     "con_valor": 2
     },
     "IFT": {
-     "ventas": 1,
-     "con_valor": 1
+     "ventas": 4,
+     "con_valor": 4
     }
    },
    "ejemplos": [
@@ -1122,15 +1063,15 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
+     "ventas": 119,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 27,
+     "ventas": 2,
      "con_valor": 0
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -1143,15 +1084,15 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
+     "ventas": 119,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 27,
+     "ventas": 2,
      "con_valor": 0
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -1164,15 +1105,15 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 347,
+     "ventas": 119,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 27,
+     "ventas": 2,
      "con_valor": 0
     },
     "IFT": {
-     "ventas": 1,
+     "ventas": 4,
      "con_valor": 0
     }
    },
