@@ -450,12 +450,36 @@ def _n_archivos(v):
     return len(v) if isinstance(v, list) else 1
 
 
+AUDIT_RAW_ARCHIVOS = {}  # id negocio -> [(campo, id archivo, downloadUrl)]  (solo en memoria; las URL nunca se escriben)
+
+
+def _ts_local(s):
+    """Fecha y hora en Colombia (YYYY-MM-DD HH:MM) de un campo fecha-hora de Bitrix."""
+    try:
+        dt = datetime.fromisoformat(str(s))
+        if dt.tzinfo is not None:
+            dt = dt.astimezone(TZ_COLOMBIA)
+        return dt.strftime('%Y-%m-%d %H:%M')
+    except Exception:
+        return None
+
+
 def _audit_campos(d, tipo_venta, valor):
+    raw = []
+    for c in CAMPOS_ARCHIVO:
+        v = d.get(c)
+        if not v:
+            continue
+        for it in (v if isinstance(v, list) else [v]):
+            if isinstance(it, dict) and it.get('id'):
+                raw.append((c, str(it['id']), str(it.get('downloadUrl') or '')))
+    AUDIT_RAW_ARCHIVOS[str(d['ID'])] = raw
     AUDIT_NEGOCIOS[str(d['ID'])] = {
         'tipo_venta': tipo_venta, 'valor': round(valor, 2),
         'asesor': USER_NAME_CACHE.get(d.get('ASSIGNED_BY_ID'), ''),
         'fecha_facturacion': _fecha_local(d.get(CAMPO_FACT)) or None,
         'creado': _fecha_hora_local(d.get('DATE_CREATE')) or None,
+        'creado_hora': _ts_local(d.get('DATE_CREATE')),
         'modificado': _fecha_hora_local(d.get('DATE_MODIFY')) or None,
         'cerrado': _fecha_local(d.get('CLOSEDATE')) or None,
         'creado_por': d.get('CREATED_BY_ID'), 'modificado_por': d.get('MODIFY_BY_ID'),
@@ -464,7 +488,186 @@ def _audit_campos(d, tipo_venta, valor):
     }
 
 
+# ---- Huella de los soportes de pago (7-oct-2026) ---------------------------------
+# Para detectar el MISMO soporte de pago adjunto en dos negocios (la senal mas fuerte
+# de venta duplicada), se descarga cada soporte una sola vez y se guarda su huella
+# (sha256 recortado), tamano y tipo en _automation/diag/soportes_huella_<mes>.json.
+# No se guarda el archivo, ni su nombre, ni la URL. Si algo falla aqui el resto de la
+# actualizacion sigue igual.
+HUELLAS_INFO = {}
+SOPORTES_REPETIDOS = []
+HUELLA_MAX_BYTES = 12 * 1024 * 1024
+HUELLA_MAX_ARCHIVOS = 700
+HUELLA_SEGUNDOS = 170
+
+
+def _descargar_huella(url):
+    """Devuelve (sha16, bytes, tipo) o None si la respuesta no es un archivo."""
+    import hashlib
+    with urllib.request.urlopen(url, timeout=40) as resp:
+        tipo = (resp.headers.get('Content-Type') or '').split(';')[0].strip().lower()
+        data = resp.read(HUELLA_MAX_BYTES)
+    if not data:
+        return None
+    cab = data[:200].lstrip().lower()
+    if tipo in ('text/html', 'application/json') or cab.startswith(b'<!doctype') or cab.startswith(b'<html') or cab.startswith(b'{"error'):
+        return None
+    return hashlib.sha256(data).hexdigest()[:16], len(data), tipo
+
+
+def _urls_candidatas(durl, machine):
+    """Formas de pedir el archivo, de la mas a la menos probable. Todas van al mismo
+    servidor de Bitrix que el resto de consultas."""
+    p = urllib.parse.urlparse(BITRIX_BASE)
+    host = f'{p.scheme}://{p.netloc}'
+    partes = [x for x in p.path.split('/') if x]
+    usuario, clave = (partes[1], partes[2]) if len(partes) >= 3 and partes[0] == 'rest' else ('', '')
+    out = []
+    if machine:
+        out.append(('item', machine if machine.startswith('http') else host + machine))
+    if durl:
+        full = durl if durl.startswith('http') else host + durl
+        u = urllib.parse.urlparse(full)
+        q = urllib.parse.parse_qsl(u.query, keep_blank_values=True)
+        out.append(('directo', full))
+        if clave:
+            q2 = [(k, clave if k == 'auth' else v) for k, v in q]
+            if not any(k == 'auth' for k, _ in q2):
+                q2.append(('auth', clave))
+            out.append(('auth', urllib.parse.urlunparse(u._replace(query=urllib.parse.urlencode(q2)))))
+            q3 = [(k, v) for k, v in q if k != 'auth'] + [('aplogin', usuario), ('ap', clave)]
+            out.append(('ap', urllib.parse.urlunparse(u._replace(query=urllib.parse.urlencode(q3)))))
+    return out
+
+
+def _urls_machine(deal_ids, campos):
+    """urlMachine de cada archivo via crm.item.get (pensada para descargar con webhook)."""
+    out = {}
+    if not deal_ids:
+        return out
+    try:
+        call('crm.item.get', {'entityTypeId': 2, 'id': deal_ids[0]})
+    except Exception:
+        return out
+    n0 = len(BATCH_FALLIDOS)
+    try:
+        res = batch({f'i{i}': f'crm.item.get?entityTypeId=2&id={i}' for i in deal_ids})
+    except Exception:
+        res = {}
+    del BATCH_FALLIDOS[n0:]  # un fallo aqui no es una alerta del cuadre
+    for i in deal_ids:
+        item = (res.get(f'i{i}') or {}).get('item') or {}
+        for c in campos:
+            v = item.get('ufCrm_' + c[len('UF_CRM_'):])
+            if not v:
+                continue
+            for it in (v if isinstance(v, list) else [v]):
+                if isinstance(it, dict) and it.get('id') and it.get('urlMachine'):
+                    out[(str(i), c, str(it['id']))] = str(it['urlMachine'])
+    return out
+
+
+def hashear_soportes(diag_dir):
+    import glob
+    from concurrent.futures import ThreadPoolExecutor
+    campos = [c for c, f in CAMPOS_ARCHIVO.items() if 'soporte de pago' in _label(f).lower()]
+    ruta = os.path.join(diag_dir, f'soportes_huella_{YM}.json')
+    try:
+        with open(ruta, encoding='utf-8') as f:
+            previo = json.load(f).get('negocios', {})
+    except Exception:
+        previo = {}
+    cache, pend = {}, []
+    for did, raw in AUDIT_RAW_ARCHIVOS.items():
+        if did not in AUDIT_NEGOCIOS:
+            continue
+        for c, fid, durl in raw:
+            if c not in campos:
+                continue
+            k = f'{c}:{fid}'
+            if k in previo.get(did, {}):
+                cache.setdefault(did, {})[k] = previo[did][k]
+            else:
+                pend.append((did, c, fid, durl))
+    pend = pend[:HUELLA_MAX_ARCHIVOS]
+    info = {'pendientes_inicio': len(pend), 'descargados': 0, 'errores': 0, 'metodo': None}
+    if pend:
+        machine = _urls_machine(sorted({p[0] for p in pend}, key=int), campos)
+        metodo = [None]
+        t0 = time.time()
+
+        def uno(p):
+            did, c, fid, durl = p
+            if time.time() - t0 > HUELLA_SEGUNDOS:
+                return p, None
+            cands = _urls_candidatas(durl, machine.get((did, c, fid)))
+            if metodo[0]:
+                cands = [x for x in cands if x[0] == metodo[0]] or cands
+            for nombre, url in cands:
+                try:
+                    r = _descargar_huella(url)
+                except Exception:
+                    r = None
+                if r:
+                    metodo[0] = metodo[0] or nombre
+                    return p, r
+            return p, None
+
+        # los primeros (hasta 5) deciden el metodo de descarga; el resto va en paralelo
+        resultados = []
+        for p in pend[:5]:
+            resultados.append(uno(p))
+            if resultados[-1][1]:
+                break
+        if resultados[-1][1]:
+            with ThreadPoolExecutor(max_workers=6) as ex:
+                resultados += list(ex.map(uno, pend[len(resultados):]))
+        for (did, c, fid, _), r in resultados:
+            if r:
+                cache.setdefault(did, {})[f'{c}:{fid}'] = {'h': r[0], 'b': r[1], 't': r[2]}
+                info['descargados'] += 1
+            else:
+                info['errores'] += 1
+        info['errores'] += len(pend) - len(resultados)
+        info['metodo'] = metodo[0]
+    with open(ruta, 'w', encoding='utf-8') as f:
+        json.dump({'mes': YM, 'negocios': cache}, f, ensure_ascii=False, separators=(',', ':'))
+    # el mismo soporte en mas de un negocio (este mes y los otros meses ya guardados)
+    donde = {}
+    for otra in glob.glob(os.path.join(diag_dir, 'soportes_huella_*.json')):
+        try:
+            with open(otra, encoding='utf-8') as f:
+                dd = json.load(f)
+        except Exception:
+            continue
+        for did, fs in (dd.get('negocios') or {}).items():
+            for v in fs.values():
+                donde.setdefault(v['h'], {})[did] = dd.get('mes')
+    for did, fs in cache.items():
+        AUDIT_NEGOCIOS[did]['soportes'] = sorted({v['h'] for v in fs.values()})
+    for h, ds in sorted(donde.items()):
+        if len(ds) > 1 and any(d in cache for d in ds):
+            negs = []
+            for d, mes in sorted(ds.items(), key=lambda x: int(x[0])):
+                n = AUDIT_NEGOCIOS.get(d) or {}
+                negs.append({'id': d, 'mes': mes, 'asesor': n.get('asesor'), 'valor': n.get('valor'), 'fecha_facturacion': n.get('fecha_facturacion')})
+            vals = [x['valor'] for x in negs if x['valor'] is not None]
+            SOPORTES_REPETIDOS.append({'huella': h, 'negocios': negs,
+                                       'mismo_valor': len(vals) > len(set(vals)),  # al menos dos negocios del grupo con igual valor
+                                       'mismo_asesor': len({x['asesor'] for x in negs}) == 1})
+    HUELLAS_INFO.update(info)
+    HUELLAS_INFO['con_huella'] = sum(len(v) for v in cache.values())
+    print(f"  huellas de soportes: {HUELLAS_INFO['con_huella']} guardadas, {info['descargados']} nuevas, "
+          f"{info['errores']} sin descargar (metodo {info['metodo']}); soportes repetidos: {len(SOPORTES_REPETIDOS)}")
+
+
 def escribir_auditoria_campos():
+    try:
+        _dd = os.path.join(os.environ.get('PIPELINE_BASE_DIR') or os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '_automation', 'diag')
+        os.makedirs(_dd, exist_ok=True)
+        hashear_soportes(_dd)
+    except Exception as e:
+        print('  (huellas de soportes: fallo,', type(e).__name__, ')')
     # El usuario 0 no es una persona: es un negocio creado por formulario, automatizacion o integracion.
     USER_NAME_CACHE.setdefault('0', 'Automatico (formulario o integracion)')
     ids = sorted({str(x) for n in AUDIT_NEGOCIOS.values() for x in (n['creado_por'], n['modificado_por']) if x and str(x) != '0'})
@@ -478,6 +681,7 @@ def escribir_auditoria_campos():
     os.makedirs(diag_dir, exist_ok=True)
     with open(os.path.join(diag_dir, f'auditoria_campos_{YM}.json'), 'w', encoding='utf-8') as f:
         json.dump({'mes': YM, 'campos_archivo': {c: _label(fd) for c, fd in CAMPOS_ARCHIVO.items()},
+                   'huellas': HUELLAS_INFO, 'soportes_repetidos': SOPORTES_REPETIDOS,
                    'negocios': AUDIT_NEGOCIOS}, f, ensure_ascii=False, separators=(',', ':'))
     print(f'  auditoria_campos_{YM}.json: {len(AUDIT_NEGOCIOS)} negocios, {len(CAMPOS_ARCHIVO)} campos de archivo')
 
@@ -921,6 +1125,16 @@ def escribir_cuadre():
         L.append('Siguen ganados en Bitrix y por eso estan en los totales de abajo, pero el tablero NO los suma.')
         for i, n, e in retirados:
             L.append(f"- #{i} {n['asesor']}: {money(n['valor'])}. {e.get('motivo', '')}")
+    CUADRE['soportes_repetidos'] = SOPORTES_REPETIDOS
+    CUADRE['huellas_soportes'] = HUELLAS_INFO
+    if SOPORTES_REPETIDOS:
+        fuertes = [x for x in SOPORTES_REPETIDOS if x['mismo_valor']]
+        L.append('')
+        L.append(f"## El mismo soporte de pago en mas de un negocio: {len(SOPORTES_REPETIDOS)} casos ({len(fuertes)} con el mismo valor)")
+        L.append('Mismo archivo y mismo valor = casi seguro venta duplicada. Mismo archivo con valores distintos suele ser un solo pago para varias compras.')
+        for x in sorted(SOPORTES_REPETIDOS, key=lambda x: (not x['mismo_valor'], x['negocios'][0]['id'])):
+            txt = '; '.join(f"#{n['id']} {n['asesor'] or '(otro mes: ' + str(n['mes']) + ')'} {money(n['valor'] or 0)} ({n['fecha_facturacion'] or n['mes']})" for n in x['negocios'])
+            L.append(f"- {'**MISMO VALOR** ' if x['mismo_valor'] else ''}{txt}")
     L.append('')
     L.append('## Totales contados por pipeline')
     for cid, c in CUADRE['categorias'].items():
