@@ -1536,6 +1536,10 @@ function tickClock(){
   el.innerHTML = `${h}:${m}<span class="date">${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}</span>`;
 }
 
+function periodoPorDefecto(){
+  return (D.default_period && D.meses.includes(D.default_period)) ? D.default_period : D.meses[D.meses.length - 1];
+}
+
 function buildSelectors(){
   const anioSel = document.getElementById('sel-anio');
   const mesSel = document.getElementById('sel-mes');
@@ -1548,7 +1552,9 @@ function buildSelectors(){
   // Por defecto arranca en el mes actual (el más reciente cargado), no en
   // "Acumulado" — el usuario puede cambiarlo con el selector cuando quiera
   // ver un mes anterior o el acumulado completo.
-  mesSel.value = D.meses[D.meses.length - 1];
+  // 7-oct-2026 (regla de Luis): el mes por defecto lo define pipeline_master.py
+  // en D.default_period (mes anterior del dia 1 al 3, mes real desde el 4).
+  mesSel.value = periodoPorDefecto();
   function onChange(){ restart(mesSel.value); }
   anioSel.addEventListener('change', onChange);
   mesSel.addEventListener('change', onChange);
@@ -1564,7 +1570,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
   tickClock();
   setInterval(tickClock, 1000*20);
   await refreshAnunciosCache();
-  restart(D.meses[D.meses.length - 1]);
+  restart(periodoPorDefecto());
 
   const btnPause = document.getElementById('btn-pause');
   if(btnPause) btnPause.addEventListener('click', togglePause);
