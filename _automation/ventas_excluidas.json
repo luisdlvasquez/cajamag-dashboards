@@ -1,0 +1,20 @@
+{
+ "_nota": "Negocios que NO suman en el tablero aunque sigan ganados en Bitrix. Quitar de la lista para volver a contarlos.",
+ "negocios": [
+  {
+   "id": "34433",
+   "motivo": "Duplicado del negocio 32156 (CER SAS, $4.472.800). El original ya esta en el informe de cierre del contrato 2026-239 como Venta de Gerencia. Cargado el 5-oct-2026.",
+   "desde": "2026-10-07"
+  },
+  {
+   "id": "34470",
+   "motivo": "Duplicado del negocio 32163 (CER SAS, $253.200). Cargado el 5-oct-2026.",
+   "desde": "2026-10-07"
+  },
+  {
+   "id": "34475",
+   "motivo": "Duplicado del negocio 32173 (CER SAS, $340.500). Cargado el 5-oct-2026.",
+   "desde": "2026-10-07"
+  }
+ ]
+}

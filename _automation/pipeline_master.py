@@ -338,6 +338,23 @@ DEDUP_DEAL_IDS = {'29104', '29033'}  # corregido 11-sep-2026: se retira 29197 (f
 # Los otros 3 (29197, 29104, 29033) siguen excluidos hasta confirmar con Luis si
 # tambien son falsos positivos del mismo lote del 18-ago.
 
+# Ventas retiradas por auditoria (7-oct-2026, a pedido de Luis): negocios que siguen
+# ganados en Bitrix pero NO deben sumar en el tablero porque la auditoria encontro
+# una inconsistencia (ej. duplicados). La lista vive en _automation/ventas_excluidas.json
+# -- para volver a contar un negocio basta con quitarlo de ese archivo; para
+# retirar otro, agregarlo con su motivo. Cada corrida deja en
+# _automation/diag/ventas_excluidas_aplicadas_<mes>.json lo que efectivamente retiro.
+VENTAS_EXCLUIDAS = {}
+try:
+    with open(os.path.join(AUTO, 'ventas_excluidas.json'), encoding='utf-8') as _fx:
+        for _e in json.load(_fx).get('negocios', []):
+            VENTAS_EXCLUIDAS[str(_e['id']).strip()] = _e
+except FileNotFoundError:
+    pass
+except Exception as _e:
+    print('  ADVERTENCIA: no se pudo leer ventas_excluidas.json:', _e)
+EXCLUIDAS_APLICADAS = {}
+
 def parse_ventas(fname, tipo_venta, categoria_default, etapa_ok, fuente_tag, solo_mes=True):
     path = os.path.join(DL, fname)
     # 29-sep-2026: un export sin negocios (ej. IFT sin matriculas aun en el mes)
@@ -353,6 +370,14 @@ def parse_ventas(fname, tipo_venta, categoria_default, etapa_ok, fuente_tag, sol
     for _, r in df.iterrows():
         if str(r.get('ID')).strip() in DEDUP_DEAL_IDS:
             excluded += 1
+            continue
+        _idx = str(r.get('ID')).strip()
+        if _idx in VENTAS_EXCLUIDAS:
+            _a = EXCLUIDAS_APLICADAS.setdefault(_idx, {
+                'id': _idx, 'motivo': VENTAS_EXCLUIDAS[_idx].get('motivo'),
+                'asesor': clean_str(r.get('Persona responsable')), 'tipo_venta': tipo_venta,
+                'fecha_facturacion': parse_date_ddmmyyyy(r.get('Fecha de facturación')), 'valor': 0.0})
+            _a['valor'] += line_total(r)
             continue
         etapa_val = r.get('Etapa de la negociación')
         if etapa_val is None or pd.isna(etapa_val):
@@ -431,6 +456,15 @@ for _mt in MANUAL_VENTAS_FORZADAS:
         print(f"  [manual] agregada venta forzada: {_mt['cliente']} (${_mt['valor']:,.0f}) - negocio {_mt['_bitrix_id']}, no vino en el pull automatico de Bitrix.")
 
 print('ventas nuevas (mes en curso):', len(new_tx), 'total $', sum(t['valor'] for t in new_tx))
+if EXCLUIDAS_APLICADAS:
+    print(f"  [auditoria] retirados {len(EXCLUIDAS_APLICADAS)} negocios por ${sum(v['valor'] for v in EXCLUIDAS_APLICADAS.values()):,.0f} (ventas_excluidas.json)")
+try:
+    os.makedirs(os.path.join(AUTO, 'diag'), exist_ok=True)
+    with open(os.path.join(AUTO, 'diag', f'ventas_excluidas_aplicadas_{YM}.json'), 'w', encoding='utf-8') as _fx:
+        json.dump({'mes': YM, 'total_retirado': round(sum(v['valor'] for v in EXCLUIDAS_APLICADAS.values()), 2),
+                   'negocios': sorted(EXCLUIDAS_APLICADAS.values(), key=lambda v: v['id'])}, _fx, ensure_ascii=False, indent=1)
+except Exception as _e:
+    print('  (no se pudo escribir ventas_excluidas_aplicadas:', _e, ')')
 
 # Etapas que cuentan como "ya sucedido" (confirmado por Luis, 1-sep-2026): cierre
 # de negociacion (ganado o perdido) o ejecucion de evento. Se excluyen

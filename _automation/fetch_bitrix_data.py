@@ -435,6 +435,50 @@ SELECT_VENTA = ['ID', 'TITLE', 'CATEGORY_ID', 'STAGE_ID', 'STAGE_SEMANTIC_ID', '
                 'DATE_MODIFY', 'DATE_CREATE', CAMPO_FACT, 'UF_CRM_1681146110054', 'UF_CRM_1681146530307']
 SELECT_VENTA += [c for c in CAMPOS_SERVICIO if c not in SELECT_VENTA]
 
+# ---- Datos para la auditoria (7-oct-2026): por cada venta contada, que archivos
+# tiene adjuntos (soporte de pago, orden de servicio, etc.), quien la creo y quien
+# la modifico por ultima vez. Se guarda en _automation/diag/auditoria_campos_<mes>.json.
+# Solo se registra SI hay archivo y cuantos -- no se descarga ni se lee su contenido.
+CAMPOS_ARCHIVO = {code: f for code, f in DEAL_FIELDS.items() if code.startswith('UF_') and f.get('type') == 'file'}
+SELECT_VENTA += [c for c in list(CAMPOS_ARCHIVO) + ['CREATED_BY_ID', 'MODIFY_BY_ID'] if c not in SELECT_VENTA]
+AUDIT_NEGOCIOS = {}
+
+
+def _n_archivos(v):
+    if v in (None, '', [], False, {}):
+        return 0
+    return len(v) if isinstance(v, list) else 1
+
+
+def _audit_campos(d, tipo_venta, valor):
+    AUDIT_NEGOCIOS[str(d['ID'])] = {
+        'tipo_venta': tipo_venta, 'valor': round(valor, 2),
+        'asesor': USER_NAME_CACHE.get(d.get('ASSIGNED_BY_ID'), ''),
+        'fecha_facturacion': _fecha_local(d.get(CAMPO_FACT)) or None,
+        'creado': _fecha_hora_local(d.get('DATE_CREATE')) or None,
+        'modificado': _fecha_hora_local(d.get('DATE_MODIFY')) or None,
+        'cerrado': _fecha_local(d.get('CLOSEDATE')) or None,
+        'creado_por': d.get('CREATED_BY_ID'), 'modificado_por': d.get('MODIFY_BY_ID'),
+        'asignado_a': d.get('ASSIGNED_BY_ID'),
+        'archivos': {c: _n_archivos(d.get(c)) for c in CAMPOS_ARCHIVO if _n_archivos(d.get(c))},
+    }
+
+
+def escribir_auditoria_campos():
+    ids = sorted({str(x) for n in AUDIT_NEGOCIOS.values() for x in (n['creado_por'], n['modificado_por']) if x})
+    resolve_users(ids)
+    for n in AUDIT_NEGOCIOS.values():
+        n['creado_por'] = USER_NAME_CACHE.get(str(n['creado_por']), n['creado_por'])
+        n['modificado_por'] = USER_NAME_CACHE.get(str(n['modificado_por']), n['modificado_por'])
+        n.pop('asignado_a', None)
+    base_dir = os.environ.get('PIPELINE_BASE_DIR') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    diag_dir = os.path.join(base_dir, '_automation', 'diag')
+    os.makedirs(diag_dir, exist_ok=True)
+    with open(os.path.join(diag_dir, f'auditoria_campos_{YM}.json'), 'w', encoding='utf-8') as f:
+        json.dump({'mes': YM, 'campos_archivo': {c: _label(fd) for c, fd in CAMPOS_ARCHIVO.items()},
+                   'negocios': AUDIT_NEGOCIOS}, f, ensure_ascii=False, separators=(',', ':'))
+    print(f'  auditoria_campos_{YM}.json: {len(AUDIT_NEGOCIOS)} negocios, {len(CAMPOS_ARCHIVO)} campos de archivo')
+
 # Diagnostico de campos de servicio: cuantas ventas contadas traen cada campo lleno
 # y ejemplos de valores crudos/traducidos (se guarda en el cuadre).
 DIAG_SERVICIO = {}
@@ -711,6 +755,7 @@ def fetch_ventas(category_id, tipo_venta, etapa_ok_name):
 
         suma_lineas_cat += valor_contado
         suma_ingreso_cat += ingreso
+        _audit_campos(d, tipo_venta, valor_contado)
         pa = CUADRE['por_asesor'].setdefault(asesor or '(sin asesor)', {})
         k = pa.setdefault(tipo_venta, {'negocios': 0, 'valor_contado': 0.0, 'ingreso_bitrix': 0.0})
         k['negocios'] += 1
@@ -1022,6 +1067,11 @@ if __name__ == '__main__':
         diagnosticar_negocios()
     except Exception as e:
         print('  (diagnostico de negocios puntuales fallo:', e, ')')
+
+    try:
+        escribir_auditoria_campos()
+    except Exception as e:
+        print('  (no se pudo escribir auditoria_campos:', e, ')')
 
     try:
         escribir_cuadre()
