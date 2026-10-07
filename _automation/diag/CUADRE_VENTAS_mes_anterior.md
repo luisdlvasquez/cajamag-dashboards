@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-09 (corrida 2026-10-07 16:40 UTC)
+# Cuadre de ventas 2026-09 (corrida 2026-10-07 16:48 UTC)
 
 Rango: 2026-09-01 a 2026-09-30. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -12,6 +12,12 @@ Posibles ventas no contadas, por asesor (revisar con Operaciones):
 - Jessica Luque Garcia: $140.300
 - Karen Patricia Ballesteros Paba: $102.000
 - Martha Cabrera Montes: $72.800
+
+## Retirados del tablero por auditoria: 3 negocios, $5.066.500
+Siguen ganados en Bitrix y por eso estan en los totales de abajo, pero el tablero NO los suma.
+- #34433 Victoria Manjarres Jimenez: $4.472.800. Duplicado del negocio 32156 (CER SAS, $4.472.800). El original ya esta en el informe de cierre del contrato 2026-239 como Venta de Gerencia. Cargado el 5-oct-2026.
+- #34470 Martha Cabrera Montes: $253.200. Duplicado del negocio 32163 (CER SAS, $253.200). Cargado el 5-oct-2026.
+- #34475 Martha Cabrera Montes: $340.500. Duplicado del negocio 32173 (CER SAS, $340.500). Cargado el 5-oct-2026.
 
 ## Totales contados por pipeline
 - Individual (pipeline 2, etapa CERRADO GANADO): 347 negocios, $40.690.572
