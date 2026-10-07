@@ -1,0 +1,30 @@
+{
+ "mes": "2026-09",
+ "total_retirado": 5066500.0,
+ "negocios": [
+  {
+   "id": "34433",
+   "motivo": "Duplicado del negocio 32156 (CER SAS, $4.472.800). El original ya esta en el informe de cierre del contrato 2026-239 como Venta de Gerencia. Cargado el 5-oct-2026.",
+   "asesor": "Victoria Manjarres Jimenez",
+   "tipo_venta": "Empresarial",
+   "fecha_facturacion": "2026-09-10",
+   "valor": 4472800.0
+  },
+  {
+   "id": "34470",
+   "motivo": "Duplicado del negocio 32163 (CER SAS, $253.200). Cargado el 5-oct-2026.",
+   "asesor": "Martha Cabrera Montes",
+   "tipo_venta": "Empresarial",
+   "fecha_facturacion": "2026-09-11",
+   "valor": 253200.0
+  },
+  {
+   "id": "34475",
+   "motivo": "Duplicado del negocio 32173 (CER SAS, $340.500). Cargado el 5-oct-2026.",
+   "asesor": "Martha Cabrera Montes",
+   "tipo_venta": "Empresarial",
+   "fecha_facturacion": "2026-09-11",
+   "valor": 340500.0
+  }
+ ]
+}

@@ -208,30 +208,6 @@
    "fecha_facturacion": "2026-09-21",
    "valor": 264400.0,
    "decision": "ya contada en su mes (mismo ID de negocio)"
-  },
-  {
-   "negocio": "34433",
-   "asesor": "Victoria Manjarres Jimenez",
-   "mes_facturacion": "2026-09",
-   "fecha_facturacion": "2026-09-10",
-   "valor": 4472800.0,
-   "decision": "ya contada en su mes (mismo ID de negocio)"
-  },
-  {
-   "negocio": "34470",
-   "asesor": "Martha Cabrera Montes",
-   "mes_facturacion": "2026-09",
-   "fecha_facturacion": "2026-09-11",
-   "valor": 253200.0,
-   "decision": "ya contada en su mes (mismo ID de negocio)"
-  },
-  {
-   "negocio": "34475",
-   "asesor": "Martha Cabrera Montes",
-   "mes_facturacion": "2026-09",
-   "fecha_facturacion": "2026-09-11",
-   "valor": 340500.0,
-   "decision": "ya contada en su mes (mismo ID de negocio)"
   }
  ]
 }
