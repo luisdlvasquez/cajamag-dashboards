@@ -2608,3 +2608,26 @@ final_html = final_html.replace(old_call_emp_24, new_call_emp_24)
 with open(OUT, 'w', encoding='utf-8') as f:
     f.write(final_html)
 print("Paso 24 aplicado: Resumen -- 'Gestion integral' y 'Empresas atendidas por tamaño' ahora muestran una 2da linea punteada gris con el total 2025 (contrato anterior, fuente: informe de avance final), arrancando en Abril igual que el informe de ventas. 'Medios de contacto' se deja sin comparativo 2025 -- ese contrato no medía por canal, no hay una cifra 2025 equivalente y honesta para comparar.")
+
+
+# ============ Paso final (7-oct-2026, a pedido de Luis): mes mostrado por defecto ============
+# Regla: del dia 1 al 3 de cada mes el dashboard abre mostrando el mes ANTERIOR
+# (aunque el mes nuevo ya se esta actualizando); desde el dia 4 abre en el mes
+# real. pipeline_master.py deja el mes elegido en DATA.ventas.default_ym; aqui se
+# hace que las tarjetas de "Mes en curso" y el foco por defecto de la tendencia
+# diaria usen ese mes en vez de "el ultimo de la lista". Si default_ym no existe
+# (datos viejos) se comporta igual que antes.
+_html_def = open(OUT, encoding='utf-8').read()
+_ult_ym = "ventasD.meses_order[ventasD.meses_order.length-1]"
+_def_ym_js = "(ventasD.meses_order.includes(ventasD.default_ym) ? ventasD.default_ym : ventasD.meses_order[ventasD.meses_order.length-1])"
+_ult_tend = "ventasD.tendencia[ventasD.tendencia.length-1]"
+_def_tend_js = "(ventasD.tendencia.find(t=>t.ym===ventasD.default_ym) || ventasD.tendencia[ventasD.tendencia.length-1])"
+_i0 = _html_def.index('const DATA = ')
+_i1 = _html_def.index('function fmt(n)')
+_cab, _blob, _js = _html_def[:_i0], _html_def[_i0:_i1], _html_def[_i1:]
+_n1, _n2 = _js.count(_ult_ym), _js.count(_ult_tend)
+assert _n1 >= 1 and _n2 >= 1, "Paso final (mes por defecto): no se encontraron las referencias al ultimo mes"
+_js = _js.replace(_ult_ym, _def_ym_js).replace(_ult_tend, _def_tend_js)
+with open(OUT, 'w', encoding='utf-8') as f:
+    f.write(_cab + _blob + _js)
+print(f"Paso final aplicado: mes por defecto (default_ym) en {_n1} referencia(s) de mes y {_n2} de tendencia.")

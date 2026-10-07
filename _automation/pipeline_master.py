@@ -70,26 +70,45 @@ else:
 MASTER = f"{AUTO}/Dashboard_Master_DATA.html"
 TV_MASTER = f"{AUTO}/TV_Master_DATA.html"
 
+def hoy_colombia():
+    """Fecha de hoy en Colombia (UTC-5). El servidor de GitHub corre en UTC: la
+    corrida de las 7 pm de Colombia ya es 'manana' en UTC."""
+    from datetime import timezone
+    return datetime.now(timezone(timedelta(hours=-5))).date()
+
+
+DIAS_GRACIA_VISTA = 3
+
+
 def effective_today(real_today=None):
-    """Devuelve la fecha 'efectiva' que usa el pipeline para decidir cual es
-    el 'mes en curso'. Regla ACTUALIZADA por Luis (17-sep-2026, reemplaza la
-    regla anterior de 2 dias habiles): el tablero debe seguir mostrando la
-    gestion/venta del mes que se ACABA DE CERRAR hasta el DIA 3 del mes (regla del 7-oct-2026; antes dia 7)
-    siguiente (mas margen para que se terminen de cargar/ajustar en Bitrix
-    las ultimas ventas y gestiones del mes que cierra). Del dia 1 al 3 del
-    mes nuevo (inclusive), el pipeline trata el mes ANTERIOR como 'mes en
-    curso' (YM, MES_NOMBRE, LABEL_SUFFIX); a partir del dia 4 ya usa el mes
-    real. No pierde datos: cuando se vuelva a correr el pipeline despues del
-    corte, el mes nuevo se recalcula completo (incluyendo los dias que ya
-    habian pasado)."""
-    t = real_today or date.today()
-    if t.day <= 3:  # 7-oct-2026, a pedido de Luis: margen de 3 dias (antes 7)
-        first_of_month = t.replace(day=1)
-        return first_of_month - timedelta(days=1)  # ultimo dia del mes anterior
-    return t
+    """Fecha que define cual es el 'mes en curso' que esta corrida reconstruye.
+
+    REGLA VIGENTE (7-oct-2026, aclarada por Luis): el mes real SIEMPRE se
+    actualiza desde el dia 1 -- ya no hay dias de 'congelamiento'. Lo unico que
+    cambia del dia 1 al 3 (DIAS_GRACIA_VISTA) es que mes MUESTRAN POR DEFECTO el
+    tablero y los dashboards al abrirlos: el mes anterior (ver mes_por_defecto()).
+    Ademas, el workflow corre en cada actualizacion una pasada previa del mes
+    anterior (FORCE_TODAY = ultimo dia de ese mes), asi que ambos meses quedan al
+    dia siempre.
+
+    (Reglas anteriores, ya sin efecto: 2 dias habiles; luego congelar hasta el
+    dia 7 -17-sep-2026-.)"""
+    return real_today or hoy_colombia()
 
 
-REAL_TODAY = date.today()
+def mes_por_defecto(real_today=None):
+    """YM que se muestra por defecto: el mes anterior del dia 1 al 3, el mes real
+    desde el dia 4. Se puede forzar con la variable de entorno DEFAULT_YM."""
+    forzado = os.environ.get('DEFAULT_YM')
+    if forzado:
+        return forzado
+    t = real_today or hoy_colombia()
+    if t.day <= DIAS_GRACIA_VISTA:
+        return (t.replace(day=1) - timedelta(days=1)).strftime('%Y-%m')
+    return t.strftime('%Y-%m')
+
+
+REAL_TODAY = hoy_colombia()
 # 2-sep-2026, a pedido de Luis: override manual para saltar el buffer de dias habiles cuando el
 # pide explicitamente cerrar el mes anterior y avanzar al nuevo ("actualiza el tablero y los
 # dashboard hasta septiembre... si ya cerramos el mes de agosto ya no le tienes que colocar
@@ -665,6 +684,14 @@ _tend_entry = {
 }
 DATA['ventas']['tendencia'].append(_tend_entry)
 DATA['ventas']['meses_order'].append(YM)
+# Orden cronologico garantizado: con la pasada previa del mes anterior (ver workflow)
+# el mes reconstruido no siempre es el ultimo.
+DATA['ventas']['tendencia'].sort(key=lambda t: t['ym'])
+DATA['ventas']['meses_order'].sort()
+DATA['gestiones']['months'].sort()
+# Mes que los dashboards muestran por defecto (regla de los 3 dias).
+_def_ym = mes_por_defecto()
+DATA['ventas']['default_ym'] = _def_ym if _def_ym in DATA['ventas']['meses_order'] else DATA['ventas']['meses_order'][-1]
 DATA['ventas']['mes_labels'][YM] = MES_NOMBRE if _FORCE_CLOSE_CURRENT else f'{MES_NOMBRE} {LABEL_SUFFIX}'
 
 existing_servicios = set(DATA['ventas']['filtros']['servicios'])
@@ -1245,6 +1272,8 @@ TVDATA['ventas_servicio_por_zona_by_period'] = {'orden': ZONAS_FISICAS, 'periodo
 # Se corrige aqui SIEMPRE porque quedaba desactualizado corrida tras corrida
 # (bug detectado repetidamente: 18-ago, 20-ago, 21-ago) al no tocarse este campo.
 TVDATA.setdefault('periodo', {})['corte'] = TODAY.isoformat()
+TVDATA['meses'] = sorted(TVDATA['meses'])
+TVDATA['default_period'] = _def_ym if _def_ym in TVDATA['meses'] else TVDATA['meses'][-1]
 
 new_tv_json = json.dumps(TVDATA, ensure_ascii=False, separators=(',',':'))
 tv_html = open(TV_MASTER, encoding='utf-8').read()

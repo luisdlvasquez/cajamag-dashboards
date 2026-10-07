@@ -39,19 +39,24 @@ AUTO = f"{BASE}/_automation"
 MASTER = f"{AUTO}/Dashboard_Master_DATA.html"
 TV_MASTER = f"{AUTO}/TV_Master_DATA.html"
 
+def _hoy_colombia():
+    import datetime as _dt
+    return _dt.datetime.now(_dt.timezone(_dt.timedelta(hours=-5))).date()
+
+
 def effective_today(real_today=None):
-    """Misma regla que pipeline_master.py (actualizada 17-sep-2026 a pedido
-    de Luis): del dia 1 al 3 (inclusive) del mes nuevo, el tablero sigue
-    tratando el mes ANTERIOR como 'mes en curso'; desde el dia 4 usa el mes
-    real."""
-    t = real_today or date.today()
+    """Mes que el Tablero TV MUESTRA por defecto (regla del 7-oct-2026): del dia
+    1 al 3 el mes anterior, desde el dia 4 el mes real -- igual que
+    mes_por_defecto() de pipeline_master.py. Las tarjetas de empresas son una
+    foto unica (no por mes), asi que se calculan para ese mes mostrado."""
+    t = real_today or _hoy_colombia()
     if t.day <= 3:  # 7-oct-2026, a pedido de Luis: margen de 3 dias (antes 7)
         first_of_month = t.replace(day=1)
         return first_of_month - timedelta(days=1)
     return t
 
 
-REAL_TODAY = date.today()
+REAL_TODAY = _hoy_colombia()
 TODAY = effective_today(REAL_TODAY)
 YM = TODAY.strftime('%Y-%m')
 
