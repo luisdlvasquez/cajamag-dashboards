@@ -37,6 +37,27 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r _automation/requirements.txt
 
+      # 7-oct-2026, a pedido de Luis: despues de que el tablero pasa al mes nuevo
+      # (dia 4 en adelante), el mes ANTERIOR se sigue refrescando en cada corrida,
+      # porque en Bitrix siguen apareciendo, cambiando o desapareciendo ventas de ese
+      # mes. Se hace una pasada completa con corte en el ultimo dia del mes anterior
+      # y luego la pasada normal del mes en curso. Si esta pasada falla, no bloquea
+      # la actualizacion del mes en curso.
+      - name: 0) Refrescar el mes anterior (cambios hechos en Bitrix despues del cierre)
+        run: |
+          PREV=$(python -c "from datetime import date,timedelta; t=date.today(); print((t.replace(day=1)-timedelta(days=1)).isoformat() if t.day>3 else '')")
+          if [ -n "$PREV" ]; then
+            echo "Refrescando el mes anterior con corte $PREV"
+            if FORCE_TODAY=$PREV python _automation/fetch_bitrix_data.py && FORCE_TODAY=$PREV python _automation/pipeline_master.py; then
+              cp _automation/diag/CUADRE_VENTAS.md _automation/diag/CUADRE_VENTAS_mes_anterior.md || true
+            else
+              echo "::warning::No se pudo refrescar el mes anterior; se continua con el mes en curso"
+              git checkout -- _automation/Dashboard_Master_DATA.html _automation/TV_Master_DATA.html
+            fi
+          else
+            echo "Dias 1 a 3: el mes anterior todavia es el mes en curso, lo cubre la pasada normal."
+          fi
+
       - name: 1) Traer datos frescos de Bitrix (ventas + gestiones, mes en curso)
         run: python _automation/fetch_bitrix_data.py
 
