@@ -465,7 +465,9 @@ def _audit_campos(d, tipo_venta, valor):
 
 
 def escribir_auditoria_campos():
-    ids = sorted({str(x) for n in AUDIT_NEGOCIOS.values() for x in (n['creado_por'], n['modificado_por']) if x})
+    # El usuario 0 no es una persona: es un negocio creado por formulario, automatizacion o integracion.
+    USER_NAME_CACHE.setdefault('0', 'Automatico (formulario o integracion)')
+    ids = sorted({str(x) for n in AUDIT_NEGOCIOS.values() for x in (n['creado_por'], n['modificado_por']) if x and str(x) != '0'})
     resolve_users(ids)
     for n in AUDIT_NEGOCIOS.values():
         n['creado_por'] = USER_NAME_CACHE.get(str(n['creado_por']), n['creado_por'])
@@ -904,6 +906,21 @@ def escribir_cuadre():
         L.append('Posibles ventas no contadas, por asesor (revisar con Operaciones):')
         for a, v in sorted(posibles.items(), key=lambda x: -x[1]):
             L.append(f'- {a}: {money(v)}')
+    # Negocios retirados por auditoria: siguen ganados en Bitrix (por eso aparecen en este cuadre)
+    # pero el tablero no los suma (ver _automation/ventas_excluidas.json).
+    try:
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ventas_excluidas.json'), encoding='utf-8') as fx:
+            excl = {str(e['id']).strip(): e for e in json.load(fx).get('negocios', [])}
+    except Exception:
+        excl = {}
+    retirados = [(i, AUDIT_NEGOCIOS[i], excl[i]) for i in excl if i in AUDIT_NEGOCIOS]
+    CUADRE['retirados_por_auditoria'] = [{'id': i, 'asesor': n['asesor'], 'valor': n['valor'], 'motivo': e.get('motivo', '')} for i, n, e in retirados]
+    if retirados:
+        L.append('')
+        L.append(f"## Retirados del tablero por auditoria: {len(retirados)} negocios, {money(sum(n['valor'] for _, n, _ in retirados))}")
+        L.append('Siguen ganados en Bitrix y por eso estan en los totales de abajo, pero el tablero NO los suma.')
+        for i, n, e in retirados:
+            L.append(f"- #{i} {n['asesor']}: {money(n['valor'])}. {e.get('motivo', '')}")
     L.append('')
     L.append('## Totales contados por pipeline')
     for cid, c in CUADRE['categorias'].items():
