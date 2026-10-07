@@ -37,25 +37,22 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r _automation/requirements.txt
 
-      # 7-oct-2026, a pedido de Luis: despues de que el tablero pasa al mes nuevo
-      # (dia 4 en adelante), el mes ANTERIOR se sigue refrescando en cada corrida,
-      # porque en Bitrix siguen apareciendo, cambiando o desapareciendo ventas de ese
-      # mes. Se hace una pasada completa con corte en el ultimo dia del mes anterior
-      # y luego la pasada normal del mes en curso. Si esta pasada falla, no bloquea
-      # la actualizacion del mes en curso.
+      # Regla vigente (7-oct-2026, aclarada por Luis): en CADA corrida se actualizan
+      # los DOS meses -- primero el mes anterior completo (en Bitrix siguen
+      # apareciendo, cambiando o desapareciendo ventas de ese mes) y luego el mes
+      # real en curso, desde el dia 1. Lo unico que cambia del dia 1 al 3 es que mes
+      # muestran POR DEFECTO el tablero y los dashboards (el anterior); eso lo decide
+      # pipeline_master.py (mes_por_defecto). Si la pasada del mes anterior falla,
+      # no bloquea la del mes en curso. Fechas en hora Colombia (UTC-5).
       - name: 0) Refrescar el mes anterior (cambios hechos en Bitrix despues del cierre)
         run: |
-          PREV=$(python -c "from datetime import date,timedelta; t=date.today(); print((t.replace(day=1)-timedelta(days=1)).isoformat() if t.day>3 else '')")
-          if [ -n "$PREV" ]; then
-            echo "Refrescando el mes anterior con corte $PREV"
-            if FORCE_TODAY=$PREV python _automation/fetch_bitrix_data.py && FORCE_TODAY=$PREV python _automation/pipeline_master.py; then
-              cp _automation/diag/CUADRE_VENTAS.md _automation/diag/CUADRE_VENTAS_mes_anterior.md || true
-            else
-              echo "::warning::No se pudo refrescar el mes anterior; se continua con el mes en curso"
-              git checkout -- _automation/Dashboard_Master_DATA.html _automation/TV_Master_DATA.html
-            fi
+          PREV=$(python -c "from datetime import datetime,timezone,timedelta; t=datetime.now(timezone(timedelta(hours=-5))).date(); print((t.replace(day=1)-timedelta(days=1)).isoformat())")
+          echo "Refrescando el mes anterior con corte $PREV"
+          if FORCE_TODAY=$PREV python _automation/fetch_bitrix_data.py && FORCE_TODAY=$PREV python _automation/pipeline_master.py; then
+            cp _automation/diag/CUADRE_VENTAS.md _automation/diag/CUADRE_VENTAS_mes_anterior.md || true
           else
-            echo "Dias 1 a 3: el mes anterior todavia es el mes en curso, lo cubre la pasada normal."
+            echo "::warning::No se pudo refrescar el mes anterior; se continua con el mes en curso"
+            git checkout -- _automation/Dashboard_Master_DATA.html _automation/TV_Master_DATA.html
           fi
 
       - name: 1) Traer datos frescos de Bitrix (ventas + gestiones, mes en curso)
