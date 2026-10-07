@@ -41,11 +41,11 @@ TV_MASTER = f"{AUTO}/TV_Master_DATA.html"
 
 def effective_today(real_today=None):
     """Misma regla que pipeline_master.py (actualizada 17-sep-2026 a pedido
-    de Luis): del dia 1 al 7 (inclusive) del mes nuevo, el tablero sigue
-    tratando el mes ANTERIOR como 'mes en curso'; desde el dia 8 usa el mes
+    de Luis): del dia 1 al 3 (inclusive) del mes nuevo, el tablero sigue
+    tratando el mes ANTERIOR como 'mes en curso'; desde el dia 4 usa el mes
     real."""
     t = real_today or date.today()
-    if t.day <= 7:
+    if t.day <= 3:  # 7-oct-2026, a pedido de Luis: margen de 3 dias (antes 7)
         first_of_month = t.replace(day=1)
         return first_of_month - timedelta(days=1)
     return t

@@ -44,7 +44,7 @@ USO:
 
 Si no se definen FECHA_DESDE/FECHA_HASTA, se usa el mes en curso completo (dia 1
 hasta hoy), calculado con la MISMA regla de "mes en curso" que pipeline_master.py
-(ver effective_today en ese archivo -- congelado hasta el dia 7 del mes siguiente).
+(ver effective_today en ese archivo -- congelado hasta el dia 3 del mes siguiente (regla del 7-oct-2026; antes dia 7)).
 """
 import os, sys, json, time
 from collections import Counter
@@ -73,12 +73,12 @@ os.makedirs(OUT_DIR, exist_ok=True)
 
 def effective_today(real_today=None):
     """MISMA regla que pipeline_master.py (actualizada 17-sep-2026 a pedido de
-    Luis): el mes se congela (deja de ser 'mes en curso') recien DESPUES del dia 7
+    Luis): el mes se congela (deja de ser 'mes en curso') recien DESPUES del dia 3 (regla del 7-oct-2026; antes dia 7)
     del mes siguiente, para dar margen a que se terminen de cargar/ajustar ventas y
-    gestiones del mes que cierra. Del dia 1 al 7 del mes nuevo, el pipeline sigue
+    gestiones del mes que cierra. Del dia 1 al 3 del mes nuevo, el pipeline sigue
     tratando el mes ANTERIOR como 'mes en curso'."""
     t = real_today or date.today()
-    if t.day <= 7:
+    if t.day <= 3:  # 7-oct-2026, a pedido de Luis: margen de 3 dias (antes 7)
         first_of_month = t.replace(day=1)
         return first_of_month - timedelta(days=1)
     return t

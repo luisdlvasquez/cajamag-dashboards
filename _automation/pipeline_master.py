@@ -74,16 +74,16 @@ def effective_today(real_today=None):
     """Devuelve la fecha 'efectiva' que usa el pipeline para decidir cual es
     el 'mes en curso'. Regla ACTUALIZADA por Luis (17-sep-2026, reemplaza la
     regla anterior de 2 dias habiles): el tablero debe seguir mostrando la
-    gestion/venta del mes que se ACABA DE CERRAR hasta el DIA 7 del mes
+    gestion/venta del mes que se ACABA DE CERRAR hasta el DIA 3 del mes (regla del 7-oct-2026; antes dia 7)
     siguiente (mas margen para que se terminen de cargar/ajustar en Bitrix
-    las ultimas ventas y gestiones del mes que cierra). Del dia 1 al 7 del
+    las ultimas ventas y gestiones del mes que cierra). Del dia 1 al 3 del
     mes nuevo (inclusive), el pipeline trata el mes ANTERIOR como 'mes en
-    curso' (YM, MES_NOMBRE, LABEL_SUFFIX); a partir del dia 8 ya usa el mes
+    curso' (YM, MES_NOMBRE, LABEL_SUFFIX); a partir del dia 4 ya usa el mes
     real. No pierde datos: cuando se vuelva a correr el pipeline despues del
     corte, el mes nuevo se recalcula completo (incluyendo los dias que ya
     habian pasado)."""
     t = real_today or date.today()
-    if t.day <= 7:
+    if t.day <= 3:  # 7-oct-2026, a pedido de Luis: margen de 3 dias (antes 7)
         first_of_month = t.replace(day=1)
         return first_of_month - timedelta(days=1)  # ultimo dia del mes anterior
     return t
