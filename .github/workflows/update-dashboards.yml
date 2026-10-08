@@ -3,10 +3,13 @@ name: Actualizar dashboards CAJAMAG
 on:
   workflow_dispatch: {}
   schedule:
-    # 29-sep-2026: 3 corridas al dia (hora Colombia = UTC-5): ~6:07 am, ~11:07 am
-    # y ~4:07 pm. Minuto 7 (no :00) porque GitHub retrasa mucho los cron en punto
-    # (la corrida de las 5 am llegaba a ejecutarse a la 1 pm).
-    - cron: '7 11,16,21 * * *'
+    # 8-oct-2026: cada hora de 6:37 am a 9:37 pm (hora Colombia = UTC-5).
+    # Con 3 corridas al dia GitHub retrasaba o se saltaba varias (la de las 6 am del
+    # 8-oct no corrio y la de las 4 pm del 7-oct corrio a las 7:55 pm), y el tablero
+    # amanecia con datos del dia anterior. Con una por hora, aunque GitHub se salte
+    # algunas, siempre hay una reciente. Minuto 37 para evitar la congestion de :00.
+    - cron: '37 11-23 * * *'
+    - cron: '37 0-2 * * *'
 
 permissions:
   contents: write
