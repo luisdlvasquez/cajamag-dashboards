@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-10-08 14:55 UTC",
+ "generado_utc": "2026-10-08 20:51 UTC",
  "rango": {
   "desde": "2026-10-01",
   "hasta": "2026-10-31",
@@ -9,10 +9,10 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 153,
+   "negocios_contados": 158,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 23297782.0,
-   "ingreso_bitrix_de_esos_negocios": 23297782.0
+   "valor_contado": 23821282.0,
+   "ingreso_bitrix_de_esos_negocios": 23821282.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -467,21 +467,34 @@
    "ingreso": 1280500.0,
    "titulo": "COMERCIALIZADORA DE SERVICIOS FINANCIEROS S A S (34652)",
    "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "35054",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "PROPUESTA ENVIADA",
+   "asesor": "Oriana Yadith Felizzola Ortega",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-10-08",
+   "fecha_creacion": "2026-10-08",
+   "semantica": "P",
+   "ingreso": 680500.0,
+   "titulo": "GRUPO AGROVID S A S (35054)",
+   "motivo": "No esta en la etapa ganada"
   }
  ],
  "por_asesor": {
   "Jessica Luque Garcia": {
    "Individual": {
-    "negocios": 12,
-    "valor_contado": 265000.0,
-    "ingreso_bitrix": 265000.0
+    "negocios": 14,
+    "valor_contado": 328400.0,
+    "ingreso_bitrix": 328400.0
    }
   },
   "Martha Cabrera Montes": {
    "Individual": {
-    "negocios": 9,
-    "valor_contado": 266000.0,
-    "ingreso_bitrix": 266000.0
+    "negocios": 10,
+    "valor_contado": 335000.0,
+    "ingreso_bitrix": 335000.0
    },
    "Empresarial": {
     "negocios": 1,
@@ -491,9 +504,9 @@
   },
   "Oriana Yadith Felizzola Ortega": {
    "Individual": {
-    "negocios": 36,
-    "valor_contado": 2591900.0,
-    "ingreso_bitrix": 2591900.0
+    "negocios": 37,
+    "valor_contado": 2785100.0,
+    "ingreso_bitrix": 2785100.0
    }
   },
   "Maria Jose Garcia Guaman": {
@@ -512,9 +525,9 @@
   },
   "Karen Liseth Cantillo De la Cruz": {
    "Individual": {
-    "negocios": 12,
-    "valor_contado": 690000.0,
-    "ingreso_bitrix": 690000.0
+    "negocios": 13,
+    "valor_contado": 887900.0,
+    "ingreso_bitrix": 887900.0
    }
   },
   "Marvis Yarima Gonzalez Gil": {
@@ -597,8 +610,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
-     "con_valor": 52
+     "ventas": 158,
+     "con_valor": 54
     },
     "Empresarial": {
      "ventas": 2,
@@ -643,8 +656,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
-     "con_valor": 113
+     "ventas": 158,
+     "con_valor": 116
     },
     "Empresarial": {
      "ventas": 2,
@@ -701,7 +714,7 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 26
     },
     "Empresarial": {
@@ -759,7 +772,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 0
     },
     "Empresarial": {
@@ -785,7 +798,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 0
     },
     "Empresarial": {
@@ -806,7 +819,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 0
     },
     "Empresarial": {
@@ -836,7 +849,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 0
     },
     "Empresarial": {
@@ -857,7 +870,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 0
     },
     "Empresarial": {
@@ -878,7 +891,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 0
     },
     "Empresarial": {
@@ -899,7 +912,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 0
     },
     "Empresarial": {
@@ -920,7 +933,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 0
     },
     "Empresarial": {
@@ -941,7 +954,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 0
     },
     "Empresarial": {
@@ -962,7 +975,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 0
     },
     "Empresarial": {
@@ -983,7 +996,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1004,8 +1017,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
-     "con_valor": 153
+     "ventas": 158,
+     "con_valor": 158
     },
     "Empresarial": {
      "ventas": 2,
@@ -1050,7 +1063,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1071,7 +1084,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1092,7 +1105,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 153,
+     "ventas": 158,
      "con_valor": 0
     },
     "Empresarial": {
