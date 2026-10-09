@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-10-09 17:36 UTC",
+ "generado_utc": "2026-10-09 21:55 UTC",
  "rango": {
   "desde": "2026-10-01",
   "hasta": "2026-10-31",
@@ -9,18 +9,18 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 168,
+   "negocios_contados": 172,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 24532482.0,
-   "ingreso_bitrix_de_esos_negocios": 24532482.0
+   "valor_contado": 24919982.0,
+   "ingreso_bitrix_de_esos_negocios": 24919982.0
   },
   "1": {
    "tipo_venta": "Empresarial",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 2,
+   "negocios_contados": 4,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 2154000.0,
-   "ingreso_bitrix_de_esos_negocios": 2154000.0
+   "valor_contado": 4080066.0,
+   "ingreso_bitrix_de_esos_negocios": 4080066.0
   },
   "4": {
    "tipo_venta": "IFT",
@@ -467,19 +467,6 @@
    "ingreso": 1280500.0,
    "titulo": "COMERCIALIZADORA DE SERVICIOS FINANCIEROS S A S (34652)",
    "motivo": "No esta en la etapa ganada"
-  },
-  {
-   "id": "35054",
-   "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "PROPUESTA ENVIADA",
-   "asesor": "Oriana Yadith Felizzola Ortega",
-   "fecha_facturacion": null,
-   "fecha_cierre": "2026-10-08",
-   "fecha_creacion": "2026-10-08",
-   "semantica": "P",
-   "ingreso": 680500.0,
-   "titulo": "GRUPO AGROVID S A S (35054)",
-   "motivo": "No esta en la etapa ganada"
   }
  ],
  "por_asesor": {
@@ -504,9 +491,14 @@
   },
   "Oriana Yadith Felizzola Ortega": {
    "Individual": {
-    "negocios": 39,
-    "valor_contado": 2860900.0,
-    "ingreso_bitrix": 2860900.0
+    "negocios": 40,
+    "valor_contado": 2935500.0,
+    "ingreso_bitrix": 2935500.0
+   },
+   "Empresarial": {
+    "negocios": 1,
+    "valor_contado": 666466.0,
+    "ingreso_bitrix": 666466.0
    }
   },
   "Maria Jose Garcia Guaman": {
@@ -525,23 +517,23 @@
   },
   "Karen Liseth Cantillo De la Cruz": {
    "Individual": {
-    "negocios": 13,
-    "valor_contado": 887900.0,
-    "ingreso_bitrix": 887900.0
+    "negocios": 14,
+    "valor_contado": 1085800.0,
+    "ingreso_bitrix": 1085800.0
    }
   },
   "Marvis Yarima Gonzalez Gil": {
    "Individual": {
-    "negocios": 7,
-    "valor_contado": 349100.0,
-    "ingreso_bitrix": 349100.0
+    "negocios": 8,
+    "valor_contado": 395100.0,
+    "ingreso_bitrix": 395100.0
    }
   },
   "Martha Lorena Celedon de la Rosa": {
    "Individual": {
-    "negocios": 2,
-    "valor_contado": 75000.0,
-    "ingreso_bitrix": 75000.0
+    "negocios": 3,
+    "valor_contado": 144000.0,
+    "ingreso_bitrix": 144000.0
    }
   },
   "Holman Marin Romero": {
@@ -561,6 +553,11 @@
     "negocios": 1,
     "valor_contado": 60000.0,
     "ingreso_bitrix": 60000.0
+   },
+   "Empresarial": {
+    "negocios": 1,
+    "valor_contado": 1259600.0,
+    "ingreso_bitrix": 1259600.0
    }
   },
   "Bienvenida Lopez Hurtado": {
@@ -610,11 +607,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
-     "con_valor": 57
+     "ventas": 172,
+     "con_valor": 58
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 1
     },
     "IFT": {
@@ -656,12 +653,12 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
-     "con_valor": 124
+     "ventas": 172,
+     "con_valor": 127
     },
     "Empresarial": {
-     "ventas": 2,
-     "con_valor": 1
+     "ventas": 4,
+     "con_valor": 2
     },
     "IFT": {
      "ventas": 4,
@@ -714,11 +711,11 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 29
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 0
     },
     "IFT": {
@@ -772,11 +769,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 1
     },
     "IFT": {
@@ -798,11 +795,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 0
     },
     "IFT": {
@@ -819,12 +816,12 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
-     "con_valor": 1
+     "ventas": 4,
+     "con_valor": 2
     },
     "IFT": {
      "ventas": 4,
@@ -839,6 +836,14 @@
       "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=34445&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=53654"
      },
      "texto": "{'id': 53654, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=34445&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=53654', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=34445&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=53654'}"
+    },
+    {
+     "crudo": {
+      "id": 54123,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=35054&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=54123",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=35054&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=54123"
+     },
+     "texto": "{'id': 54123, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=35054&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=54123', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=35054&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=54123'}"
     }
    ]
   },
@@ -849,11 +854,11 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 0
     },
     "IFT": {
@@ -870,11 +875,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 0
     },
     "IFT": {
@@ -891,11 +896,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 0
     },
     "IFT": {
@@ -912,11 +917,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 0
     },
     "IFT": {
@@ -933,11 +938,11 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 0
     },
     "IFT": {
@@ -954,11 +959,11 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 0
     },
     "IFT": {
@@ -975,11 +980,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 0
     },
     "IFT": {
@@ -996,11 +1001,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 0
     },
     "IFT": {
@@ -1017,12 +1022,12 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
-     "con_valor": 168
+     "ventas": 172,
+     "con_valor": 172
     },
     "Empresarial": {
-     "ventas": 2,
-     "con_valor": 2
+     "ventas": 4,
+     "con_valor": 4
     },
     "IFT": {
      "ventas": 4,
@@ -1063,11 +1068,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 0
     },
     "IFT": {
@@ -1084,11 +1089,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 0
     },
     "IFT": {
@@ -1105,11 +1110,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 168,
+     "ventas": 172,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 4,
      "con_valor": 0
     },
     "IFT": {
