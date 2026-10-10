@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-10 (corrida 2026-10-10 06:22 UTC)
+# Cuadre de ventas 2026-10 (corrida 2026-10-10 16:26 UTC)
 
 Rango: 2026-10-01 a 2026-10-31. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -93,11 +93,13 @@ Ninguno.
 ## Lineas con precio/cantidad sospechosos (0)
 Ninguno.
 
-## Negocios creados o cerrados en el mes que NO estan ganados (abiertos o perdidos, con valor) (4)
+## Negocios creados o cerrados en el mes que NO estan ganados (abiertos o perdidos, con valor) (6)
 | ID | Asesor | Pipeline | Etapa | F. creacion | F. facturacion | F. cierre | Ingreso | Detalle |
 |---|---|---|---|---|---|---|---:|---|
 | 26008 | Bienvenida Lopez Hurtado | VENTA INDIVIDUAL | CERRADO PERDIDO | 2026-07-13 | - | 2026-10-06 | $400.400 | No esta en la etapa ganada |
 | 33660 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-23 | 2026-09-23 | 2026-10-01 | $255.000 | No esta en la etapa ganada |
+| 35269 | Martha Cabrera Montes | VENTA INDIVIDUAL | NUEVA OPORTUNIDAD | 2026-10-10 | 2026-10-09 | 2026-10-10 | $69.000 | No esta en la etapa ganada |
+| 35271 | Martha Cabrera Montes | VENTA INDIVIDUAL | NUEVA OPORTUNIDAD | 2026-10-10 | 2026-10-09 | 2026-10-10 | $69.000 | No esta en la etapa ganada |
 | 34652 | Marvis Yarima Gonzalez Gil | VENTA EMPRESARIAL | EN ESPERA DE OC | 2026-10-06 | - | 2026-10-06 | $1.280.500 | No esta en la etapa ganada |
 | 34563 | Oriana Yadith Felizzola Ortega | VENTA INDIVIDUAL | NUEVA OPORTUNIDAD | 2026-10-06 | - | 2026-10-13 | $8.600 | No esta en la etapa ganada |
 

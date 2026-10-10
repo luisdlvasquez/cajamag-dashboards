@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-10-10 06:22 UTC",
+ "generado_utc": "2026-10-10 16:26 UTC",
  "rango": {
   "desde": "2026-10-01",
   "hasta": "2026-10-31",
@@ -10,7 +10,9 @@
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
    "negocios_contados": 172,
-   "otras_etapas_con_fecha_en_el_mes": {},
+   "otras_etapas_con_fecha_en_el_mes": {
+    "NUEVA OPORTUNIDAD": 2
+   },
    "valor_contado": 24919982.0,
    "ingreso_bitrix_de_esos_negocios": 24919982.0
   },
@@ -440,6 +442,32 @@
    "semantica": "P",
    "ingreso": 8600.0,
    "titulo": " (34563)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "35269",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "NUEVA OPORTUNIDAD",
+   "asesor": "Martha Cabrera Montes",
+   "fecha_facturacion": "2026-10-09",
+   "fecha_cierre": "2026-10-10",
+   "fecha_creacion": "2026-10-10",
+   "semantica": "P",
+   "ingreso": 69000.0,
+   "titulo": " (35269)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "35271",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "NUEVA OPORTUNIDAD",
+   "asesor": "Martha Cabrera Montes",
+   "fecha_facturacion": "2026-10-09",
+   "fecha_cierre": "2026-10-10",
+   "fecha_creacion": "2026-10-10",
+   "semantica": "P",
+   "ingreso": 69000.0,
+   "titulo": " (35271)",
    "motivo": "No esta en la etapa ganada"
   },
   {
