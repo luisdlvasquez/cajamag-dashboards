@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-10-12 06:28 UTC",
+ "generado_utc": "2026-10-12 20:28 UTC",
  "rango": {
   "desde": "2026-10-01",
   "hasta": "2026-10-31",
@@ -9,12 +9,10 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 172,
-   "otras_etapas_con_fecha_en_el_mes": {
-    "NUEVA OPORTUNIDAD": 2
-   },
-   "valor_contado": 24919982.0,
-   "ingreso_bitrix_de_esos_negocios": 24919982.0
+   "negocios_contados": 175,
+   "otras_etapas_con_fecha_en_el_mes": {},
+   "valor_contado": 25149982.0,
+   "ingreso_bitrix_de_esos_negocios": 25149982.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -445,29 +443,42 @@
    "motivo": "No esta en la etapa ganada"
   },
   {
-   "id": "35269",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "NUEVA OPORTUNIDAD",
-   "asesor": "Martha Cabrera Montes",
-   "fecha_facturacion": "2026-10-09",
-   "fecha_cierre": "2026-10-10",
-   "fecha_creacion": "2026-10-10",
-   "semantica": "P",
-   "ingreso": 69000.0,
-   "titulo": " (35269)",
+   "id": "26012",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "CERRADO PERDIDO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-10-12",
+   "fecha_creacion": "2026-07-13",
+   "semantica": "F",
+   "ingreso": 305200.0,
+   "titulo": "ADMINISTRADORA DE HOTELES GMH SA (26012)",
    "motivo": "No esta en la etapa ganada"
   },
   {
-   "id": "35271",
-   "pipeline": "VENTA INDIVIDUAL",
-   "etapa": "NUEVA OPORTUNIDAD",
-   "asesor": "Martha Cabrera Montes",
-   "fecha_facturacion": "2026-10-09",
-   "fecha_cierre": "2026-10-10",
-   "fecha_creacion": "2026-10-10",
-   "semantica": "P",
-   "ingreso": 69000.0,
-   "titulo": " (35271)",
+   "id": "31546",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "CERRADO PERDIDO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-10-12",
+   "fecha_creacion": "2026-09-05",
+   "semantica": "F",
+   "ingreso": 1302500.0,
+   "titulo": "CITECNICAS BALTIME DE COLOMBIA SA (31546)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "31548",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "CERRADO PERDIDO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-10-12",
+   "fecha_creacion": "2026-09-05",
+   "semantica": "F",
+   "ingreso": 1197500.0,
+   "titulo": "CITECNICAS BALTIME DE COLOMBIA SA (31548)",
    "motivo": "No esta en la etapa ganada"
   },
   {
@@ -495,6 +506,19 @@
    "ingreso": 1280500.0,
    "titulo": "COMERCIALIZADORA DE SERVICIOS FINANCIEROS S A S (34652)",
    "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "35326",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "DESARROLLO PROPUESTA",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-10-12",
+   "fecha_creacion": "2026-10-12",
+   "semantica": "P",
+   "ingreso": 379900.0,
+   "titulo": "ADMINISTRADORA DE HOTELES G M H S A (35326)",
+   "motivo": "No esta en la etapa ganada"
   }
  ],
  "por_asesor": {
@@ -507,9 +531,9 @@
   },
   "Martha Cabrera Montes": {
    "Individual": {
-    "negocios": 13,
-    "valor_contado": 426000.0,
-    "ingreso_bitrix": 426000.0
+    "negocios": 16,
+    "valor_contado": 656000.0,
+    "ingreso_bitrix": 656000.0
    },
    "Empresarial": {
     "negocios": 1,
@@ -635,7 +659,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 58
     },
     "Empresarial": {
@@ -681,8 +705,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
-     "con_valor": 127
+     "ventas": 175,
+     "con_valor": 130
     },
     "Empresarial": {
      "ventas": 4,
@@ -739,7 +763,7 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 29
     },
     "Empresarial": {
@@ -797,7 +821,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 0
     },
     "Empresarial": {
@@ -823,7 +847,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 0
     },
     "Empresarial": {
@@ -844,7 +868,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 0
     },
     "Empresarial": {
@@ -882,7 +906,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 0
     },
     "Empresarial": {
@@ -903,7 +927,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 0
     },
     "Empresarial": {
@@ -924,7 +948,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 0
     },
     "Empresarial": {
@@ -945,7 +969,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 0
     },
     "Empresarial": {
@@ -966,7 +990,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 0
     },
     "Empresarial": {
@@ -987,7 +1011,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1008,7 +1032,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1029,7 +1053,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1050,8 +1074,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
-     "con_valor": 172
+     "ventas": 175,
+     "con_valor": 175
     },
     "Empresarial": {
      "ventas": 4,
@@ -1096,7 +1120,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1117,7 +1141,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1138,7 +1162,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 172,
+     "ventas": 175,
      "con_valor": 0
     },
     "Empresarial": {

@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-09 (corrida 2026-10-12 06:27 UTC)
+# Cuadre de ventas 2026-09 (corrida 2026-10-12 20:27 UTC)
 
 Rango: 2026-09-01 a 2026-09-30. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -98,8 +98,8 @@ Ninguno.
 ## Negocios creados o cerrados en el mes que NO estan ganados (abiertos o perdidos, con valor) (11)
 | ID | Asesor | Pipeline | Etapa | F. creacion | F. facturacion | F. cierre | Ingreso | Detalle |
 |---|---|---|---|---|---|---|---:|---|
-| 31546 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | EN ESPERA DE OC | 2026-09-05 | - | 2026-09-05 | $1.302.500 | No esta en la etapa ganada |
-| 31548 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | EN ESPERA DE OC | 2026-09-05 | - | 2026-09-05 | $1.197.500 | No esta en la etapa ganada |
+| 31546 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-05 | - | 2026-10-12 | $1.302.500 | No esta en la etapa ganada |
+| 31548 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-05 | - | 2026-10-12 | $1.197.500 | No esta en la etapa ganada |
 | 33660 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-23 | 2026-09-23 | 2026-10-01 | $255.000 | No esta en la etapa ganada |
 | 32192 | Holman Marin Romero | VENTA EMPRESARIAL | EN ESPERA DE OC | 2026-09-11 | - | 2026-09-13 | $280.900 | No esta en la etapa ganada |
 | 32201 | Holman Marin Romero | VENTA EMPRESARIAL | EN ESPERA DE OC | 2026-09-11 | - | 2026-09-13 | $161.000 | No esta en la etapa ganada |
