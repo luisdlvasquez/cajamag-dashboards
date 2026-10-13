@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-10-12 20:28 UTC",
+ "generado_utc": "2026-10-13 02:17 UTC",
  "rango": {
   "desde": "2026-10-01",
   "hasta": "2026-10-31",
@@ -518,6 +518,19 @@
    "semantica": "P",
    "ingreso": 379900.0,
    "titulo": "ADMINISTRADORA DE HOTELES G M H S A (35326)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "35331",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "PROPUESTA ENVIADA",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-10-12",
+   "fecha_creacion": "2026-10-12",
+   "semantica": "P",
+   "ingreso": 6814500.0,
+   "titulo": "FRISBY S A (35331)",
    "motivo": "No esta en la etapa ganada"
   }
  ],

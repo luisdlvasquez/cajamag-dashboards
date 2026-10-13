@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-10 (corrida 2026-10-12 20:28 UTC)
+# Cuadre de ventas 2026-10 (corrida 2026-10-13 02:17 UTC)
 
 Rango: 2026-10-01 a 2026-10-31. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -93,7 +93,7 @@ Ninguno.
 ## Lineas con precio/cantidad sospechosos (0)
 Ninguno.
 
-## Negocios creados o cerrados en el mes que NO estan ganados (abiertos o perdidos, con valor) (8)
+## Negocios creados o cerrados en el mes que NO estan ganados (abiertos o perdidos, con valor) (9)
 | ID | Asesor | Pipeline | Etapa | F. creacion | F. facturacion | F. cierre | Ingreso | Detalle |
 |---|---|---|---|---|---|---|---:|---|
 | 26008 | Bienvenida Lopez Hurtado | VENTA INDIVIDUAL | CERRADO PERDIDO | 2026-07-13 | - | 2026-10-06 | $400.400 | No esta en la etapa ganada |
@@ -102,6 +102,7 @@ Ninguno.
 | 31548 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-05 | - | 2026-10-12 | $1.197.500 | No esta en la etapa ganada |
 | 33660 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-23 | 2026-09-23 | 2026-10-01 | $255.000 | No esta en la etapa ganada |
 | 35326 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | DESARROLLO PROPUESTA | 2026-10-12 | - | 2026-10-12 | $379.900 | No esta en la etapa ganada |
+| 35331 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-10-12 | - | 2026-10-12 | $6.814.500 | No esta en la etapa ganada |
 | 34652 | Marvis Yarima Gonzalez Gil | VENTA EMPRESARIAL | EN ESPERA DE OC | 2026-10-06 | - | 2026-10-06 | $1.280.500 | No esta en la etapa ganada |
 | 34563 | Oriana Yadith Felizzola Ortega | VENTA INDIVIDUAL | NUEVA OPORTUNIDAD | 2026-10-06 | - | 2026-10-13 | $8.600 | No esta en la etapa ganada |
 

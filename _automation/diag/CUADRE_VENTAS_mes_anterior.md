@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-09 (corrida 2026-10-12 20:27 UTC)
+# Cuadre de ventas 2026-09 (corrida 2026-10-13 02:16 UTC)
 
 Rango: 2026-09-01 a 2026-09-30. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -95,11 +95,12 @@ Ninguno.
 | 33070 | Holman Marin Romero | VENTA EMPRESARIAL | CERRADO GANADO | 2026-09-16 | 2026-09-14 | 2026-09-16 | $2.437.700 | Precio/cantidad sospechosos (Capacitacion lenguaje de seña 20 horas, para 25 personas: precio 1.0, cant. 2437700.0) |
 | 33401 | Karen Liseth Cantillo De la Cruz | VENTA INDIVIDUAL | CERRADO GANADO | 2026-09-21 | 2026-09-18 | 2026-09-21 | $60.000 | Precio/cantidad sospechosos (BOLETAS DIA DEL AFILIADO: precio 4.0, cant. 15000.0) |
 
-## Negocios creados o cerrados en el mes que NO estan ganados (abiertos o perdidos, con valor) (11)
+## Negocios creados o cerrados en el mes que NO estan ganados (abiertos o perdidos, con valor) (12)
 | ID | Asesor | Pipeline | Etapa | F. creacion | F. facturacion | F. cierre | Ingreso | Detalle |
 |---|---|---|---|---|---|---|---:|---|
 | 31546 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-05 | - | 2026-10-12 | $1.302.500 | No esta en la etapa ganada |
 | 31548 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-05 | - | 2026-10-12 | $1.197.500 | No esta en la etapa ganada |
+| 31555 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-09-05 | - | 2026-09-05 | $2.911.600 | No esta en la etapa ganada |
 | 33660 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-23 | 2026-09-23 | 2026-10-01 | $255.000 | No esta en la etapa ganada |
 | 32192 | Holman Marin Romero | VENTA EMPRESARIAL | EN ESPERA DE OC | 2026-09-11 | - | 2026-09-13 | $280.900 | No esta en la etapa ganada |
 | 32201 | Holman Marin Romero | VENTA EMPRESARIAL | EN ESPERA DE OC | 2026-09-11 | - | 2026-09-13 | $161.000 | No esta en la etapa ganada |
