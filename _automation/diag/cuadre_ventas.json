@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-10-15 15:47 UTC",
+ "generado_utc": "2026-10-15 20:06 UTC",
  "rango": {
   "desde": "2026-10-01",
   "hasta": "2026-10-31",
@@ -9,10 +9,10 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 212,
+   "negocios_contados": 216,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 30575282.0,
-   "ingreso_bitrix_de_esos_negocios": 30575282.0
+   "valor_contado": 30786282.0,
+   "ingreso_bitrix_de_esos_negocios": 30786282.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -587,9 +587,9 @@
   },
   "Martha Cabrera Montes": {
    "Individual": {
-    "negocios": 17,
-    "valor_contado": 898200.0,
-    "ingreso_bitrix": 898200.0
+    "negocios": 19,
+    "valor_contado": 1017200.0,
+    "ingreso_bitrix": 1017200.0
    },
    "Empresarial": {
     "negocios": 3,
@@ -632,9 +632,9 @@
   },
   "Marvis Yarima Gonzalez Gil": {
    "Individual": {
-    "negocios": 12,
-    "valor_contado": 504300.0,
-    "ingreso_bitrix": 504300.0
+    "negocios": 14,
+    "valor_contado": 596300.0,
+    "ingreso_bitrix": 596300.0
    }
   },
   "Martha Lorena Celedon de la Rosa": {
@@ -720,7 +720,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 64
     },
     "Empresarial": {
@@ -766,8 +766,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
-     "con_valor": 158
+     "ventas": 216,
+     "con_valor": 160
     },
     "Empresarial": {
      "ventas": 6,
@@ -824,7 +824,7 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 33
     },
     "Empresarial": {
@@ -882,7 +882,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 0
     },
     "Empresarial": {
@@ -912,7 +912,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 0
     },
     "Empresarial": {
@@ -933,7 +933,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 0
     },
     "Empresarial": {
@@ -971,7 +971,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 0
     },
     "Empresarial": {
@@ -992,7 +992,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1013,7 +1013,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1034,7 +1034,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1055,7 +1055,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1076,7 +1076,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1097,7 +1097,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1118,7 +1118,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1139,8 +1139,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
-     "con_valor": 212
+     "ventas": 216,
+     "con_valor": 216
     },
     "Empresarial": {
      "ventas": 6,
@@ -1185,7 +1185,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1206,7 +1206,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1227,7 +1227,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 212,
+     "ventas": 216,
      "con_valor": 0
     },
     "Empresarial": {
