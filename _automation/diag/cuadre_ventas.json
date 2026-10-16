@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-10-16 15:35 UTC",
+ "generado_utc": "2026-10-16 19:03 UTC",
  "rango": {
   "desde": "2026-10-01",
   "hasta": "2026-10-31",
@@ -9,10 +9,10 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 221,
+   "negocios_contados": 224,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 31256882.0,
-   "ingreso_bitrix_de_esos_negocios": 31256882.0
+   "valor_contado": 31338882.0,
+   "ingreso_bitrix_de_esos_negocios": 31338882.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -652,9 +652,9 @@
   },
   "Martha Lorena Celedon de la Rosa": {
    "Individual": {
-    "negocios": 5,
-    "valor_contado": 234000.0,
-    "ingreso_bitrix": 234000.0
+    "negocios": 8,
+    "valor_contado": 316000.0,
+    "ingreso_bitrix": 316000.0
    }
   },
   "Holman Marin Romero": {
@@ -733,8 +733,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
-     "con_valor": 65
+     "ventas": 224,
+     "con_valor": 68
     },
     "Empresarial": {
      "ventas": 6,
@@ -779,8 +779,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
-     "con_valor": 164
+     "ventas": 224,
+     "con_valor": 167
     },
     "Empresarial": {
      "ventas": 6,
@@ -837,7 +837,7 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 33
     },
     "Empresarial": {
@@ -895,7 +895,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 0
     },
     "Empresarial": {
@@ -925,7 +925,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 0
     },
     "Empresarial": {
@@ -946,7 +946,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 0
     },
     "Empresarial": {
@@ -984,7 +984,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1005,7 +1005,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1026,7 +1026,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1047,7 +1047,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1068,7 +1068,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1089,7 +1089,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1110,7 +1110,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1131,7 +1131,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1152,8 +1152,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
-     "con_valor": 221
+     "ventas": 224,
+     "con_valor": 224
     },
     "Empresarial": {
      "ventas": 6,
@@ -1198,7 +1198,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1219,7 +1219,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1240,7 +1240,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 221,
+     "ventas": 224,
      "con_valor": 0
     },
     "Empresarial": {
