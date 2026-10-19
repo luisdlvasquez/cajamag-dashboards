@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-10-19 17:49 UTC",
+ "generado_utc": "2026-10-19 22:41 UTC",
  "rango": {
   "desde": "2026-10-01",
   "hasta": "2026-10-31",
@@ -9,10 +9,10 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 250,
+   "negocios_contados": 252,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 35411282.0,
-   "ingreso_bitrix_de_esos_negocios": 35411282.0
+   "valor_contado": 35938582.0,
+   "ingreso_bitrix_de_esos_negocios": 35938582.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -575,21 +575,47 @@
    "ingreso": 12119000.0,
    "titulo": "OPERADORES DE SERVICIOS DE LA SIERRA SA ESP (35490)",
    "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "35910",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "PROPUESTA ENVIADA",
+   "asesor": "Karen Liseth Cantillo De la Cruz",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-10-19",
+   "fecha_creacion": "2026-10-19",
+   "semantica": "P",
+   "ingreso": 2183300.0,
+   "titulo": "EDIFICIO BALCONES COSTA AZUL (35910)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "35912",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "IDENTIFICACIÓN EMPRESA",
+   "asesor": "Karen Liseth Cantillo De la Cruz",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-10-19",
+   "fecha_creacion": "2026-10-19",
+   "semantica": "P",
+   "ingreso": 2387500.0,
+   "titulo": "FUNDACION GRUPO INTEGRA (35912)",
+   "motivo": "No esta en la etapa ganada"
   }
  ],
  "por_asesor": {
   "Jessica Luque Garcia": {
    "Individual": {
-    "negocios": 16,
-    "valor_contado": 386000.0,
-    "ingreso_bitrix": 386000.0
+    "negocios": 17,
+    "valor_contado": 475300.0,
+    "ingreso_bitrix": 475300.0
    }
   },
   "Martha Cabrera Montes": {
    "Individual": {
-    "negocios": 19,
-    "valor_contado": 1017200.0,
-    "ingreso_bitrix": 1017200.0
+    "negocios": 20,
+    "valor_contado": 1455200.0,
+    "ingreso_bitrix": 1455200.0
    },
    "Empresarial": {
     "negocios": 3,
@@ -720,7 +746,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 74
     },
     "Empresarial": {
@@ -766,8 +792,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
-     "con_valor": 184
+     "ventas": 252,
+     "con_valor": 185
     },
     "Empresarial": {
      "ventas": 6,
@@ -824,7 +850,7 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 39
     },
     "Empresarial": {
@@ -882,7 +908,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 0
     },
     "Empresarial": {
@@ -912,7 +938,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 0
     },
     "Empresarial": {
@@ -933,7 +959,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 0
     },
     "Empresarial": {
@@ -971,7 +997,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 0
     },
     "Empresarial": {
@@ -992,7 +1018,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1013,7 +1039,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1034,7 +1060,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1055,7 +1081,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1076,7 +1102,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1097,7 +1123,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1118,7 +1144,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1139,8 +1165,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
-     "con_valor": 250
+     "ventas": 252,
+     "con_valor": 252
     },
     "Empresarial": {
      "ventas": 6,
@@ -1185,7 +1211,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1206,7 +1232,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1227,7 +1253,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 250,
+     "ventas": 252,
      "con_valor": 0
     },
     "Empresarial": {
