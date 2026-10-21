@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-10-21 20:25 UTC",
+ "generado_utc": "2026-10-21 23:41 UTC",
  "rango": {
   "desde": "2026-10-01",
   "hasta": "2026-10-31",
@@ -9,18 +9,18 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 276,
+   "negocios_contados": 279,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 38165582.0,
-   "ingreso_bitrix_de_esos_negocios": 38165582.0
+   "valor_contado": 38400482.0,
+   "ingreso_bitrix_de_esos_negocios": 38400482.0
   },
   "1": {
    "tipo_venta": "Empresarial",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 7,
+   "negocios_contados": 8,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 12461366.0,
-   "ingreso_bitrix_de_esos_negocios": 12461366.0
+   "valor_contado": 12536366.0,
+   "ingreso_bitrix_de_esos_negocios": 12536366.0
   },
   "4": {
    "tipo_venta": "IFT",
@@ -603,19 +603,6 @@
    "motivo": "No esta en la etapa ganada"
   },
   {
-   "id": "36055",
-   "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "EN ESPERA DE OC",
-   "asesor": "Marvis Yarima Gonzalez Gil",
-   "fecha_facturacion": null,
-   "fecha_cierre": "2026-10-21",
-   "fecha_creacion": "2026-10-21",
-   "semantica": "P",
-   "ingreso": 75000.0,
-   "titulo": "CLINICA DE ENFERMEDADES DIGESTIVAS S.A.S (36055)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
    "id": "36107",
    "pipeline": "VENTA EMPRESARIAL",
    "etapa": "CERRADO PERDIDO",
@@ -632,9 +619,9 @@
  "por_asesor": {
   "Jessica Luque Garcia": {
    "Individual": {
-    "negocios": 23,
-    "valor_contado": 1061600.0,
-    "ingreso_bitrix": 1061600.0
+    "negocios": 25,
+    "valor_contado": 1098600.0,
+    "ingreso_bitrix": 1098600.0
    }
   },
   "Martha Cabrera Montes": {
@@ -663,9 +650,9 @@
   },
   "Maria Jose Garcia Guaman": {
    "Individual": {
-    "negocios": 37,
-    "valor_contado": 18123200.0,
-    "ingreso_bitrix": 18123200.0
+    "negocios": 38,
+    "valor_contado": 18321100.0,
+    "ingreso_bitrix": 18321100.0
    }
   },
   "Karen Patricia Ballesteros Paba": {
@@ -687,6 +674,11 @@
     "negocios": 21,
     "valor_contado": 1704300.0,
     "ingreso_bitrix": 1704300.0
+   },
+   "Empresarial": {
+    "negocios": 1,
+    "valor_contado": 75000.0,
+    "ingreso_bitrix": 75000.0
    }
   },
   "Martha Lorena Celedon de la Rosa": {
@@ -777,11 +769,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 76
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 2
     },
     "IFT": {
@@ -823,11 +815,11 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
-     "con_valor": 195
+     "ventas": 279,
+     "con_valor": 196
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 4
     },
     "IFT": {
@@ -881,11 +873,11 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 39
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 0
     },
     "IFT": {
@@ -939,11 +931,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 2
     },
     "IFT": {
@@ -969,19 +961,28 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 7,
-     "con_valor": 0
+     "ventas": 8,
+     "con_valor": 1
     },
     "IFT": {
      "ventas": 4,
      "con_valor": 0
     }
    },
-   "ejemplos": []
+   "ejemplos": [
+    {
+     "crudo": {
+      "id": 55186,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=36055&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=55186",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=36055&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=55186"
+     },
+     "texto": "{'id': 55186, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=36055&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=55186', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=36055&fieldName=UF_CRM_1681148244917&dynamic=Y&fileId=55186'}"
+    }
+   ]
   },
   "UF_CRM_1698765695579": {
    "nombre": "Cotización servicio",
@@ -990,11 +991,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 2
     },
     "IFT": {
@@ -1028,11 +1029,11 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 0
     },
     "IFT": {
@@ -1049,11 +1050,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 0
     },
     "IFT": {
@@ -1070,11 +1071,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 0
     },
     "IFT": {
@@ -1091,11 +1092,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 0
     },
     "IFT": {
@@ -1112,11 +1113,11 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 0
     },
     "IFT": {
@@ -1133,11 +1134,11 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 0
     },
     "IFT": {
@@ -1154,11 +1155,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 0
     },
     "IFT": {
@@ -1175,11 +1176,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 0
     },
     "IFT": {
@@ -1196,12 +1197,12 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
-     "con_valor": 276
+     "ventas": 279,
+     "con_valor": 279
     },
     "Empresarial": {
-     "ventas": 7,
-     "con_valor": 7
+     "ventas": 8,
+     "con_valor": 8
     },
     "IFT": {
      "ventas": 4,
@@ -1242,11 +1243,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 0
     },
     "IFT": {
@@ -1263,11 +1264,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 0
     },
     "IFT": {
@@ -1284,11 +1285,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 276,
+     "ventas": 279,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 7,
+     "ventas": 8,
      "con_valor": 0
     },
     "IFT": {
