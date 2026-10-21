@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-10-21 16:10 UTC",
+ "generado_utc": "2026-10-21 20:25 UTC",
  "rango": {
   "desde": "2026-10-01",
   "hasta": "2026-10-31",
@@ -9,10 +9,10 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 264,
+   "negocios_contados": 276,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 36603982.0,
-   "ingreso_bitrix_de_esos_negocios": 36603982.0
+   "valor_contado": 38165582.0,
+   "ingreso_bitrix_de_esos_negocios": 38165582.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -614,14 +614,27 @@
    "ingreso": 75000.0,
    "titulo": "CLINICA DE ENFERMEDADES DIGESTIVAS S.A.S (36055)",
    "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "36107",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "CERRADO PERDIDO",
+   "asesor": "Oriana Yadith Felizzola Ortega",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-10-21",
+   "fecha_creacion": "2026-10-21",
+   "semantica": "F",
+   "ingreso": 1010000.0,
+   "titulo": "FRIGORIFICOS BAMAR SA (36107)",
+   "motivo": "No esta en la etapa ganada"
   }
  ],
  "por_asesor": {
   "Jessica Luque Garcia": {
    "Individual": {
-    "negocios": 22,
-    "valor_contado": 1024800.0,
-    "ingreso_bitrix": 1024800.0
+    "negocios": 23,
+    "valor_contado": 1061600.0,
+    "ingreso_bitrix": 1061600.0
    }
   },
   "Martha Cabrera Montes": {
@@ -638,9 +651,9 @@
   },
   "Oriana Yadith Felizzola Ortega": {
    "Individual": {
-    "negocios": 62,
-    "valor_contado": 3283300.0,
-    "ingreso_bitrix": 3283300.0
+    "negocios": 64,
+    "valor_contado": 3304300.0,
+    "ingreso_bitrix": 3304300.0
    },
    "Empresarial": {
     "negocios": 1,
@@ -650,9 +663,9 @@
   },
   "Maria Jose Garcia Guaman": {
    "Individual": {
-    "negocios": 35,
-    "valor_contado": 17727400.0,
-    "ingreso_bitrix": 17727400.0
+    "negocios": 37,
+    "valor_contado": 18123200.0,
+    "ingreso_bitrix": 18123200.0
    }
   },
   "Karen Patricia Ballesteros Paba": {
@@ -671,9 +684,9 @@
   },
   "Marvis Yarima Gonzalez Gil": {
    "Individual": {
-    "negocios": 14,
-    "valor_contado": 596300.0,
-    "ingreso_bitrix": 596300.0
+    "negocios": 21,
+    "valor_contado": 1704300.0,
+    "ingreso_bitrix": 1704300.0
    }
   },
   "Martha Lorena Celedon de la Rosa": {
@@ -764,7 +777,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 76
     },
     "Empresarial": {
@@ -810,8 +823,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
-     "con_valor": 192
+     "ventas": 276,
+     "con_valor": 195
     },
     "Empresarial": {
      "ventas": 7,
@@ -868,7 +881,7 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 39
     },
     "Empresarial": {
@@ -926,7 +939,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 0
     },
     "Empresarial": {
@@ -956,7 +969,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 0
     },
     "Empresarial": {
@@ -977,7 +990,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1015,7 +1028,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1036,7 +1049,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1057,7 +1070,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1078,7 +1091,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1099,7 +1112,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1120,7 +1133,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1141,7 +1154,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1162,7 +1175,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1183,8 +1196,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
-     "con_valor": 264
+     "ventas": 276,
+     "con_valor": 276
     },
     "Empresarial": {
      "ventas": 7,
@@ -1229,7 +1242,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1250,7 +1263,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1271,7 +1284,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 264,
+     "ventas": 276,
      "con_valor": 0
     },
     "Empresarial": {
