@@ -49,6 +49,7 @@ hasta hoy), calculado con la MISMA regla de "mes en curso" que pipeline_master.p
 import os, sys, json, time
 from collections import Counter
 from datetime import date, datetime, timedelta, timezone
+import urllib.error
 import urllib.request
 import urllib.parse
 
@@ -163,11 +164,33 @@ def _en_rango(s):
 
 # ---------------- helpers REST ----------------
 
+# 26-oct-2026: desde el 22-oct Bitrix responde 403 a las llamadas de GitHub Actions (el
+# cliente Python-urllib por defecto). Se envian cabeceras de navegador y, si vuelve a
+# fallar, se imprime el codigo/servidor/cuerpo SIN la URL (la URL lleva la clave del webhook).
+_HEADERS = {
+    'User-Agent': ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+                   '(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'),
+    'Accept': 'application/json, text/plain, */*',
+    'Accept-Language': 'es-CO,es;q=0.9',
+}
+
+
 def _http_get(url):
     for intento in range(5):
         try:
-            with urllib.request.urlopen(url, timeout=60) as resp:
+            req = urllib.request.Request(url, headers=_HEADERS)
+            with urllib.request.urlopen(req, timeout=60) as resp:
                 return json.loads(resp.read().decode('utf-8'))
+        except urllib.error.HTTPError as e:
+            try:
+                cuerpo = e.read().decode('utf-8', 'replace')[:300].replace('\n', ' ')
+            except Exception:
+                cuerpo = ''
+            print(f'  [HTTP {e.code}] intento {intento + 1}/5 servidor={e.headers.get("Server")} '
+                  f'cf-ray={e.headers.get("CF-RAY")} cuerpo={cuerpo!r}', flush=True)
+            if intento == 4:
+                raise
+            time.sleep(1.5 * (intento + 1))
         except Exception as e:
             if intento == 4:
                 raise
@@ -504,7 +527,7 @@ HUELLA_SEGUNDOS = 170
 def _descargar_huella(url):
     """Devuelve (sha16, bytes, tipo) o None si la respuesta no es un archivo."""
     import hashlib
-    with urllib.request.urlopen(url, timeout=40) as resp:
+    with urllib.request.urlopen(urllib.request.Request(url, headers=_HEADERS), timeout=40) as resp:
         tipo = (resp.headers.get('Content-Type') or '').split(';')[0].strip().lower()
         data = resp.read(HUELLA_MAX_BYTES)
     if not data:
