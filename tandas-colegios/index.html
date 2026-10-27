@@ -760,7 +760,7 @@ const ORDER=['Santa Marta urbana','Santa Marta rural: Minca / Gaira / Bonda','Tr
 const gkey=r=>r.sec.replace('Barrio ref.: ','').replace('Cerca de ','');
 const map=L.map('map',{zoomControl:true}).setView([11.235,-74.2],12);
 let tilesOK=false;
-const voy=L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{maxZoom:20,subdomains:'abcd',attribution:'© OpenStreetMap · © CARTO'});
+const voy=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'});
 const esri=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'});
 let vErr=0;voy.on('tileload',()=>{if(!tilesOK){tilesOK=true;map.removeLayer(gS);if(map.hasLayer(gLab))map.removeLayer(gLab);document.getElementById('map').classList.add('tiles')}});
 voy.on('tileerror',()=>{if(++vErr==4&&!tilesOK){map.removeLayer(voy);esri.addTo(map)}});
