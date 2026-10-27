@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-10-27 02:27 UTC",
+ "generado_utc": "2026-10-27 05:33 UTC",
  "rango": {
   "desde": "2026-10-01",
   "hasta": "2026-10-31",
@@ -17,10 +17,10 @@
   "1": {
    "tipo_venta": "Empresarial",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 11,
+   "negocios_contados": 12,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 15446266.0,
-   "ingreso_bitrix_de_esos_negocios": 15446266.0
+   "valor_contado": 15648866.0,
+   "ingreso_bitrix_de_esos_negocios": 15648866.0
   },
   "4": {
    "tipo_venta": "IFT",
@@ -719,9 +719,9 @@
     "ingreso_bitrix": 3964800.0
    },
    "Empresarial": {
-    "negocios": 1,
-    "valor_contado": 379900.0,
-    "ingreso_bitrix": 379900.0
+    "negocios": 2,
+    "valor_contado": 582500.0,
+    "ingreso_bitrix": 582500.0
    }
   },
   "Victoria Manjarres Jimenez": {
@@ -778,7 +778,7 @@
      "con_valor": 106
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 3
     },
     "IFT": {
@@ -824,8 +824,8 @@
      "con_valor": 256
     },
     "Empresarial": {
-     "ventas": 11,
-     "con_valor": 5
+     "ventas": 12,
+     "con_valor": 6
     },
     "IFT": {
      "ventas": 4,
@@ -882,7 +882,7 @@
      "con_valor": 53
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 0
     },
     "IFT": {
@@ -940,7 +940,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 3
     },
     "IFT": {
@@ -974,7 +974,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 1
     },
     "IFT": {
@@ -1004,7 +1004,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 2
     },
     "IFT": {
@@ -1042,7 +1042,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 0
     },
     "IFT": {
@@ -1063,7 +1063,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 0
     },
     "IFT": {
@@ -1084,7 +1084,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 0
     },
     "IFT": {
@@ -1105,7 +1105,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 0
     },
     "IFT": {
@@ -1126,7 +1126,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 0
     },
     "IFT": {
@@ -1147,7 +1147,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 0
     },
     "IFT": {
@@ -1168,7 +1168,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 0
     },
     "IFT": {
@@ -1189,7 +1189,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 0
     },
     "IFT": {
@@ -1210,8 +1210,8 @@
      "con_valor": 347
     },
     "Empresarial": {
-     "ventas": 11,
-     "con_valor": 11
+     "ventas": 12,
+     "con_valor": 12
     },
     "IFT": {
      "ventas": 4,
@@ -1256,7 +1256,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 0
     },
     "IFT": {
@@ -1277,7 +1277,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 0
     },
     "IFT": {
@@ -1298,7 +1298,7 @@
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 11,
+     "ventas": 12,
      "con_valor": 0
     },
     "IFT": {
