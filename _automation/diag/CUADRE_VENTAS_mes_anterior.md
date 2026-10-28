@@ -1,10 +1,10 @@
-# Cuadre de ventas 2026-09 (corrida 2026-10-28 17:23 UTC)
+# Cuadre de ventas 2026-09 (corrida 2026-10-28 21:56 UTC)
 
 Rango: 2026-09-01 a 2026-09-30. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
 ## Alertas (lo primero que hay que revisar si Operaciones reporta diferencias)
 - **Ganados en el mes con Fecha de facturacion vacia o de otro mes: 11 negocios, $936.100**
-- Consultas a Bitrix fallidas: 8
+- Consultas a Bitrix fallidas: 12
 
 Posibles ventas no contadas, por asesor (revisar con Operaciones):
 - Marvis Yarima Gonzalez Gil: $361.000
@@ -96,7 +96,7 @@ Ninguno.
 | 33070 | Holman Marin Romero | VENTA EMPRESARIAL | CERRADO GANADO | 2026-09-16 | 2026-09-14 | 2026-09-16 | $2.437.700 | Precio/cantidad sospechosos (Capacitacion lenguaje de seña 20 horas, para 25 personas: precio 1.0, cant. 2437700.0) |
 | 33401 | Karen Liseth Cantillo De la Cruz | VENTA INDIVIDUAL | CERRADO GANADO | 2026-09-21 | 2026-09-18 | 2026-09-21 | $60.000 | Precio/cantidad sospechosos (BOLETAS DIA DEL AFILIADO: precio 4.0, cant. 15000.0) |
 
-## Negocios creados o cerrados en el mes que NO estan ganados (abiertos o perdidos, con valor) (12)
+## Negocios creados o cerrados en el mes que NO estan ganados (abiertos o perdidos, con valor) (13)
 | ID | Asesor | Pipeline | Etapa | F. creacion | F. facturacion | F. cierre | Ingreso | Detalle |
 |---|---|---|---|---|---|---|---:|---|
 | 31546 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-05 | - | 2026-10-12 | $1.302.500 | No esta en la etapa ganada |
@@ -108,6 +108,7 @@ Ninguno.
 | 33688 | Jessica Luque Garcia | VENTA INDIVIDUAL | CERRADO GANADO | 2026-09-24 | 2026-10-05 | 2026-10-06 | $4.400 | No esta en la etapa ganada |
 | 28528 | Karen Liseth Cantillo De la Cruz | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-08-12 | - | 2026-09-18 | $4.302.900 | No esta en la etapa ganada |
 | 31877 | Karen Liseth Cantillo De la Cruz | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-09-09 | - | 2026-09-09 | $732.600 | No esta en la etapa ganada |
+| 34238 | Maria Jose Garcia Guaman | VENTA EMPRESARIAL | CERRADO GANADO | 2026-09-30 | 2026-10-23 | 2026-10-28 | $752.500 | No esta en la etapa ganada |
 | 26938 | Oriana Yadith Felizzola Ortega | VENTA INDIVIDUAL | CERRADO PERDIDO | 2026-07-27 | - | 2026-09-15 | $1.391.100 | No esta en la etapa ganada |
 | 28490 | Oriana Yadith Felizzola Ortega | VENTA EMPRESARIAL | APLAZADO | 2026-08-11 | - | 2026-09-14 | $718.500 | No esta en la etapa ganada |
 | 33941 | Oriana Yadith Felizzola Ortega | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-09-28 | - | 2026-09-28 | $549.600 | No esta en la etapa ganada |
@@ -165,4 +166,4 @@ Ninguno.
 ## Ventas contadas por seccion del catalogo de productos de Bitrix
 Sin datos (las lineas no traen producto del catalogo).
 
-Consultas a Bitrix que fallaron tras reintentos: 8 ['crm.company.get?ID=68366', 'crm.company.get?ID=13316', 'crm.company.get?ID=13374', 'crm.company.get?ID=19184', 'crm.company.get?ID=46266', 'crm.company.get?ID=46750', 'crm.company.get?ID=64900', 'crm.company.get?ID=8956']
+Consultas a Bitrix que fallaron tras reintentos: 12 ['crm.company.get?ID=68366', 'crm.company.get?ID=13316', 'crm.company.get?ID=13374', 'crm.company.get?ID=18591', 'crm.company.get?ID=19184', 'crm.company.get?ID=19519', 'crm.company.get?ID=46266', 'crm.company.get?ID=46750', 'crm.company.get?ID=64900', 'crm.company.get?ID=67242', 'crm.company.get?ID=68347', 'crm.company.get?ID=8956']
