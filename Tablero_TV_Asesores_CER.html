@@ -80,6 +80,31 @@ header{
 .r-bar-wrap{width:110px; height:7px; background:var(--bg); border-radius:6px; overflow:hidden; border:1px solid var(--border);}
 .r-bar{height:100%; border-radius:6px;}
 .r-pct{width:46px; text-align:right; font-size:12px; font-weight:800;}
+/* ---- Ranking de ventas: podio con foto + barras animadas (28-oct-2026, a pedido de Luis) ---- */
+.bx-list{display:flex; align-items:stretch; gap:8px; flex:1; min-height:0; padding:4px 0 0;}
+.bx-col{flex:1 1 0; min-width:0; display:flex; flex-direction:column; align-items:center; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:6px 4px 6px;}
+.bx-val{text-align:center; line-height:1.15; min-height:34px;}
+.bx-val .m{font-size:15px; font-weight:800; color:var(--text); font-variant-numeric:tabular-nums; white-space:nowrap;}
+.bx-val .c{font-size:11px; font-weight:800;}
+.bx-track{flex:1; min-height:0; width:62%; display:flex; align-items:flex-end; margin:4px 0;}
+.bx-bar{display:flex; flex-direction:column; overflow:hidden; width:100%; height:var(--h,0%); border-radius:8px 8px 0 0; animation:bxgrow 1.3s cubic-bezier(.22,.8,.25,1) both; animation-delay:calc(.45s + var(--i,0)*.12s);}
+@keyframes bxgrow{from{height:0}to{height:var(--h,0%)}}
+.bx-seg{width:100%; flex:none;}
+.bx-leg{display:flex; gap:18px; font-size:13px; font-weight:700; color:var(--text-muted); align-items:center;}
+.bx-leg i{display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:6px; vertical-align:-1px;}
+.bx-av{width:52px; height:52px; font-size:16px; border:2px solid #fff; box-shadow:0 0 0 2px var(--border);}
+.bx-name{text-align:center; margin-top:5px; font-size:13px; font-weight:800; color:var(--text); line-height:1.15; max-width:100%;}
+.bx-name span{display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.bx-pos{font-size:12px; font-weight:800; color:var(--text-muted);}
+.av{position:relative; border-radius:50%; overflow:hidden; background:#e3ecea; flex:none; display:flex; align-items:center; justify-content:center; color:var(--verde-dark); font-weight:800;}
+.av span{font-size:1em; letter-spacing:.5px;}
+.av img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 12%;}
+.gauge-foto{width:124px; height:124px;}
+.gauge-foto .gauge-inner{width:84%; height:84%; overflow:hidden; padding:0;}
+.gauge-foto .av{width:100%; height:100%; font-size:30px;}
+.p-card.gold .gauge-foto{width:140px; height:140px;}
+.p-pct{font-size:13px; font-weight:800; margin-top:5px;}
+
 
 /* ---------- GESTION SCREEN (9 indicadores) ---------- */
 /* Las tarjetas y la grilla se estiran a toda la altura de la pantalla
@@ -471,7 +496,26 @@ footer{flex-shrink:0; padding:8px 32px 12px; background:#fff; border-top:1px sol
 <script>
 const D = window.TVDATA;
 const PROFILE_COLORS = D.profile_colors;
-const RETIRADOS = D.retirados || {};
+// Retiros confirmados por Luis que no vienen en los datos del pipeline:
+// Ballesteros y Marvis no siguen desde noviembre 2026 (en octubre y en el
+// acumulado se siguen viendo). Vive aqui (JS) para que no se pise al
+// actualizar el bloque de datos TVDATA.
+const RETIRADOS = Object.assign({}, D.retirados || {}, {
+  "Karen Patricia Ballesteros": "2026-11",
+  "Marvis Yarima": "2026-11"
+});
+// Fotos de asesores (archivos en la carpeta fotos/). Clave = fragmento unico del nombre.
+const ASESOR_FOTOS = {
+  "Oriana Yadith":"oriana.jpg", "Melissa":"melissa.jpg", "Marvis Yarima":"marvis.jpg", "Celedon":"celedon.jpg",
+  "Martha Cabrera":"cabrera.jpg", "Maria Jose":"mariajose.jpg", "Cantillo":"cantillo.jpg", "Jessica":"jessica.jpg",
+  "Holman":"holman.jpg", "Bienvenida":"bienvenida.jpg", "Victoria":"victoria.jpg", "Elicenith":"elicenith.jpg"
+};
+function fotoAsesor(n){ for(const k in ASESOR_FOTOS){ if((n||'').includes(k)) return 'fotos/'+ASESOR_FOTOS[k]; } return null; }
+function inicialesAsesor(n){ const p=(n||'').trim().split(/\s+/); return ((p[0]||'')[0]||'')+((p[1]||'')[0]||''); }
+function avatarHtml(n, cls){
+  const f = fotoAsesor(n);
+  return `<div class="av ${cls||''}"><span>${inicialesAsesor(n)}</span>${f?`<img src="${f}" alt="" onerror="this.remove()">`:''}</div>`;
+}
 // Un asesor se considera retirado en un periodo puntual (ej. "2026-07") si el
 // mes de ese periodo es >= el mes desde el que ya no tuvo actividad. En
 // "acumulado" SIEMPRE se muestra (así se ve su aporte histórico real).
@@ -529,51 +573,53 @@ const IND_ORDER = ['Presentación de portafolio','Asesorías generales','Visita 
 
 /* ---------------- RANKING ---------------- */
 function renderRanking(periodKey){
-  // Se muestran TODOS los asesores activos del periodo (no se recorta a un
-  // top N): los que ya no estan en el equipo para ese periodo puntual si se
-  // excluyen (en "acumulado" se ven todos, incluidos los retirados, para
-  // reflejar su aporte historico real). Los que no tienen meta asignada
-  // (ingresos recientes, p.ej.) igual aparecen al final de la lista, sin
-  // barra de cumplimiento, para que nadie del equipo quede invisible.
+  // Se muestran TODOS los asesores activos del periodo. Desde el 28-oct-2026
+  // (pedido de Luis) el orden es por VENTAS (de quien mas vende a quien menos),
+  // el podio es de 3 con foto y del 4.o en adelante va un grafico de barras
+  // animado, tambien con foto. Los retirados del periodo se excluyen (en
+  // "acumulado" se ven todos para reflejar su aporte historico).
   const activos = (D.ranking_by_period[periodKey] || []).filter(r =>
-    !estaRetiradoEnPeriodo(r.asesor, periodKey));
-  const conMeta = activos.filter(r => r.meta !== null);
-  const sinMeta = activos.filter(r => r.meta === null);
-  const top3 = conMeta.slice(0,3);
-  const rest = conMeta.slice(3);
+    !estaRetiradoEnPeriodo(r.asesor, periodKey))
+    .slice().sort((a,b)=>(b.total||0)-(a.total||0));
+  const sinMetaN = activos.filter(r => r.meta === null).length;
+  const top3 = activos.slice(0,3);
+  const rest = activos.slice(3);
+  const maxTotal = activos.length ? (activos[0].total||0) : 0;
   const medalClass = ['gold','silver','bronze'];
   const medalIcon = ['🥇','🥈','🥉'];
   let podium = top3.map((r,i)=>`
     <div class="p-card ${medalClass[i]}">
       <div class="p-medal">${medalIcon[i]}</div>
-      <div class="gauge" style="${gaugeStyle(r.cumpl,98)}"><div class="gauge-inner"><div class="gv" style="color:${pctColor(r.cumpl)}">${r.cumpl!=null?r.cumpl.toFixed(1)+'%':'—'}</div><div class="gl">CUMPLIMIENTO</div></div></div>
+      <div class="gauge gauge-foto" style="${gaugeStyle(r.cumpl,i===0?140:124)}"><div class="gauge-inner">${avatarHtml(r.asesor)}</div></div>
       <div class="p-name">${r.asesor}</div>
-      <div class="p-zona" style="background:${zcolor(r.zona)}">${r.zona}</div>
-      <div class="p-meta">${money(r.total)} <span style="opacity:.6">/</span> <b>${money(r.meta)}</b></div>
+      <div class="p-zona" style="background:${zcolor(r.zona)}">${r.zona || 'Sin zona asignada'}</div>
+      <div class="p-meta" style="font-size:15px; font-weight:800; color:var(--text);">${money(r.total)}</div>
+      <div class="p-pct" style="color:${pctColor(r.cumpl)}">${r.cumpl!=null?r.cumpl.toFixed(1)+'% de su meta':'sin meta asignada'}</div>
     </div>`).join('');
-  // Puestos 4, 5 y 6 se destacan un poco (menos que el podio, mas que el resto).
-  let restRows = rest.map((r,i)=>{
-    const p = Math.max(0,Math.min(r.cumpl||0,100));
-    const midTier = i<3 ? ' r-row-mid' : '';
-    return `<div class="r-row${midTier}">
-      <div class="r-pos">#${i+4}</div>
-      <div class="r-name"><div class="n">${r.asesor}</div><div class="z">${r.zona || 'Sin zona asignada'}</div></div>
-      <div class="r-val">${money(r.total)}</div>
-      <div class="r-bar-wrap"><div class="r-bar" style="width:${p}%;background:${pctColor(r.cumpl)}"></div></div>
-      <div class="r-pct" style="color:${pctColor(r.cumpl)}">${r.cumpl!=null?r.cumpl.toFixed(1)+'%':'—'}</div>
+  const PART=['de','del','la','las','los','y'];
+  const catMap = {}; ((D.ventas_categoria_by_period||{})[periodKey]||[]).forEach(v=>{catMap[v.asesor]=v;});
+  const corto = n => { const t=n.trim().split(/\s+/); const f=t[0]; if(t.length<=2) return [f,t[1]||''];
+    let i = PART.includes(t[1].toLowerCase()) ? 3 : (t.length>=4 && !PART.includes(t[2].toLowerCase()) ? 2 : 1);
+    return [f, t[i]||t[1]]; };
+  let bars = rest.map((r,i)=>{
+    const h = maxTotal>0 ? Math.max(2, Math.min((r.total||0)/maxTotal*100,100)) : 0;
+    const col = r.meta===null ? '#a8b0ae' : pctColor(r.cumpl);
+    const vc = catMap[r.asesor] || {};
+    const tt = (vc.empresarial||0)+(vc.individual||0);
+    const pe = tt>0 ? (vc.empresarial||0)/tt*100 : 0;
+    const [n1,n2] = corto(r.asesor);
+    return `<div class="bx-col">
+      <div class="bx-val"><div class="m">${money(r.total)}</div><div class="c" style="color:var(--text-muted)">${r.cumpl!=null?r.cumpl.toFixed(0)+'% meta':'sin meta'}</div></div>
+      <div class="bx-track"><div class="bx-bar" style="--h:${h.toFixed(1)}%;--i:${i}">${tt>0?`<div class="bx-seg" style="height:${pe.toFixed(1)}%;background:var(--naranja)"></div><div class="bx-seg" style="height:${(100-pe).toFixed(1)}%;background:var(--verde)"></div>`:`<div class="bx-seg" style="height:100%;background:#a8b0ae"></div>`}</div></div>
+      ${avatarHtml(r.asesor,'bx-av')}
+      <div class="bx-name"><span>${n1}</span><span>${n2}</span></div>
+      <div class="bx-pos">#${i+4}</div>
     </div>`;
   }).join('');
-  let sinMetaRows = sinMeta.map(r=>`<div class="r-row r-row-sinmeta">
-      <div class="r-pos">—</div>
-      <div class="r-name"><div class="n">${r.asesor}</div><div class="z">${r.zona || 'Sin zona asignada'}</div></div>
-      <div class="r-val">${money(r.total)}</div>
-      <div class="r-bar-wrap"><div class="r-bar" style="width:0%"></div></div>
-      <div class="r-pct" style="color:var(--text-muted); font-size:9.5px;">sin meta asignada</div>
-    </div>`).join('');
   if(activos.length===0){ return `<div class="scr-head"><h2>🏆 Ranking de Ventas</h2></div><div style="padding:40px;text-align:center;color:var(--text-muted)">Sin asesores activos en este periodo.</div>`; }
-  return `<div class="scr-head"><h2>🏆 Ranking de Ventas — El Asesor Frente a su Meta</h2><div class="tag">${periodLabel(periodKey)} · ${activos.length} asesores activos${sinMeta.length?` (${sinMeta.length} sin meta asignada)`:''}</div></div>
+  return `<div class="scr-head"><h2>🏆 Ranking de Ventas — de quien más vende a quien menos</h2><div class="bx-leg"><span><i style="background:var(--naranja)"></i>Venta empresarial</span><span><i style="background:var(--verde)"></i>Venta individual</span></div><div class="tag">${periodLabel(periodKey)} · ${activos.length} asesores activos${sinMetaN?` (${sinMetaN} sin meta asignada)`:''}</div></div>
     <div class="podium">${podium}</div>
-    <div class="rest-list">${restRows}${sinMetaRows}</div>`;
+    ${rest.length?`<div class="bx-list">${bars}</div>`:''}`;
 }
 
 /* ---------------- AUDITORIA DE VENTAS (aceptadas / pendientes / rechazadas) ----------------
@@ -1283,11 +1329,11 @@ function periodLabel(k){
 /* ---------------- SCREEN SEQUENCE (rebuilt on period change) ---------------- */
 let SCREENS = [];
 let currentPeriod = 'acumulado';
-const SECTION_LABEL = {ventas_cat:'Venta Empresarial / Individual', ventas:'Ranking de Ventas', ventas_servicio:'Ventas por Servicio', ventas_dia:'Ventas de Hoy', gestion:'Gestión Comercial', gestion_podio:'Podio de Gestión', empresas:'Empresas por Asesor', empresas_podio:'Podio de Empresas', anuncio:'Anuncios'};
+const SECTION_LABEL = {ventas_cat:'Venta Empresarial / Individual', ventas:'Ranking de Ventas', ventas_servicio:'Ventas por Servicio', ventas_dia:'Ventas de Hoy', gestion:'Gestión Comercial', gestion_podio:'Podio de Gestión', empresas:'Empresas por Asesor', empresas_podio:'Podio de Empresas', empresas_pendientes:'Empresas Pendientes', anuncio:'Anuncios'};
 
 function buildScreens(periodKey){
   const list = [];
-  list.push({type:'ventas_cat', dur:20000, render:()=>renderVentasCategoria(periodKey)});
+  list.push({type:'ventas_cat', dur:60000, render:()=>renderVentasCategoria(periodKey)});
   list.push({type:'ventas', dur:30000, render:()=>renderRanking(periodKey)});
   list.push({type:'ventas_servicio', dur:20000, render:()=>renderVentasPorServicio(periodKey)});
   list.push({type:'ventas_dia', dur:18000, render:()=>renderVentasDelDia()});
