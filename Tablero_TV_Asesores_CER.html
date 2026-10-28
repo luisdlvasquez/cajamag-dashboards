@@ -93,6 +93,10 @@ header{
 .bx-seg{width:100%; flex:none;}
 .bx-leg{display:flex; gap:18px; font-size:13px; font-weight:700; color:var(--text-muted); align-items:center;}
 .bx-leg i{display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:6px; vertical-align:-1px;}
+.bx-pct{display:block; text-align:center; color:#fff; font-weight:800; font-size:13px; padding-top:3px;}
+.vc-full .bx-av{width:42px; height:42px; font-size:13px;}
+.vc-full .bx-name{font-size:12px;}
+.vc-full .bx-val .m{font-size:14px;}
 .bx-av{width:52px; height:52px; font-size:16px; border:2px solid #fff; box-shadow:0 0 0 2px var(--border);}
 .bx-name{text-align:center; margin-top:5px; font-size:13px; font-weight:800; color:var(--text); line-height:1.15; max-width:100%;}
 .bx-name span{display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
@@ -679,6 +683,10 @@ async function refreshVentasHoyCache(){
    cerradas y facturadas en Bitrix). No incluye un desglose "sin IVA" porque esa
    cifra depende de la columna VALOR TOTAL SIN IMPUESTO del informe mensual
    (distinta fuente de datos, no integrada aún a este tablero en vivo). */
+const PART_NOMBRE=['de','del','la','las','los','y'];
+function nombreCorto(n){ const t=n.trim().split(/\s+/); const f=t[0]; if(t.length<=2) return [f,t[1]||''];
+  const i = PART_NOMBRE.includes(t[1].toLowerCase()) ? 3 : (t.length>=4 && !PART_NOMBRE.includes(t[2].toLowerCase()) ? 2 : 1);
+  return [f, t[i]||t[1]]; }
 function renderVentasCategoria(periodKey){
   // Nota: aqui NO se filtra por "meta !== null" (a diferencia del Ranking) —
   // esta pantalla muestra pesos vendidos, no % de cumplimiento, y hay
@@ -697,20 +705,26 @@ function renderVentasCategoria(periodKey){
   const totalSinIva = rows.reduce((s,r)=>s+(r.sin_iva||0),0);
   const totalMeta = rows.reduce((s,r)=>s+(r.meta||0),0);
   const cumplGen = totalMeta ? (totalGen/totalMeta*100) : null;
-  const sorted = [...rows].sort((a,b)=>(b.total||0)-(a.total||0));
+  const sorted = [...rows].sort((a,b)=>(b.sin_iva||0)-(a.sin_iva||0));
   const fiscalRows = (D.fiscal_breakdown_by_period && D.fiscal_breakdown_by_period[periodKey]) || [];
   const fiscalChips = fiscalRows.map(f=>`<span><b>${f.label}:</b> ${money(f.con_iva)}</span>`).join('');
+  const maxSin = sorted.length ? (sorted[0].sin_iva||0) : 0;
+  const nCols = sorted.length;
   const listRows = sorted.map((r,i)=>{
     const t = r.total || 0;
+    const h = maxSin>0 ? Math.max(2, Math.min((r.sin_iva||0)/maxSin*100,100)) : 0;
     const pe = t>0 ? Math.max(0,Math.min((r.empresarial/t)*100,100)) : 0;
-    const pi = t>0 ? Math.max(0,100-pe) : 0;
-    const peLbl = pe>=14 ? `<span class="vc-seg-lbl">${pe.toFixed(0)}%</span>` : '';
-    const piLbl = pi>=14 ? `<span class="vc-seg-lbl">${pi.toFixed(0)}%</span>` : '';
-    return `<div class="vc-row">
-      <div class="r-pos">#${i+1}</div>
-      <div class="r-name"><div class="n">${r.asesor}</div><div class="z">${r.zona || 'Sin zona asignada'}</div></div>
-      <div class="vc-bar-wrap"><div class="vc-seg vc-emp" style="width:${pe}%">${peLbl}</div><div class="vc-seg vc-ind" style="width:${pi}%">${piLbl}</div></div>
-      <div class="vc-valcol"><div class="vc-val">${money(r.total)}<span class="vc-tag">c/IVA</span></div><div class="vc-val-sub">${money(r.sin_iva)}<span class="vc-tag">s/IVA</span></div></div>
+    const pi = t>0 ? 100-pe : 0;
+    const peLbl = (pe>=14 && h*pe/100>=7) ? `<span class="bx-pct">${pe.toFixed(0)}%</span>` : '';
+    const piLbl = (pi>=14 && h*pi/100>=7) ? `<span class="bx-pct">${pi.toFixed(0)}%</span>` : '';
+    const segs = t>0 ? `<div class="bx-seg" style="height:${pe.toFixed(1)}%;background:var(--naranja)">${peLbl}</div><div class="bx-seg" style="height:${pi.toFixed(1)}%;background:var(--verde)">${piLbl}</div>` : `<div class="bx-seg" style="height:100%;background:#a8b0ae"></div>`;
+    const [n1,n2] = nombreCorto(r.asesor);
+    return `<div class="bx-col">
+      <div class="bx-val"><div class="m">${money(r.sin_iva)}</div><div class="iv">c/IVA ${money(r.total)}</div></div>
+      <div class="bx-track"><div class="bx-bar" style="--h:${h.toFixed(1)}%;--i:${i}">${segs}</div></div>
+      ${avatarHtml(r.asesor,'bx-av')}
+      <div class="bx-name"><span>${n1}</span><span>${n2}</span></div>
+      <div class="bx-pos">#${i+1}</div>
     </div>`;
   }).join('');
   const ac = cachedAuditoria;
@@ -729,7 +743,7 @@ function renderVentasCategoria(periodKey){
     </div>
     <div class="vc-legend"><span><i class="vc-dot vc-emp"></i>Empresarial</span><span><i class="vc-dot vc-ind"></i>Individual</span><span style="opacity:.7">Sin IVA: formación/IFT, teatro y vacunación exentos; cafetería con INC 8% (no IVA); el resto gravado 19%</span></div>
     <div class="vc-fiscal">${fiscalChips}</div>
-    <div class="vc-list">${listRows}</div>`;
+    <div class="bx-list vc-full">${listRows}</div>`;
 }
 
 /* ---------------- VENTAS DEL DIA (reemplaza el feed tipo notificaciones) ----------------
@@ -1336,7 +1350,8 @@ const SECTION_LABEL = {ventas_cat:'Venta Empresarial / Individual', ventas:'Rank
 
 function buildScreens(periodKey){
   const list = [];
-  list.push({type:'ventas', dur:60000, render:()=>renderRanking(periodKey)});
+  list.push({type:'ventas_cat', dur:60000, render:()=>renderVentasCategoria(periodKey)});
+  list.push({type:'ventas', dur:20000, render:()=>renderRanking(periodKey)});
   list.push({type:'ventas_servicio', dur:20000, render:()=>renderVentasPorServicio(periodKey)});
   list.push({type:'ventas_dia', dur:18000, render:()=>renderVentasDelDia()});
   // Aplanar todos los grupos precargados, quitar asesores retirados para
