@@ -1,10 +1,10 @@
-# Cuadre de ventas 2026-09 (corrida 2026-10-28 06:14 UTC)
+# Cuadre de ventas 2026-09 (corrida 2026-10-28 17:23 UTC)
 
 Rango: 2026-09-01 a 2026-09-30. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
 ## Alertas (lo primero que hay que revisar si Operaciones reporta diferencias)
 - **Ganados en el mes con Fecha de facturacion vacia o de otro mes: 11 negocios, $936.100**
-- Consultas a Bitrix fallidas: 2
+- Consultas a Bitrix fallidas: 8
 
 Posibles ventas no contadas, por asesor (revisar con Operaciones):
 - Marvis Yarima Gonzalez Gil: $361.000
@@ -165,4 +165,4 @@ Ninguno.
 ## Ventas contadas por seccion del catalogo de productos de Bitrix
 Sin datos (las lineas no traen producto del catalogo).
 
-Consultas a Bitrix que fallaron tras reintentos: 2 ['crm.company.get?ID=46266', 'crm.company.get?ID=8956']
+Consultas a Bitrix que fallaron tras reintentos: 8 ['crm.company.get?ID=68366', 'crm.company.get?ID=13316', 'crm.company.get?ID=13374', 'crm.company.get?ID=19184', 'crm.company.get?ID=46266', 'crm.company.get?ID=46750', 'crm.company.get?ID=64900', 'crm.company.get?ID=8956']
