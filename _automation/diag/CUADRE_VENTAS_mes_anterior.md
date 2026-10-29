@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-09 (corrida 2026-10-29 17:34 UTC)
+# Cuadre de ventas 2026-09 (corrida 2026-10-29 22:01 UTC)
 
 Rango: 2026-09-01 a 2026-09-30. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -107,7 +107,7 @@ Ninguno.
 | 32201 | Holman Marin Romero | VENTA EMPRESARIAL | EN ESPERA DE OC | 2026-09-11 | - | 2026-09-13 | $161.000 | No esta en la etapa ganada |
 | 33688 | Jessica Luque Garcia | VENTA INDIVIDUAL | CERRADO GANADO | 2026-09-24 | 2026-10-05 | 2026-10-06 | $4.400 | No esta en la etapa ganada |
 | 28528 | Karen Liseth Cantillo De la Cruz | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-08-12 | - | 2026-09-18 | $4.302.900 | No esta en la etapa ganada |
-| 31877 | Karen Liseth Cantillo De la Cruz | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-09-09 | - | 2026-09-09 | $732.600 | No esta en la etapa ganada |
+| 31877 | Karen Liseth Cantillo De la Cruz | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-09 | - | 2026-10-29 | $732.600 | No esta en la etapa ganada |
 | 34238 | Maria Jose Garcia Guaman | VENTA EMPRESARIAL | CERRADO GANADO | 2026-09-30 | 2026-10-23 | 2026-10-28 | $752.500 | No esta en la etapa ganada |
 | 26938 | Oriana Yadith Felizzola Ortega | VENTA INDIVIDUAL | CERRADO PERDIDO | 2026-07-27 | - | 2026-09-15 | $1.391.100 | No esta en la etapa ganada |
 | 28490 | Oriana Yadith Felizzola Ortega | VENTA EMPRESARIAL | APLAZADO | 2026-08-11 | - | 2026-09-14 | $718.500 | No esta en la etapa ganada |
