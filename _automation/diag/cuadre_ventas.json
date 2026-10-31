@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-10-30 21:45 UTC",
+ "generado_utc": "2026-10-31 01:50 UTC",
  "rango": {
   "desde": "2026-10-01",
   "hasta": "2026-10-31",
@@ -9,18 +9,18 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 391,
+   "negocios_contados": 396,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 70996370.0,
-   "ingreso_bitrix_de_esos_negocios": 70996370.0
+   "valor_contado": 72737670.0,
+   "ingreso_bitrix_de_esos_negocios": 72737670.0
   },
   "1": {
    "tipo_venta": "Empresarial",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 16,
+   "negocios_contados": 17,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 29754466.0,
-   "ingreso_bitrix_de_esos_negocios": 29754466.0
+   "valor_contado": 31371366.0,
+   "ingreso_bitrix_de_esos_negocios": 31371366.0
   },
   "4": {
    "tipo_venta": "IFT",
@@ -642,19 +642,6 @@
    "motivo": "No esta en la etapa ganada"
   },
   {
-   "id": "36547",
-   "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "IDENTIFICACIÓN EMPRESA",
-   "asesor": "Oriana Yadith Felizzola Ortega",
-   "fecha_facturacion": null,
-   "fecha_cierre": "2026-10-27",
-   "fecha_creacion": "2026-10-27",
-   "semantica": "P",
-   "ingreso": 1616900.0,
-   "titulo": "CORPORACION LA LOLITA (36547)",
-   "motivo": "No esta en la etapa ganada"
-  },
-  {
    "id": "36670",
    "pipeline": "VENTA EMPRESARIAL",
    "etapa": "EN ESPERA DE OC",
@@ -716,14 +703,14 @@
   },
   "Oriana Yadith Felizzola Ortega": {
    "Individual": {
-    "negocios": 84,
-    "valor_contado": 20147388.0,
-    "ingreso_bitrix": 20147388.0
+    "negocios": 88,
+    "valor_contado": 21842688.0,
+    "ingreso_bitrix": 21842688.0
    },
    "Empresarial": {
-    "negocios": 1,
-    "valor_contado": 666466.0,
-    "ingreso_bitrix": 666466.0
+    "negocios": 2,
+    "valor_contado": 2283366.0,
+    "ingreso_bitrix": 2283366.0
    }
   },
   "Maria Jose Garcia Guaman": {
@@ -747,9 +734,9 @@
   },
   "Karen Liseth Cantillo De la Cruz": {
    "Individual": {
-    "negocios": 22,
-    "valor_contado": 1441400.0,
-    "ingreso_bitrix": 1441400.0
+    "negocios": 23,
+    "valor_contado": 1487400.0,
+    "ingreso_bitrix": 1487400.0
    }
   },
   "Marvis Yarima Gonzalez Gil": {
@@ -876,12 +863,12 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
-     "con_valor": 114
+     "ventas": 396,
+     "con_valor": 115
     },
     "Empresarial": {
-     "ventas": 16,
-     "con_valor": 3
+     "ventas": 17,
+     "con_valor": 4
     },
     "IFT": {
      "ventas": 4,
@@ -922,12 +909,12 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
-     "con_valor": 286
+     "ventas": 396,
+     "con_valor": 289
     },
     "Empresarial": {
-     "ventas": 16,
-     "con_valor": 8
+     "ventas": 17,
+     "con_valor": 9
     },
     "IFT": {
      "ventas": 4,
@@ -980,11 +967,11 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 56
     },
     "Empresarial": {
-     "ventas": 16,
+     "ventas": 17,
      "con_valor": 0
     },
     "IFT": {
@@ -1038,12 +1025,12 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 16,
-     "con_valor": 3
+     "ventas": 17,
+     "con_valor": 4
     },
     "IFT": {
      "ventas": 4,
@@ -1062,6 +1049,10 @@
     {
      "crudo": "CENTRO RECREACIONAL TEYUNA",
      "texto": "CENTRO RECREACIONAL TEYUNA"
+    },
+    {
+     "crudo": "UIS CIÉNAGA",
+     "texto": "UIS CIÉNAGA"
     }
    ]
   },
@@ -1072,11 +1063,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 16,
+     "ventas": 17,
      "con_valor": 1
     },
     "IFT": {
@@ -1102,11 +1093,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 16,
+     "ventas": 17,
      "con_valor": 3
     },
     "IFT": {
@@ -1148,11 +1139,11 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 16,
+     "ventas": 17,
      "con_valor": 0
     },
     "IFT": {
@@ -1169,11 +1160,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 16,
+     "ventas": 17,
      "con_valor": 0
     },
     "IFT": {
@@ -1190,11 +1181,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 16,
+     "ventas": 17,
      "con_valor": 0
     },
     "IFT": {
@@ -1211,11 +1202,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 16,
+     "ventas": 17,
      "con_valor": 0
     },
     "IFT": {
@@ -1232,11 +1223,11 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 16,
+     "ventas": 17,
      "con_valor": 0
     },
     "IFT": {
@@ -1253,11 +1244,11 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 16,
+     "ventas": 17,
      "con_valor": 0
     },
     "IFT": {
@@ -1274,11 +1265,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 16,
+     "ventas": 17,
      "con_valor": 0
     },
     "IFT": {
@@ -1295,11 +1286,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 16,
+     "ventas": 17,
      "con_valor": 0
     },
     "IFT": {
@@ -1316,12 +1307,12 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
-     "con_valor": 391
+     "ventas": 396,
+     "con_valor": 396
     },
     "Empresarial": {
-     "ventas": 16,
-     "con_valor": 16
+     "ventas": 17,
+     "con_valor": 17
     },
     "IFT": {
      "ventas": 4,
@@ -1362,11 +1353,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 16,
+     "ventas": 17,
      "con_valor": 0
     },
     "IFT": {
@@ -1383,11 +1374,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 16,
+     "ventas": 17,
      "con_valor": 0
     },
     "IFT": {
@@ -1404,11 +1395,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 391,
+     "ventas": 396,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 16,
+     "ventas": 17,
      "con_valor": 0
     },
     "IFT": {
