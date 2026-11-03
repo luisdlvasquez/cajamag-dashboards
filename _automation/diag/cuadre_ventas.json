@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-11-03 18:41 UTC",
+ "generado_utc": "2026-11-03 21:47 UTC",
  "rango": {
   "desde": "2026-11-01",
   "hasta": "2026-11-30",
@@ -9,7 +9,7 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 3,
+   "negocios_contados": 4,
    "otras_etapas_con_fecha_en_el_mes": {},
    "valor_contado": 71800.0,
    "ingreso_bitrix_de_esos_negocios": 71800.0
@@ -51,7 +51,7 @@
  "por_asesor": {
   "Martha Lorena Celedon de la Rosa": {
    "Individual": {
-    "negocios": 2,
+    "negocios": 3,
     "valor_contado": 49600.0,
     "ingreso_bitrix": 49600.0
    }
@@ -94,11 +94,15 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
-     "con_valor": 2
+     "ventas": 4,
+     "con_valor": 3
     }
    },
    "ejemplos": [
+    {
+     "crudo": "2026-11-02T19:00:00-05:00",
+     "texto": "2026-11-02T19:00:00-05:00"
+    },
     {
      "crudo": "2026-11-02T19:00:00-05:00",
      "texto": "2026-11-02T19:00:00-05:00"
@@ -116,8 +120,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
-     "con_valor": 3
+     "ventas": 4,
+     "con_valor": 4
     }
    },
    "ejemplos": [
@@ -138,6 +142,12 @@
       100
      ],
      "texto": "Teatro"
+    },
+    {
+     "crudo": [
+      97
+     ],
+     "texto": "Recreación"
     }
    ]
   },
@@ -148,7 +158,7 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -161,7 +171,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -174,7 +184,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -187,7 +197,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -200,7 +210,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -213,7 +223,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -226,7 +236,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -239,7 +249,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -252,7 +262,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -265,7 +275,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -278,7 +288,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -291,7 +301,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -304,11 +314,15 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
-     "con_valor": 3
+     "ventas": 4,
+     "con_valor": 4
     }
    },
    "ejemplos": [
+    {
+     "crudo": "0",
+     "texto": "0"
+    },
     {
      "crudo": "0",
      "texto": "0"
@@ -330,7 +344,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -343,7 +357,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
@@ -356,7 +370,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 3,
+     "ventas": 4,
      "con_valor": 0
     }
    },
