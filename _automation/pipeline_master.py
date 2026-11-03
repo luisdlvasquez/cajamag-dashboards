@@ -622,11 +622,44 @@ month_raw = [r for r in raw_all if r['fecha'].startswith(YM)]
 today_str = raw_all[0]['fecha'] if raw_all else None
 
 af = DATA['gestiones']['advisors_full']
+
+# 3-nov-2026 (a pedido de Luis): asesores que cargan gestiones pero no estaban en el
+# listado fijo de advisors_full (Elicenith Carvajalino: 220 gestiones en octubre y no
+# salia en ninguna pantalla de gestion). Se dan de alta aqui con el perfil indicado;
+# Eliana Atuesta queda fuera a proposito (solo 4 gestiones, no es asesora de gestion).
+ASESORES_ALTA = {'Elicenith Carvajalino Del Toro': 'Santa Marta'}
+for _n, _perfil in ASESORES_ALTA.items():
+    if not any(x['name'] == _n for x in af):
+        af.append({'name': _n, 'active': True, 'current_profile': _perfil,
+                   'profiles_by_month': {}, 'months': {},
+                   'accumulated': {'indicators': {}, 'global_pct': 0.0},
+                   'notes_by_month': {}, 'notes_total': {}, 'meses_activos': 0,
+                   'active_months': [], 'empresas_asignadas': 0,
+                   'empresas_gestionadas_contrato': 0, 'empresas_faltantes_contrato': 0})
+        print(f'  [alta] {_n} agregado al listado de gestion (perfil {_perfil})')
+
+# Asesores que ya no continuan: desde ese mes NO se les rellena la ficha en cero
+# (si aun cargan gestiones ese mes, igual se calculan normalmente).
+ASESORES_FUERA_DESDE = {
+    'Nelvis Paola Meza Saenz': '2026-10',
+    'Marvis Yarima Gonzalez Gil': '2026-11',
+    'Karen Patricia Ballesteros Paba': '2026-11',
+}
+_prev_ym = (date(int(YM[:4]), int(YM[5:7]), 1) - timedelta(days=1)).strftime('%Y-%m')
+
+def _debe_aparecer_en_cero(a):
+    """Un asesor activo que tuvo ficha el mes anterior y aun no ha cargado ninguna
+    gestion este mes debe salir en 0 %, no desaparecer (3-nov-2026)."""
+    fuera = ASESORES_FUERA_DESDE.get(a['name'])
+    if fuera and YM >= fuera:
+        return False
+    return bool(a.get('active', True)) and _prev_ym in a['months']
+
 for a in af:
     name = a['name']
     perfil = a.get('current_profile')
     rows = [r for r in month_raw if r['asesor']==name]
-    if not rows:
+    if not rows and not _debe_aparecer_en_cero(a):
         continue
     counts = Counter()
     for r in rows:
