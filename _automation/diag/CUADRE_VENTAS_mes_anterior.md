@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-10 (corrida 2026-11-03 21:46 UTC)
+# Cuadre de ventas 2026-10 (corrida 2026-11-04 00:13 UTC)
 
 Rango: 2026-10-01 a 2026-10-31. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
