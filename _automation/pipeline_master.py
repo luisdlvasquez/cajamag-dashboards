@@ -1269,7 +1269,7 @@ def _servicio_agg(tx_list):
     agg = {}
     for t in tx_list:
         cat = _resolver_servicio_oficial(t)
-        v = t.get('valor') or 0.0
+        v = valor_sin_iva(t)   # 4-nov-2026: el Tablero TV muestra SOLO montos sin IVA
         d = agg.setdefault(cat, {'servicio': cat, 'valor': 0.0, 'cantidad': 0})
         d['valor'] += v
         d['cantidad'] += 1
@@ -1321,7 +1321,7 @@ def _servicio_por_zona_agg(tx_list):
         z = _zona_fisica(cat, t.get('zona'))
         agg = por_zona[z]
         d = agg.setdefault(cat, {'servicio': cat, 'valor': 0.0, 'cantidad': 0})
-        d['valor'] += (t.get('valor') or 0.0)
+        d['valor'] += valor_sin_iva(t)   # 4-nov-2026: solo sin IVA
         d['cantidad'] += 1
     out = {}
     for z in ZONAS_FISICAS:
@@ -1334,6 +1334,25 @@ for ym_k in TVDATA['meses']:
     ventas_servicio_por_zona_by_period[ym_k] = _servicio_por_zona_agg([t for t in all_tx if t.get('ym')==ym_k])
 ventas_servicio_por_zona_by_period['acumulado'] = _servicio_por_zona_agg(all_tx)
 TVDATA['ventas_servicio_por_zona_by_period'] = {'orden': ZONAS_FISICAS, 'periodos': ventas_servicio_por_zona_by_period}
+
+# ---- Empresarial / Individual SIN IVA por asesor y periodo (4-nov-2026, a pedido
+# de Luis: el Tablero TV ya no muestra nada con IVA). Se recalcula para TODOS los
+# periodos (incluidos los meses cerrados) directamente desde las transacciones,
+# sin tocar los campos con IVA que ya existian (los usa el % de cumplimiento).
+def _backfill_categoria_sin_iva():
+    meses_acum = set(TVDATA['meses'] + [YM])
+    for per, rows in TVDATA.get('ventas_categoria_by_period', {}).items():
+        agg = Counter()
+        for t in all_tx:
+            if not t.get('asesor') or t.get('tipo_venta') not in ('Empresarial', 'Individual'):
+                continue
+            ok = (t.get('ym') in meses_acum) if per == 'acumulado' else (t.get('ym') == per)
+            if ok:
+                agg[(t['asesor'], t['tipo_venta'])] += valor_sin_iva(t)
+        for r in rows:
+            r['empresarial_sin_iva'] = round(agg.get((r['asesor'], 'Empresarial'), 0.0), 2)
+            r['individual_sin_iva'] = round(agg.get((r['asesor'], 'Individual'), 0.0), 2)
+_backfill_categoria_sin_iva()
 
 # ---- Corte del periodo (fecha "hasta" que se muestra en el encabezado del TV) ----
 # Se corrige aqui SIEMPRE porque quedaba desactualizado corrida tras corrida
