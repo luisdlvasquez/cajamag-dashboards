@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-11-04 06:57 UTC",
+ "generado_utc": "2026-11-04 18:53 UTC",
  "rango": {
   "desde": "2026-11-01",
   "hasta": "2026-11-30",
@@ -9,10 +9,10 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 4,
+   "negocios_contados": 6,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 71800.0,
-   "ingreso_bitrix_de_esos_negocios": 71800.0
+   "valor_contado": 1545400.0,
+   "ingreso_bitrix_de_esos_negocios": 1545400.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -71,9 +71,16 @@
   },
   "Maria Jose Garcia Guaman": {
    "Individual": {
+    "negocios": 2,
+    "valor_contado": 1173800.0,
+    "ingreso_bitrix": 1173800.0
+   }
+  },
+  "Karen Liseth Cantillo De la Cruz": {
+   "Individual": {
     "negocios": 1,
-    "valor_contado": 22200.0,
-    "ingreso_bitrix": 22200.0
+    "valor_contado": 322000.0,
+    "ingreso_bitrix": 322000.0
    }
   }
  },
@@ -107,7 +114,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 3
     }
    },
@@ -133,8 +140,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
-     "con_valor": 4
+     "ventas": 6,
+     "con_valor": 6
     }
    },
    "ejemplos": [
@@ -161,6 +168,18 @@
       97
      ],
      "texto": "Recreación"
+    },
+    {
+     "crudo": [
+      102
+     ],
+     "texto": "Turismo Social"
+    },
+    {
+     "crudo": [
+      7437
+     ],
+     "texto": "Vacunación"
     }
    ]
   },
@@ -171,11 +190,18 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
-     "con_valor": 0
+     "ventas": 6,
+     "con_valor": 1
     }
    },
-   "ejemplos": []
+   "ejemplos": [
+    {
+     "crudo": [
+      8493
+     ],
+     "texto": "VACUNACION SANTA MARTA"
+    }
+   ]
   },
   "UF_CRM_1681147127230": {
    "nombre": "Lugar de prestación del servicio",
@@ -184,7 +210,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 0
     }
    },
@@ -197,7 +223,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 0
     }
    },
@@ -210,7 +236,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 0
     }
    },
@@ -223,7 +249,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 0
     }
    },
@@ -236,7 +262,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 0
     }
    },
@@ -249,7 +275,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 0
     }
    },
@@ -262,7 +288,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 0
     }
    },
@@ -275,7 +301,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 0
     }
    },
@@ -288,7 +314,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 0
     }
    },
@@ -301,7 +327,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 0
     }
    },
@@ -314,7 +340,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 0
     }
    },
@@ -327,11 +353,19 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
-     "con_valor": 4
+     "ventas": 6,
+     "con_valor": 6
     }
    },
    "ejemplos": [
+    {
+     "crudo": "0",
+     "texto": "0"
+    },
+    {
+     "crudo": "0",
+     "texto": "0"
+    },
     {
      "crudo": "0",
      "texto": "0"
@@ -357,7 +391,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 0
     }
    },
@@ -370,7 +404,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 0
     }
    },
@@ -383,7 +417,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 4,
+     "ventas": 6,
      "con_valor": 0
     }
    },
