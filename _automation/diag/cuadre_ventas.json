@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-11-04 18:53 UTC",
+ "generado_utc": "2026-11-04 21:57 UTC",
  "rango": {
   "desde": "2026-11-01",
   "hasta": "2026-11-30",
@@ -9,10 +9,10 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 6,
+   "negocios_contados": 29,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 1545400.0,
-   "ingreso_bitrix_de_esos_negocios": 1545400.0
+   "valor_contado": 5400600.0,
+   "ingreso_bitrix_de_esos_negocios": 5400600.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -64,9 +64,9 @@
  "por_asesor": {
   "Martha Lorena Celedon de la Rosa": {
    "Individual": {
-    "negocios": 3,
-    "valor_contado": 49600.0,
-    "ingreso_bitrix": 49600.0
+    "negocios": 12,
+    "valor_contado": 350400.0,
+    "ingreso_bitrix": 350400.0
    }
   },
   "Maria Jose Garcia Guaman": {
@@ -81,6 +81,20 @@
     "negocios": 1,
     "valor_contado": 322000.0,
     "ingreso_bitrix": 322000.0
+   }
+  },
+  "Jessica Luque Garcia": {
+   "Individual": {
+    "negocios": 1,
+    "valor_contado": 103800.0,
+    "ingreso_bitrix": 103800.0
+   }
+  },
+  "Oriana Yadith Felizzola Ortega": {
+   "Individual": {
+    "negocios": 13,
+    "valor_contado": 3450600.0,
+    "ingreso_bitrix": 3450600.0
    }
   }
  },
@@ -114,8 +128,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
-     "con_valor": 3
+     "ventas": 29,
+     "con_valor": 12
     }
    },
    "ejemplos": [
@@ -130,6 +144,18 @@
     {
      "crudo": "2026-11-02T19:00:00-05:00",
      "texto": "2026-11-02T19:00:00-05:00"
+    },
+    {
+     "crudo": "2026-11-03T19:00:00-05:00",
+     "texto": "2026-11-03T19:00:00-05:00"
+    },
+    {
+     "crudo": "2026-11-03T19:00:00-05:00",
+     "texto": "2026-11-03T19:00:00-05:00"
+    },
+    {
+     "crudo": "2026-11-03T19:00:00-05:00",
+     "texto": "2026-11-03T19:00:00-05:00"
     }
    ]
   },
@@ -140,8 +166,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
-     "con_valor": 6
+     "ventas": 29,
+     "con_valor": 27
     }
    },
    "ejemplos": [
@@ -190,7 +216,7 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 1
     }
    },
@@ -210,7 +236,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 0
     }
    },
@@ -223,7 +249,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 0
     }
    },
@@ -236,7 +262,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 0
     }
    },
@@ -249,7 +275,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 0
     }
    },
@@ -262,7 +288,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 0
     }
    },
@@ -275,7 +301,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 0
     }
    },
@@ -288,7 +314,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 0
     }
    },
@@ -301,7 +327,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 0
     }
    },
@@ -314,7 +340,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 0
     }
    },
@@ -327,7 +353,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 0
     }
    },
@@ -340,7 +366,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 0
     }
    },
@@ -353,8 +379,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
-     "con_valor": 6
+     "ventas": 29,
+     "con_valor": 29
     }
    },
    "ejemplos": [
@@ -391,7 +417,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 0
     }
    },
@@ -404,7 +430,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 0
     }
    },
@@ -417,7 +443,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 6,
+     "ventas": 29,
      "con_valor": 0
     }
    },
