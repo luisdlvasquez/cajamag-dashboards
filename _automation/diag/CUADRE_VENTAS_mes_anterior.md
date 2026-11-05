@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-10 (corrida 2026-11-05 07:18 UTC)
+# Cuadre de ventas 2026-10 (corrida 2026-11-05 18:59 UTC)
 
 Rango: 2026-10-01 a 2026-10-31. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -110,7 +110,7 @@ Ninguno.
 | 31548 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-05 | - | 2026-10-12 | $1.197.500 | No esta en la etapa ganada |
 | 33660 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-23 | 2026-09-23 | 2026-10-01 | $255.000 | No esta en la etapa ganada |
 | 35331 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-10-12 | - | 2026-10-12 | $6.814.500 | No esta en la etapa ganada |
-| 36670 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | EN ESPERA DE OC | 2026-10-28 | - | 2026-10-28 | $300.100 | No esta en la etapa ganada |
+| 36670 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO GANADO | 2026-10-28 | 2026-11-04 | 2026-11-05 | $300.100 | No esta en la etapa ganada |
 | 31877 | Karen Liseth Cantillo De la Cruz | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-09 | - | 2026-10-29 | $732.600 | No esta en la etapa ganada |
 | 35910 | Karen Liseth Cantillo De la Cruz | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-10-19 | - | 2026-10-19 | $2.183.300 | No esta en la etapa ganada |
 | 35912 | Karen Liseth Cantillo De la Cruz | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-10-19 | - | 2026-10-19 | $2.387.500 | No esta en la etapa ganada |
