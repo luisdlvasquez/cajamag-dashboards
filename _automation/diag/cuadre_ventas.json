@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-11-05 18:59 UTC",
+ "generado_utc": "2026-11-06 00:35 UTC",
  "rango": {
   "desde": "2026-11-01",
   "hasta": "2026-11-30",
@@ -9,10 +9,10 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 46,
+   "negocios_contados": 53,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 6064600.0,
-   "ingreso_bitrix_de_esos_negocios": 6064600.0
+   "valor_contado": 6580600.0,
+   "ingreso_bitrix_de_esos_negocios": 6580600.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -66,9 +66,9 @@
  "por_asesor": {
   "Martha Lorena Celedon de la Rosa": {
    "Individual": {
-    "negocios": 14,
-    "valor_contado": 519800.0,
-    "ingreso_bitrix": 519800.0
+    "negocios": 15,
+    "valor_contado": 851800.0,
+    "ingreso_bitrix": 851800.0
    }
   },
   "Maria Jose Garcia Guaman": {
@@ -108,12 +108,17 @@
   },
   "Elicenith Carvajalino Del Toro": {
    "Individual": {
-    "negocios": 2,
-    "valor_contado": 146800.0,
-    "ingreso_bitrix": 146800.0
+    "negocios": 6,
+    "valor_contado": 238800.0,
+    "ingreso_bitrix": 238800.0
    }
   },
   "Bienvenida Lopez Hurtado": {
+   "Individual": {
+    "negocios": 2,
+    "valor_contado": 92000.0,
+    "ingreso_bitrix": 92000.0
+   },
    "Empresarial": {
     "negocios": 2,
     "valor_contado": 1648500.0,
@@ -151,8 +156,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
-     "con_valor": 13
+     "ventas": 53,
+     "con_valor": 16
     },
     "Empresarial": {
      "ventas": 2,
@@ -193,8 +198,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
-     "con_valor": 40
+     "ventas": 53,
+     "con_valor": 43
     },
     "Empresarial": {
      "ventas": 2,
@@ -247,8 +252,8 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
-     "con_valor": 1
+     "ventas": 53,
+     "con_valor": 3
     },
     "Empresarial": {
      "ventas": 2,
@@ -261,6 +266,18 @@
       8493
      ],
      "texto": "VACUNACION SANTA MARTA"
+    },
+    {
+     "crudo": [
+      8506
+     ],
+     "texto": "RECREACION. STA MTA"
+    },
+    {
+     "crudo": [
+      8506
+     ],
+     "texto": "RECREACION. STA MTA"
     }
    ]
   },
@@ -271,7 +288,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
+     "ventas": 53,
      "con_valor": 0
     },
     "Empresarial": {
@@ -288,7 +305,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
+     "ventas": 53,
      "con_valor": 0
     },
     "Empresarial": {
@@ -305,7 +322,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
+     "ventas": 53,
      "con_valor": 0
     },
     "Empresarial": {
@@ -322,7 +339,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
+     "ventas": 53,
      "con_valor": 0
     },
     "Empresarial": {
@@ -339,7 +356,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
+     "ventas": 53,
      "con_valor": 0
     },
     "Empresarial": {
@@ -356,7 +373,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
+     "ventas": 53,
      "con_valor": 0
     },
     "Empresarial": {
@@ -373,7 +390,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
+     "ventas": 53,
      "con_valor": 0
     },
     "Empresarial": {
@@ -390,7 +407,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
+     "ventas": 53,
      "con_valor": 0
     },
     "Empresarial": {
@@ -407,7 +424,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
+     "ventas": 53,
      "con_valor": 0
     },
     "Empresarial": {
@@ -424,7 +441,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
+     "ventas": 53,
      "con_valor": 0
     },
     "Empresarial": {
@@ -441,7 +458,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
+     "ventas": 53,
      "con_valor": 0
     },
     "Empresarial": {
@@ -458,8 +475,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
-     "con_valor": 46
+     "ventas": 53,
+     "con_valor": 53
     },
     "Empresarial": {
      "ventas": 2,
@@ -500,7 +517,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
+     "ventas": 53,
      "con_valor": 0
     },
     "Empresarial": {
@@ -517,7 +534,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
+     "ventas": 53,
      "con_valor": 0
     },
     "Empresarial": {
@@ -534,7 +551,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 46,
+     "ventas": 53,
      "con_valor": 0
     },
     "Empresarial": {
