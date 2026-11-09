@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-11-09 07:07 UTC",
+ "generado_utc": "2026-11-09 21:39 UTC",
  "rango": {
   "desde": "2026-11-01",
   "hasta": "2026-11-30",
@@ -9,18 +9,18 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 66,
+   "negocios_contados": 85,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 7005500.0,
-   "ingreso_bitrix_de_esos_negocios": 7005500.0
+   "valor_contado": 14744300.0,
+   "ingreso_bitrix_de_esos_negocios": 14744300.0
   },
   "1": {
    "tipo_venta": "Empresarial",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 2,
+   "negocios_contados": 3,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 1648500.0,
-   "ingreso_bitrix_de_esos_negocios": 1648500.0
+   "valor_contado": 3831800.0,
+   "ingreso_bitrix_de_esos_negocios": 3831800.0
   },
   "4": {
    "tipo_venta": "IFT",
@@ -37,6 +37,45 @@
  "cantidades_raras": [],
  "no_ganados_del_mes": [
   {
+   "id": "37356",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "NUEVA OPORTUNIDAD",
+   "asesor": "Oriana Yadith Felizzola Ortega",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-09",
+   "fecha_creacion": "2026-11-09",
+   "semantica": "P",
+   "ingreso": 1778800.0,
+   "titulo": " (37356)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "37393",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "NUEVA OPORTUNIDAD",
+   "asesor": "Oriana Yadith Felizzola Ortega",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-09",
+   "fecha_creacion": "2026-11-09",
+   "semantica": "P",
+   "ingreso": 47400.0,
+   "titulo": " (37393)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "37395",
+   "pipeline": "VENTA INDIVIDUAL",
+   "etapa": "PRIMER CONTACTO",
+   "asesor": "Oriana Yadith Felizzola Ortega",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-09",
+   "fecha_creacion": "2026-11-09",
+   "semantica": "P",
+   "ingreso": 47400.0,
+   "titulo": " (37395)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
    "id": "28489",
    "pipeline": "VENTA EMPRESARIAL",
    "etapa": "CERRADO PERDIDO",
@@ -47,6 +86,19 @@
    "semantica": "F",
    "ingreso": 2460000.0,
    "titulo": "GRASAS Y DERIVADOS SAGRADESA SA (28489)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "35912",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "CERRADO PERDIDO",
+   "asesor": "Karen Liseth Cantillo De la Cruz",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-09",
+   "fecha_creacion": "2026-10-19",
+   "semantica": "F",
+   "ingreso": 2387500.0,
+   "titulo": "FUNDACION GRUPO INTEGRA (35912)",
    "motivo": "No esta en la etapa ganada"
   },
   {
@@ -61,68 +113,132 @@
    "ingreso": 4368000.0,
    "titulo": "INSTITUTO NUEVA ENSE ANZA (36984)",
    "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "37449",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "AFINACIÓN PROPUESTA",
+   "asesor": "Martha Cabrera Montes",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-09",
+   "fecha_creacion": "2026-11-09",
+   "semantica": "P",
+   "ingreso": 6076100.0,
+   "titulo": "PRODUCTOS RAMO SA (37449)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "37462",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "PROPUESTA ENVIADA",
+   "asesor": "Martha Cabrera Montes",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-09",
+   "fecha_creacion": "2026-11-09",
+   "semantica": "P",
+   "ingreso": 4490000.0,
+   "titulo": "ABATA S A S (37462)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "37476",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "PROPUESTA ENVIADA",
+   "asesor": "Martha Cabrera Montes",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-16",
+   "fecha_creacion": "2026-11-09",
+   "semantica": "P",
+   "ingreso": 9919000.0,
+   "titulo": " (37476)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "37483",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "PROPUESTA ENVIADA",
+   "asesor": "Martha Cabrera Montes",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-16",
+   "fecha_creacion": "2026-11-09",
+   "semantica": "P",
+   "ingreso": 1503000.0,
+   "titulo": "ABATA S A S (37483)",
+   "motivo": "No esta en la etapa ganada"
   }
  ],
  "por_asesor": {
   "Martha Lorena Celedon de la Rosa": {
    "Individual": {
-    "negocios": 16,
-    "valor_contado": 1043900.0,
-    "ingreso_bitrix": 1043900.0
+    "negocios": 17,
+    "valor_contado": 1071300.0,
+    "ingreso_bitrix": 1071300.0
    }
   },
   "Maria Jose Garcia Guaman": {
    "Individual": {
-    "negocios": 2,
-    "valor_contado": 1173800.0,
-    "ingreso_bitrix": 1173800.0
+    "negocios": 5,
+    "valor_contado": 4635600.0,
+    "ingreso_bitrix": 4635600.0
    }
   },
   "Karen Liseth Cantillo De la Cruz": {
    "Individual": {
+    "negocios": 2,
+    "valor_contado": 376800.0,
+    "ingreso_bitrix": 376800.0
+   },
+   "Empresarial": {
     "negocios": 1,
-    "valor_contado": 322000.0,
-    "ingreso_bitrix": 322000.0
+    "valor_contado": 2183300.0,
+    "ingreso_bitrix": 2183300.0
    }
   },
   "Jessica Luque Garcia": {
    "Individual": {
-    "negocios": 1,
-    "valor_contado": 103800.0,
-    "ingreso_bitrix": 103800.0
+    "negocios": 2,
+    "valor_contado": 151200.0,
+    "ingreso_bitrix": 151200.0
    }
   },
   "Oriana Yadith Felizzola Ortega": {
    "Individual": {
-    "negocios": 37,
-    "valor_contado": 3885000.0,
-    "ingreso_bitrix": 3885000.0
+    "negocios": 40,
+    "valor_contado": 7328100.0,
+    "ingreso_bitrix": 7328100.0
    }
   },
   "Martha Cabrera Montes": {
    "Individual": {
-    "negocios": 1,
-    "valor_contado": 146200.0,
-    "ingreso_bitrix": 146200.0
+    "negocios": 3,
+    "valor_contado": 197600.0,
+    "ingreso_bitrix": 197600.0
    }
   },
   "Elicenith Carvajalino Del Toro": {
    "Individual": {
-    "negocios": 6,
-    "valor_contado": 238800.0,
-    "ingreso_bitrix": 238800.0
+    "negocios": 9,
+    "valor_contado": 356400.0,
+    "ingreso_bitrix": 356400.0
    }
   },
   "Bienvenida Lopez Hurtado": {
    "Individual": {
-    "negocios": 2,
-    "valor_contado": 92000.0,
-    "ingreso_bitrix": 92000.0
+    "negocios": 4,
+    "valor_contado": 184900.0,
+    "ingreso_bitrix": 184900.0
    },
    "Empresarial": {
     "negocios": 2,
     "valor_contado": 1648500.0,
     "ingreso_bitrix": 1648500.0
+   }
+  },
+  "Holman Marin Romero": {
+   "Individual": {
+    "negocios": 3,
+    "valor_contado": 442400.0,
+    "ingreso_bitrix": 442400.0
    }
   }
  },
@@ -156,12 +272,12 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
-     "con_valor": 17
+     "ventas": 85,
+     "con_valor": 22
     },
     "Empresarial": {
-     "ventas": 2,
-     "con_valor": 0
+     "ventas": 3,
+     "con_valor": 1
     }
    },
    "ejemplos": [
@@ -198,12 +314,12 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
-     "con_valor": 56
+     "ventas": 85,
+     "con_valor": 68
     },
     "Empresarial": {
-     "ventas": 2,
-     "con_valor": 2
+     "ventas": 3,
+     "con_valor": 3
     }
    },
    "ejemplos": [
@@ -252,11 +368,11 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
-     "con_valor": 3
+     "ventas": 85,
+     "con_valor": 4
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 3,
      "con_valor": 0
     }
    },
@@ -278,6 +394,12 @@
       8506
      ],
      "texto": "RECREACION. STA MTA"
+    },
+    {
+     "crudo": [
+      8505
+     ],
+     "texto": "TEATRO CAJAMAG"
     }
    ]
   },
@@ -288,15 +410,20 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
+     "ventas": 85,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
-     "con_valor": 0
+     "ventas": 3,
+     "con_valor": 1
     }
    },
-   "ejemplos": []
+   "ejemplos": [
+    {
+     "crudo": "HOTEL SENDEROS DEL MAR",
+     "texto": "HOTEL SENDEROS DEL MAR"
+    }
+   ]
   },
   "UF_CRM_1681148244917": {
    "nombre": "Orden de servicio",
@@ -305,11 +432,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
+     "ventas": 85,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 3,
      "con_valor": 0
     }
    },
@@ -322,15 +449,24 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
+     "ventas": 85,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
-     "con_valor": 0
+     "ventas": 3,
+     "con_valor": 1
     }
    },
-   "ejemplos": []
+   "ejemplos": [
+    {
+     "crudo": {
+      "id": 54878,
+      "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=35910&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=54878",
+      "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=35910&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=54878"
+     },
+     "texto": "{'id': 54878, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=35910&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=54878', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=35910&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=54878'}"
+    }
+   ]
   },
   "UF_CRM_1743799505479": {
    "nombre": "Servicios",
@@ -339,11 +475,11 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
+     "ventas": 85,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 3,
      "con_valor": 0
     }
    },
@@ -356,11 +492,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
+     "ventas": 85,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 3,
      "con_valor": 0
     }
    },
@@ -373,11 +509,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
+     "ventas": 85,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 3,
      "con_valor": 0
     }
    },
@@ -390,11 +526,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
+     "ventas": 85,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 3,
      "con_valor": 0
     }
    },
@@ -407,11 +543,11 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
+     "ventas": 85,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 3,
      "con_valor": 0
     }
    },
@@ -424,11 +560,11 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
+     "ventas": 85,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 3,
      "con_valor": 0
     }
    },
@@ -441,11 +577,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
+     "ventas": 85,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 3,
      "con_valor": 0
     }
    },
@@ -458,11 +594,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
+     "ventas": 85,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 3,
      "con_valor": 0
     }
    },
@@ -475,12 +611,12 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
-     "con_valor": 66
+     "ventas": 85,
+     "con_valor": 85
     },
     "Empresarial": {
-     "ventas": 2,
-     "con_valor": 2
+     "ventas": 3,
+     "con_valor": 3
     }
    },
    "ejemplos": [
@@ -517,11 +653,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
+     "ventas": 85,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 3,
      "con_valor": 0
     }
    },
@@ -534,11 +670,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
+     "ventas": 85,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 3,
      "con_valor": 0
     }
    },
@@ -551,11 +687,11 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 66,
+     "ventas": 85,
      "con_valor": 0
     },
     "Empresarial": {
-     "ventas": 2,
+     "ventas": 3,
      "con_valor": 0
     }
    },
