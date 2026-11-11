@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-11-11 00:15 UTC",
+ "generado_utc": "2026-11-11 07:01 UTC",
  "rango": {
   "desde": "2026-11-01",
   "hasta": "2026-11-30",
@@ -9,10 +9,10 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 102,
+   "negocios_contados": 107,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 15840200.0,
-   "ingreso_bitrix_de_esos_negocios": 15840200.0
+   "valor_contado": 16289600.0,
+   "ingreso_bitrix_de_esos_negocios": 16289600.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -257,9 +257,9 @@
   },
   "Bienvenida Lopez Hurtado": {
    "Individual": {
-    "negocios": 6,
-    "valor_contado": 564400.0,
-    "ingreso_bitrix": 564400.0
+    "negocios": 11,
+    "valor_contado": 1013800.0,
+    "ingreso_bitrix": 1013800.0
    },
    "Empresarial": {
     "negocios": 2,
@@ -317,8 +317,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
-     "con_valor": 31
+     "ventas": 107,
+     "con_valor": 36
     },
     "Empresarial": {
      "ventas": 4,
@@ -363,8 +363,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
-     "con_valor": 81
+     "ventas": 107,
+     "con_valor": 86
     },
     "Empresarial": {
      "ventas": 4,
@@ -421,8 +421,8 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
-     "con_valor": 6
+     "ventas": 107,
+     "con_valor": 11
     },
     "Empresarial": {
      "ventas": 4,
@@ -479,7 +479,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
+     "ventas": 107,
      "con_valor": 0
     },
     "Empresarial": {
@@ -505,7 +505,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
+     "ventas": 107,
      "con_valor": 0
     },
     "Empresarial": {
@@ -526,7 +526,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
+     "ventas": 107,
      "con_valor": 0
     },
     "Empresarial": {
@@ -556,7 +556,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
+     "ventas": 107,
      "con_valor": 0
     },
     "Empresarial": {
@@ -577,7 +577,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
+     "ventas": 107,
      "con_valor": 0
     },
     "Empresarial": {
@@ -598,7 +598,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
+     "ventas": 107,
      "con_valor": 0
     },
     "Empresarial": {
@@ -619,7 +619,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
+     "ventas": 107,
      "con_valor": 0
     },
     "Empresarial": {
@@ -640,7 +640,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
+     "ventas": 107,
      "con_valor": 0
     },
     "Empresarial": {
@@ -661,7 +661,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
+     "ventas": 107,
      "con_valor": 0
     },
     "Empresarial": {
@@ -682,7 +682,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
+     "ventas": 107,
      "con_valor": 0
     },
     "Empresarial": {
@@ -703,7 +703,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
+     "ventas": 107,
      "con_valor": 0
     },
     "Empresarial": {
@@ -724,8 +724,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
-     "con_valor": 102
+     "ventas": 107,
+     "con_valor": 107
     },
     "Empresarial": {
      "ventas": 4,
@@ -770,7 +770,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
+     "ventas": 107,
      "con_valor": 0
     },
     "Empresarial": {
@@ -791,7 +791,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
+     "ventas": 107,
      "con_valor": 0
     },
     "Empresarial": {
@@ -812,7 +812,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 102,
+     "ventas": 107,
      "con_valor": 0
     },
     "Empresarial": {
