@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-10 (corrida 2026-11-12 01:42 UTC)
+# Cuadre de ventas 2026-10 (corrida 2026-11-12 07:39 UTC)
 
 Rango: 2026-10-01 a 2026-10-31. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -101,7 +101,7 @@ Ninguno.
 |---|---|---|---|---|---|---|---:|---|
 | 35450 | Martha Cabrera Montes | VENTA EMPRESARIAL | CERRADO GANADO | 2026-10-13 | 2026-10-13 | 2026-10-13 | $1.439.000 | Precio/cantidad sospechosos (Refrigerio AM  (Pincho de pollo 40 gr. + Bollo - Jugo de fruta natural): precio 7000.0, cant. 120.0) |
 
-## Negocios creados o cerrados en el mes que NO estan ganados (abiertos o perdidos, con valor) (19)
+## Negocios creados o cerrados en el mes que NO estan ganados (abiertos o perdidos, con valor) (20)
 | ID | Asesor | Pipeline | Etapa | F. creacion | F. facturacion | F. cierre | Ingreso | Detalle |
 |---|---|---|---|---|---|---|---:|---|
 | 26008 | Bienvenida Lopez Hurtado | VENTA INDIVIDUAL | CERRADO PERDIDO | 2026-07-13 | - | 2026-10-06 | $400.400 | No esta en la etapa ganada |
@@ -110,6 +110,7 @@ Ninguno.
 | 31548 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-05 | - | 2026-10-12 | $1.197.500 | No esta en la etapa ganada |
 | 33660 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-23 | 2026-09-23 | 2026-10-01 | $255.000 | No esta en la etapa ganada |
 | 35331 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-10-12 | - | 2026-10-12 | $6.814.500 | No esta en la etapa ganada |
+| 36501 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO GANADO | 2026-10-27 | 2026-11-06 | 2026-11-11 | $395.400 | No esta en la etapa ganada |
 | 36670 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO GANADO | 2026-10-28 | 2026-11-04 | 2026-11-05 | $300.100 | No esta en la etapa ganada |
 | 31877 | Karen Liseth Cantillo De la Cruz | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-09 | - | 2026-10-29 | $732.600 | No esta en la etapa ganada |
 | 35910 | Karen Liseth Cantillo De la Cruz | VENTA EMPRESARIAL | CERRADO GANADO | 2026-10-19 | 2026-11-09 | 2026-11-09 | $2.183.300 | No esta en la etapa ganada |
