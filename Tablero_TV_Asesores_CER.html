@@ -414,7 +414,7 @@ footer{flex-shrink:0; padding:8px 32px 12px; background:#fff; border-top:1px sol
     </div>
     <div class="ttl">
       <h1>Tablero de Desempeño — Asesores Comerciales</h1>
-      <div class="sub">El asesor frente a su meta · corte 2026-11-12</div>
+      <div class="sub">El asesor frente a su meta · corte 2026-11-04</div>
     </div>
   </div>
   <div class="hdr-right">
@@ -568,7 +568,9 @@ function gaugeStyle(pct, size, colorFn){
 const IND_SHORT = {
   'Actividades de mantenimiento':'Mantenim.','Asesorías generales':'Asesorías','Actualización de base de datos':'Act. BD',
   'Visita por primera vez':'1ra visita','Visitas presenciales':'Visitas','Feria de servicios':'Ferias',
-  'Presentación de portafolio':'Portafolio','Cotizaciones':'Cotizac.','Órdenes de compra':'Ord. compra'
+  'Presentación de portafolio':'Portafolio','Cotizaciones':'Cotizac.','Órdenes de compra':'Ord. compra',
+  'Asesorías comercial':'Asesoría com.','Presentación de ejecutivo':'Pres. ejec.','Orientación a subsidios':'Subsidios',
+  'Orientación a afiliaciones':'Afiliaciones','Actividad de temporada':'Temporada'
 };
 // 'Visitas presenciales' se quito de aqui (25-ago-2026, a pedido de Luis):
 // quedaba duplicada porque ya se muestra en la fila de canales/medios de
@@ -576,6 +578,9 @@ const IND_SHORT = {
 // promedio general (global_pct), solo que ahora se toma desde 'canales' en
 // vez de desde este listado, para no contarlo dos veces.
 const IND_ORDER = ['Presentación de portafolio','Asesorías generales','Visita por primera vez','Actividades de mantenimiento','Actualización de base de datos','Feria de servicios','Cotizaciones','Órdenes de compra'];
+// 12-nov-2026: desde noviembre "Asesorías generales" desaparecio de Bitrix y fue reemplazada por 5 actividades nuevas.
+const IND_ORDER_NOV26 = ['Presentación de portafolio','Asesorías comercial','Presentación de ejecutivo','Orientación a subsidios','Orientación a afiliaciones','Actividad de temporada','Visita por primera vez','Actividades de mantenimiento','Actualización de base de datos','Feria de servicios','Cotizaciones','Órdenes de compra'];
+function indOrderFor(periodKey){ return (periodKey && periodKey!=='acumulado' && periodKey>='2026-11') ? IND_ORDER_NOV26 : IND_ORDER; }
 
 /* ---------------- RANKING ---------------- */
 function renderRanking(periodKey){
@@ -781,8 +786,9 @@ function renderVentasDelDia(){
 const CANAL_ICON = {'Llamadas':'📞','Visitas presenciales':'🚶','WhatsApp':'💬','Correos':'✉️','Reuniones virtuales':'🖥️'};
 function renderGestionGroup(group, periodKey, idx, total){
   const cards = group.map(a=>{
-    const inds = IND_ORDER.map(k=>{
+    const inds = indOrderFor(periodKey).map(k=>{
       const v = a.indicators[k];
+      if(v && v.na && v.meta==null && v.real!=null && v.reason!=='sin_dato') return `<div class="g-ind"><div class="lbl">${IND_SHORT[k]||k}</div><div class="barwrap"><div class="bar" style="width:0%;"></div></div><div class="nums">${v.real} · sin meta</div></div>`;
       if(!v || v.na || v.meta===0) return `<div class="g-ind"><div class="lbl">${IND_SHORT[k]||k}</div><div class="barwrap"><div class="bar" style="width:0%;"></div></div><div class="nums">s/d</div></div>`;
       const pct = v.pct==null?0:Math.min(v.pct,100);
       return `<div class="g-ind"><div class="lbl">${IND_SHORT[k]||k}</div><div class="barwrap"><div class="bar" style="width:${pct}%;background:${gestColor(v.pct)}"></div></div><div class="nums">${v.real ?? 0}/${v.meta} · ${v.pct!=null?v.pct.toFixed(0)+'%':'—'}</div></div>`;
