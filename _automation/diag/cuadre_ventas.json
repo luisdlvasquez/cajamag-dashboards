@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-11-11 18:53 UTC",
+ "generado_utc": "2026-11-12 01:42 UTC",
  "rango": {
   "desde": "2026-11-01",
   "hasta": "2026-11-30",
@@ -9,10 +9,10 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 111,
+   "negocios_contados": 112,
    "otras_etapas_con_fecha_en_el_mes": {},
-   "valor_contado": 16892100.0,
-   "ingreso_bitrix_de_esos_negocios": 16892100.0
+   "valor_contado": 16919500.0,
+   "ingreso_bitrix_de_esos_negocios": 16919500.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -217,9 +217,9 @@
   },
   "Karen Liseth Cantillo De la Cruz": {
    "Individual": {
-    "negocios": 4,
-    "valor_contado": 530700.0,
-    "ingreso_bitrix": 530700.0
+    "negocios": 5,
+    "valor_contado": 558100.0,
+    "ingreso_bitrix": 558100.0
    },
    "Empresarial": {
     "negocios": 1,
@@ -317,7 +317,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 37
     },
     "Empresarial": {
@@ -363,7 +363,7 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 87
     },
     "Empresarial": {
@@ -421,7 +421,7 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 11
     },
     "Empresarial": {
@@ -479,7 +479,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 0
     },
     "Empresarial": {
@@ -505,7 +505,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 0
     },
     "Empresarial": {
@@ -526,7 +526,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 0
     },
     "Empresarial": {
@@ -556,7 +556,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 0
     },
     "Empresarial": {
@@ -577,7 +577,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 0
     },
     "Empresarial": {
@@ -598,7 +598,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 0
     },
     "Empresarial": {
@@ -619,7 +619,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 0
     },
     "Empresarial": {
@@ -640,7 +640,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 0
     },
     "Empresarial": {
@@ -661,7 +661,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 0
     },
     "Empresarial": {
@@ -682,7 +682,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 0
     },
     "Empresarial": {
@@ -703,7 +703,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 0
     },
     "Empresarial": {
@@ -724,8 +724,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
-     "con_valor": 111
+     "ventas": 112,
+     "con_valor": 112
     },
     "Empresarial": {
      "ventas": 4,
@@ -770,7 +770,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 0
     },
     "Empresarial": {
@@ -791,7 +791,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 0
     },
     "Empresarial": {
@@ -812,7 +812,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 111,
+     "ventas": 112,
      "con_valor": 0
     },
     "Empresarial": {
