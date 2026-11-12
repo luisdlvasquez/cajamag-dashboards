@@ -157,10 +157,33 @@ GESTION_MAP = {
     'Actualización de datos': 'Actualización de base de datos',
     'Actividades de mantenimiento': 'Actividades de mantenimiento',
     'Feria de servicios': 'Feria de servicios',
+    # 12-nov-2026: en Bitrix "Asesorías generales" desaparecio de Tipo de evento (V) y fue
+    # reemplazada por 5 actividades nuevas. 'Asesorías generales' se conserva en el mapa solo
+    # para recalcular meses cerrados (sep/oct) con su historia real.
+    'Asesorías Comercial': 'Asesorías comercial',
+    'Presentación de ejecutivo': 'Presentación de ejecutivo',
+    'Orientación a subsidios': 'Orientación a subsidios',
+    'Orientación a afiliaciones': 'Orientación a afiliaciones',
+    'Actividad de temporada': 'Actividad de temporada',
 }
 INDICATORS = ['Actividades de mantenimiento','Asesorías generales','Actualización de base de datos',
               'Visita por primera vez','Visitas presenciales','Feria de servicios',
               'Presentación de portafolio','Cotizaciones','Órdenes de compra']
+# Desde noviembre 2026 las 5 actividades nuevas reemplazan a "Asesorías generales". Todavia no
+# tienen meta por perfil (profile_targets), asi que salen "sin meta" y no cuentan en el % global
+# hasta que Luis las defina.
+ACTIVIDADES_NUEVAS_NOV26 = ['Asesorías comercial','Presentación de ejecutivo','Orientación a subsidios',
+                            'Orientación a afiliaciones','Actividad de temporada']
+if YM >= '2026-11':
+    INDICATORS = [i for i in INDICATORS if i != 'Asesorías generales'] + ACTIVIDADES_NUEVAS_NOV26
+
+# 12-nov-2026: la meta mensual de ventas por asesor pasa de 21M a 25M para TODOS desde noviembre
+# 2026. Los meses anteriores (cerrados) conservan su meta de 21M.
+META_VENTA_ASESOR_DESDE_NOV26 = 25000000
+def meta_venta_asesor_vigente(ym, meta_previa):
+    if ym >= '2026-11' and meta_previa is not None:
+        return META_VENTA_ASESOR_DESDE_NOV26
+    return meta_previa
 
 # Metas mensuales por canal de contacto (Tipo de actividad V), confirmadas por
 # Luis (25-ago-2026). "Visitas presenciales" NO esta aqui: reusa la meta que ya
@@ -773,6 +796,15 @@ for key in ['categorias','asesores','zonas','tipos_venta']:
 
 DATA['empresas_agg']['tam_counts'] = dict(Counter(r['tam'] for r in DATA['empresas_full']))
 
+# 12-nov-2026: meta de ventas por asesor = 25M para todos desde noviembre (antes 21M).
+# 'meta_mensual' es la tasa mensual vigente de cada asesor en los dashboards.
+if YM >= '2026-11':
+    for _r in DATA['ventas']['ranking']:
+        if _r.get('meta_mensual') is not None:
+            _r['meta_mensual'] = META_VENTA_ASESOR_DESDE_NOV26
+    DATA['ventas']['meta_asesores_mensual_total'] = sum(
+        _r['meta_mensual'] for _r in DATA['ventas']['ranking'] if _r.get('meta_mensual') is not None)
+
 # ============ 6. Guardar master actualizado ============
 new_data_json = json.dumps(DATA, ensure_ascii=False, separators=(',',':'))
 master_html = open(MASTER, encoding='utf-8').read()
@@ -811,6 +843,7 @@ for name in names_seen:
         zona = adv.get('current_profile') if adv else None
         meta = 21000000
         meses_activos = 1
+    meta = meta_venta_asesor_vigente(YM, meta)
     total = totals_by_adv.get(name, 0.0)
     cumpl = round(total/meta*100, 1) if meta else None
     rank_month.append({'asesor': name, 'zona': zona, 'meta': meta, 'total': total,
