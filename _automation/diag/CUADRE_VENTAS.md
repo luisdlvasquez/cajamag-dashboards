@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-11 (corrida 2026-11-16 07:13 UTC)
+# Cuadre de ventas 2026-11 (corrida 2026-11-16 21:16 UTC)
 
 Rango: 2026-11-01 a 2026-11-30. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -58,7 +58,7 @@ Ninguno.
 | 37522 | Jessica Luque Garcia | VENTA INDIVIDUAL | NUEVA OPORTUNIDAD | 2026-11-10 | - | 2026-11-10 | $140.900 | No esta en la etapa ganada |
 | 35912 | Karen Liseth Cantillo De la Cruz | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-10-19 | - | 2026-11-09 | $2.387.500 | No esta en la etapa ganada |
 | 37659 | Maria Jose Garcia Guaman | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-11-11 | - | 2026-11-11 | $22.815.000 | No esta en la etapa ganada |
-| 37449 | Martha Cabrera Montes | VENTA EMPRESARIAL | AFINACIÓN PROPUESTA | 2026-11-09 | - | 2026-11-09 | $6.076.100 | No esta en la etapa ganada |
+| 37449 | Martha Cabrera Montes | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-11-09 | - | 2026-11-16 | $6.076.100 | No esta en la etapa ganada |
 | 37462 | Martha Cabrera Montes | VENTA EMPRESARIAL | AFINACIÓN PROPUESTA | 2026-11-09 | - | 2026-11-09 | $3.446.000 | No esta en la etapa ganada |
 | 37476 | Martha Cabrera Montes | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-11-09 | - | 2026-11-16 | $9.919.000 | No esta en la etapa ganada |
 | 37483 | Martha Cabrera Montes | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-11-09 | - | 2026-11-16 | $1.503.000 | No esta en la etapa ganada |
