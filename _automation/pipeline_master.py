@@ -688,13 +688,25 @@ for a in af:
     for r in rows:
         for p in [x.strip() for x in (r.get('gestion') or '').split('/')]:
             if p in GESTION_MAP:
-                counts[GESTION_MAP[p]] += 1
+                _ind_g = GESTION_MAP[p]
+                # 18-nov-2026: en Bitrix "Asesorías generales" fue RENOMBRADA a "Asesorías Comercial"
+                # (misma opcion de lista, mismo id): Bitrix reescribe retroactivamente las gestiones
+                # viejas con el nombre nuevo. Para meses anteriores a noviembre, que siguen midiendo
+                # "Asesorías generales", esas gestiones se cuentan en ese indicador; si no, octubre
+                # quedaba en 0 contra su meta.
+                if _ind_g == 'Asesorías comercial' and 'Asesorías generales' in INDICATORS:
+                    _ind_g = 'Asesorías generales'
+                counts[_ind_g] += 1
         if r.get('medio') and r['medio'].strip() == 'Visita presencial':
             counts['Visitas presenciales'] += 1
     targets = profile_targets.get(perfil, {})
     inds, pct_vals = {}, []
     for ind in INDICATORS:
         meta = targets.get(ind)
+        # 'Asesorías comercial' es la misma actividad que 'Asesorías generales' (renombrada):
+        # conserva la meta del perfil hasta que Luis defina una nueva.
+        if ind == 'Asesorías comercial' and meta is None:
+            meta = targets.get('Asesorías generales')
         if ind in ('Cotizaciones','Órdenes de compra'):
             inds[ind] = {'meta': meta, 'real': None, 'pct': None, 'na': True, 'reason': 'sin_dato'}
             continue
