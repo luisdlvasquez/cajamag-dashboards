@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-10 (corrida 2026-11-18 16:26 UTC)
+# Cuadre de ventas 2026-10 (corrida 2026-11-18 19:35 UTC)
 
 Rango: 2026-10-01 a 2026-10-31. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -22,7 +22,7 @@ Mismo archivo y mismo valor = casi seguro venta duplicada. Mismo archivo con val
 
 ## Totales contados por pipeline
 - Individual (pipeline 2, etapa CERRADO GANADO): 409 negocios, $72.985.070
-- Empresarial (pipeline 1, etapa CERRADO GANADO): 17 negocios, $31.371.366
+- Empresarial (pipeline 1, etapa CERRADO GANADO): 17 negocios, $31.283.366
 - IFT (pipeline 4, etapa CERRADO MATRICULARO): 4 negocios, $3.347.900
 
 ## Por asesor (valor contado vs Ingreso en Bitrix de esos mismos negocios)
@@ -40,7 +40,7 @@ Mismo archivo y mismo valor = casi seguro venta duplicada. Mismo archivo con val
 | Karen Patricia Ballesteros Paba | Individual | 11 | $1.383.300 | $1.383.300 |
 | Maria Jose Garcia Guaman | Empresarial | 1 | $752.500 | $752.500 |
 | Maria Jose Garcia Guaman | Individual | 51 | $30.369.900 | $30.369.900 |
-| Martha Cabrera Montes | Empresarial | 3 | $7.313.500 | $7.313.500 |
+| Martha Cabrera Montes | Empresarial | 3 | $7.225.500 | $7.225.500 |
 | Martha Cabrera Montes | Individual | 33 | $2.641.000 | $2.641.000 |
 | Martha Lorena Celedon de la Rosa | Individual | 25 | $925.100 | $925.100 |
 | Marvis Yarima Gonzalez Gil | Empresarial | 2 | $1.126.600 | $1.126.600 |
@@ -121,7 +121,7 @@ Ninguno.
 | 36529 | Marvis Yarima Gonzalez Gil | VENTA EMPRESARIAL | EN ESPERA DE OC | 2026-10-27 | - | 2026-10-27 | $1.594.400 | No esta en la etapa ganada |
 | 36740 | Marvis Yarima Gonzalez Gil | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-10-29 | - | 2026-10-29 | $3.000.000 | No esta en la etapa ganada |
 | 35488 | Oriana Yadith Felizzola Ortega | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-10-13 | - | 2026-10-22 | $1.227.500 | No esta en la etapa ganada |
-| 35490 | Oriana Yadith Felizzola Ortega | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-10-13 | - | 2026-10-13 | $12.119.000 | No esta en la etapa ganada |
+| 35490 | Oriana Yadith Felizzola Ortega | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-10-13 | - | 2026-11-18 | $12.119.000 | No esta en la etapa ganada |
 | 36107 | Oriana Yadith Felizzola Ortega | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-10-21 | - | 2026-10-21 | $1.010.000 | No esta en la etapa ganada |
 | 36442 | Oriana Yadith Felizzola Ortega | VENTA EMPRESARIAL | AFINACIÓN PROPUESTA | 2026-10-26 | - | 2026-10-26 | $141.500 | No esta en la etapa ganada |
 
