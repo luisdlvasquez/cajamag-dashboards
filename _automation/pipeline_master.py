@@ -176,6 +176,8 @@ ACTIVIDADES_NUEVAS_NOV26 = ['Asesorías comercial','Presentación de ejecutivo',
                             'Orientación a afiliaciones','Actividad de temporada']
 if YM >= '2026-11':
     INDICATORS = [i for i in INDICATORS if i != 'Asesorías generales'] + ACTIVIDADES_NUEVAS_NOV26
+META_SIMBOLICA_NUEVAS = {'Presentación de ejecutivo': 10, 'Orientación a subsidios': 10,
+                         'Orientación a afiliaciones': 10, 'Actividad de temporada': 10}
 
 # 12-nov-2026: la meta mensual de ventas por asesor pasa de 21M a 25M para TODOS desde noviembre
 # 2026. Los meses anteriores (cerrados) conservan su meta de 21M.
@@ -707,6 +709,10 @@ for a in af:
         # conserva la meta del perfil hasta que Luis defina una nueva.
         if ind == 'Asesorías comercial' and meta is None:
             meta = targets.get('Asesorías generales')
+        # 18-nov-2026: meta SIMBOLICA (a pedido de Luis) para las 4 actividades nuevas, solo para
+        # que se vea la barra; la cambia cuando defina la meta real.
+        if ind in META_SIMBOLICA_NUEVAS and meta is None:
+            meta = META_SIMBOLICA_NUEVAS[ind]
         if ind in ('Cotizaciones','Órdenes de compra'):
             inds[ind] = {'meta': meta, 'real': None, 'pct': None, 'na': True, 'reason': 'sin_dato'}
             continue
