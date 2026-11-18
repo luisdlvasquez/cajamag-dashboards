@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-10 (corrida 2026-11-18 07:54 UTC)
+# Cuadre de ventas 2026-10 (corrida 2026-11-18 16:01 UTC)
 
 Rango: 2026-10-01 a 2026-10-31. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -123,7 +123,7 @@ Ninguno.
 | 35488 | Oriana Yadith Felizzola Ortega | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-10-13 | - | 2026-10-22 | $1.227.500 | No esta en la etapa ganada |
 | 35490 | Oriana Yadith Felizzola Ortega | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-10-13 | - | 2026-10-13 | $12.119.000 | No esta en la etapa ganada |
 | 36107 | Oriana Yadith Felizzola Ortega | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-10-21 | - | 2026-10-21 | $1.010.000 | No esta en la etapa ganada |
-| 36442 | Oriana Yadith Felizzola Ortega | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-10-26 | - | 2026-10-26 | $1.010.000 | No esta en la etapa ganada |
+| 36442 | Oriana Yadith Felizzola Ortega | VENTA EMPRESARIAL | AFINACIÓN PROPUESTA | 2026-10-26 | - | 2026-10-26 | $141.500 | No esta en la etapa ganada |
 
 ## Revision puntual de negocios (1)
 | ID | Asesor | Pipeline | Etapa | F. creacion | F. facturacion | F. cierre | Ingreso | Detalle |
