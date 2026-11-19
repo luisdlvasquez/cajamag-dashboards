@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-11-18 19:36 UTC",
+ "generado_utc": "2026-11-19 01:30 UTC",
  "rango": {
   "desde": "2026-11-01",
   "hasta": "2026-11-30",
@@ -9,12 +9,12 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 141,
+   "negocios_contados": 142,
    "otras_etapas_con_fecha_en_el_mes": {
     "NUEVA OPORTUNIDAD": 1
    },
-   "valor_contado": 26345800.0,
-   "ingreso_bitrix_de_esos_negocios": 26345800.0
+   "valor_contado": 26572200.0,
+   "ingreso_bitrix_de_esos_negocios": 26572200.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -288,6 +288,45 @@
    "motivo": "No esta en la etapa ganada"
   },
   {
+   "id": "38124",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "PROPUESTA ENVIADA",
+   "asesor": "Jessica Luque Garcia",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-18",
+   "fecha_creacion": "2026-11-18",
+   "semantica": "P",
+   "ingreso": 990000.0,
+   "titulo": "CEDEC (38124)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "38140",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "CERRADO PERDIDO",
+   "asesor": "Maria Jose Garcia Guaman",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-18",
+   "fecha_creacion": "2026-11-18",
+   "semantica": "F",
+   "ingreso": 18875000.0,
+   "titulo": "GASEOSAS POSADA TOBON S A (38140)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "38148",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "IDENTIFICACIÓN EMPRESA",
+   "asesor": "Maria Jose Garcia Guaman",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-18",
+   "fecha_creacion": "2026-11-18",
+   "semantica": "P",
+   "ingreso": 4208864.0,
+   "titulo": "GASEOSAS POSADA TOBON S A (38148)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
    "id": "38068",
    "pipeline": "IFT",
    "etapa": "ASIGNACIÓN",
@@ -342,9 +381,9 @@
   },
   "Oriana Yadith Felizzola Ortega": {
    "Individual": {
-    "negocios": 44,
-    "valor_contado": 12865700.0,
-    "ingreso_bitrix": 12865700.0
+    "negocios": 45,
+    "valor_contado": 13092100.0,
+    "ingreso_bitrix": 13092100.0
    }
   },
   "Martha Cabrera Montes": {
@@ -428,7 +467,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 49
     },
     "Empresarial": {
@@ -474,7 +513,7 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 108
     },
     "Empresarial": {
@@ -532,7 +571,7 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 13
     },
     "Empresarial": {
@@ -590,7 +629,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 0
     },
     "Empresarial": {
@@ -616,7 +655,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 0
     },
     "Empresarial": {
@@ -637,7 +676,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 0
     },
     "Empresarial": {
@@ -667,7 +706,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 0
     },
     "Empresarial": {
@@ -688,7 +727,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 0
     },
     "Empresarial": {
@@ -709,7 +748,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 0
     },
     "Empresarial": {
@@ -730,7 +769,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 0
     },
     "Empresarial": {
@@ -751,7 +790,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 0
     },
     "Empresarial": {
@@ -772,7 +811,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 0
     },
     "Empresarial": {
@@ -793,7 +832,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 0
     },
     "Empresarial": {
@@ -814,7 +853,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 0
     },
     "Empresarial": {
@@ -835,8 +874,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
-     "con_valor": 141
+     "ventas": 142,
+     "con_valor": 142
     },
     "Empresarial": {
      "ventas": 9,
@@ -881,7 +920,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 0
     },
     "Empresarial": {
@@ -902,7 +941,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 0
     },
     "Empresarial": {
@@ -923,7 +962,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 141,
+     "ventas": 142,
      "con_valor": 0
     },
     "Empresarial": {
