@@ -2639,3 +2639,7 @@ _js = _js.replace(_ult_ym, _def_ym_js).replace(_ult_tend, _def_tend_js)
 with open(OUT, 'w', encoding='utf-8') as f:
     f.write(_cab + _blob + _js)
 print(f"Paso final aplicado: mes por defecto (default_ym) en {_n1} referencia(s) de mes y {_n2} de tendencia.")
+
+# 20-nov-2026: seccion Multiempresa (cobertura, revision de noviembre, calidad)
+import multiempresa_ui
+multiempresa_ui.aplicar_a_archivo(OUT)

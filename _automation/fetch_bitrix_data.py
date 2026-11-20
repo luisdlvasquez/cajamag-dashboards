@@ -289,6 +289,19 @@ def _norm_txt(s):
     return s
 
 
+def _fecha_hora_min(s):
+    """'YYYY-MM-DD HH:MM' en hora Colombia de un campo fecha-hora (DATE_CREATE)."""
+    if not s:
+        return ''
+    try:
+        dt = datetime.fromisoformat(str(s))
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone(timedelta(hours=-5)))
+        return dt.astimezone(timezone(timedelta(hours=-5))).strftime('%Y-%m-%d %H:%M')
+    except Exception:
+        return ''
+
+
 def fecha_iso_a_ddmmyyyy(s, es_fecha_hora=False):
     """ISO de Bitrix -> 'dd/mm/aaaa'. Para campos FECHA usa _fecha_local (con la
     correccion de zona horaria); para campos FECHA-HORA usa el dia en hora
@@ -346,6 +359,58 @@ CAMPOS_SERVICIO = {code: f for code, f in DEAL_FIELDS.items()
 ENUM_TIPO_ACTIVIDAD = _enum_map(DEAL_FIELDS, 'UF_CRM_1740085404851')
 ENUM_TIPO_EVENTO = _enum_map(DEAL_FIELDS, 'UF_CRM_1740428574274')
 ENUM_CATEGORIA_AFILIACION = _enum_map(CONTACT_FIELDS, 'UF_CRM_1679886333416')
+
+# 20-nov-2026 (gestion multiempresa): campos nuevos del negocio (embudo 24) y "Grupo empresarial"
+# de la compania. Los codigos vienen del documento de Luis; si no existen en crm.deal.fields se
+# buscan por etiqueta, para no depender de un codigo mal copiado.
+def _campo_por_etiqueta(fields, codigo_preferido, *frases):
+    if codigo_preferido in fields:
+        return codigo_preferido
+    for code, f in fields.items():
+        if not code.startswith('UF_'):
+            continue
+        lab = _norm_txt(_label(f))
+        if all(_norm_txt(x) in lab for x in frases):
+            return code
+    return None
+
+CAMPO_EMP_ADIC = _campo_por_etiqueta(DEAL_FIELDS, 'UF_CRM_1795190189', 'empresas gestionadas')
+CAMPO_EXCEPCION = _campo_por_etiqueta(DEAL_FIELDS, 'UF_CRM_1795190210', 'excepcion')
+CAMPO_MOTIVO_EXC = _campo_por_etiqueta(DEAL_FIELDS, 'UF_CRM_1795190222', 'motivo')
+CAMPO_GRUPO_EMP = _campo_por_etiqueta(COMPANY_FIELDS, 'UF_CRM_GRUPO_EMPRESARIAL', 'grupo empresarial')
+ENUM_GRUPO_EMP = _enum_map(COMPANY_FIELDS, CAMPO_GRUPO_EMP) if CAMPO_GRUPO_EMP else {}
+print(f'  [multiempresa] campos: adicionales={CAMPO_EMP_ADIC} excepcion={CAMPO_EXCEPCION} '
+      f'motivo={CAMPO_MOTIVO_EXC} grupo(compania)={CAMPO_GRUPO_EMP}', flush=True)
+
+
+def _ids_compania(v):
+    """Lista de IDs de compania de un campo 'vincular a CRM' (valores tipo 'CO_123' o '123')."""
+    if v in (None, '', False, 0, '0'):
+        return []
+    vals = v if isinstance(v, (list, tuple)) else [v]
+    out = []
+    for x in vals:
+        x = str(x).strip()
+        if not x:
+            continue
+        if x.upper().startswith('CO_'):
+            x = x[3:]
+        elif '_' in x:       # otro tipo de elemento CRM (contacto, negocio...): se ignora
+            continue
+        if x.isdigit() and x != '0' and x not in out:
+            out.append(x)
+    return out
+
+
+def _si(v):
+    return str(v).strip().upper() in ('1', 'Y', 'TRUE', 'SI', 'SÍ')
+
+
+def _grupo_de(company):
+    if not CAMPO_GRUPO_EMP:
+        return ''
+    return enum_valor(ENUM_GRUPO_EMP, company.get(CAMPO_GRUPO_EMP))
+
 
 STAGE_NAME_CACHE = {}  # category_id -> {STATUS_ID: NAME}
 
@@ -1239,7 +1304,8 @@ def fetch_gestiones(fname):
         '<=UF_CRM_1740428746956': (date.fromisoformat(gest_hasta) + timedelta(days=3)).isoformat(),
     }, select=['ID', 'CATEGORY_ID', 'STAGE_ID', 'ASSIGNED_BY_ID', 'COMPANY_ID',
                'UF_CRM_1740428746956', 'UF_CRM_1740085404851', 'UF_CRM_1740428574274',
-               'UF_CRM_1740429016'])
+               'UF_CRM_1740429016', 'DATE_CREATE'] +
+              [c for c in (CAMPO_EMP_ADIC, CAMPO_EXCEPCION, CAMPO_MOTIVO_EXC) if c])
     deals = [d for d in candidatos
              if FECHA_DESDE <= _fecha_hora_local(d.get('UF_CRM_1740428746956')) <= gest_hasta]
     print(f'  {len(deals)} negocios con Fecha y hora evento {FECHA_DESDE}..{gest_hasta} (todas las categorias).')
@@ -1260,10 +1326,23 @@ def fetch_gestiones(fname):
 
     resolve_users([d.get('ASSIGNED_BY_ID') for d in filtrados])
     resolve_companies([d.get('COMPANY_ID') for d in filtrados])
+    _adic_ids = {d['ID']: _ids_compania(d.get(CAMPO_EMP_ADIC)) if CAMPO_EMP_ADIC else [] for d in filtrados}
+    try:
+        resolve_companies([c for ids in _adic_ids.values() for c in ids])
+    except Exception as _e:   # las adicionales nunca deben tumbar la actualizacion de gestiones
+        print('  [multiempresa] no se pudieron resolver las companias adicionales:', _e, flush=True)
 
     rows = []
     for d in filtrados:
         company = COMPANY_CACHE.get(d.get('COMPANY_ID')) or {}
+        _adic = []
+        for _cid in _adic_ids.get(d['ID'], []):
+            if _cid == str(d.get('COMPANY_ID')):
+                continue            # la principal no se repite; el pipeline lo reporta en calidad
+            _c = COMPANY_CACHE.get(_cid) or {}
+            _adic.append({'id': _cid, 'nit': _c.get('UF_CRM_1679587096910') or '',
+                          'nombre': _c.get('TITLE') or '', 'grupo': _grupo_de(_c)})
+        _adic_igual_principal = int(any(_c == str(d.get('COMPANY_ID')) for _c in _adic_ids.get(d['ID'], [])))
         tipo_actividad = ENUM_TIPO_ACTIVIDAD.get(str(d.get('UF_CRM_1740085404851') or ''), '')
         tipo_evento_ids = d.get('UF_CRM_1740428574274') or []
         if not isinstance(tipo_evento_ids, list):
@@ -1279,6 +1358,16 @@ def fetch_gestiones(fname):
             'Tipo de evento (V)': tipo_evento,
             'Descripción del evento (V)': d.get('UF_CRM_1740429016') or '',
             'Pipeline de la negociación': category_name(d['CATEGORY_ID']),
+            # --- gestion multiempresa (20-nov-2026); columnas nuevas, las anteriores no cambian ---
+            'ID del negocio': d['ID'],
+            'ID categoria': d['CATEGORY_ID'],
+            'Creado en': _fecha_hora_min(d.get('DATE_CREATE')),
+            'ID compania': d.get('COMPANY_ID') or '',
+            'Grupo empresarial (principal)': _grupo_de(company),
+            'Empresas adicionales': json.dumps(_adic, ensure_ascii=False) if _adic else '',
+            'Adicional igual a principal': _adic_igual_principal,
+            'Excepcion de grupo': int(_si(d.get(CAMPO_EXCEPCION))) if CAMPO_EXCEPCION else 0,
+            'Motivo de la excepcion': (d.get(CAMPO_MOTIVO_EXC) or '') if CAMPO_MOTIVO_EXC else '',
         })
     return pd.DataFrame(rows)
 

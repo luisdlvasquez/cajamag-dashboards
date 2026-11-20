@@ -502,6 +502,37 @@ try:
 except (ValueError, IndexError):
     print('  [gestiones.xls] sin gestiones en el rango')
     g = pd.DataFrame(columns=['Fecha y hora evento'])
+def _int_o_0(x):
+    try:
+        return int(float(x))
+    except Exception:
+        return 0
+
+
+def _extra_multiempresa(r):
+    """Campos de la gestion multiempresa (20-nov-2026). Si el export no trae las columnas
+    (exports viejos), devuelve {} y el registro queda exactamente como antes."""
+    if 'ID del negocio' not in r.index or pd.isna(r.get('ID del negocio')):
+        return {}
+    adic = []
+    raw_adic = clean_str(r.get('Empresas adicionales'))
+    if raw_adic:
+        try:
+            adic = json.loads(raw_adic)
+        except Exception:
+            adic = []
+    return {
+        'deal_id': str(_int_o_0(r.get('ID del negocio'))),
+        'cat': str(_int_o_0(r.get('ID categoria'))),
+        'creado': clean_str(r.get('Creado en')),
+        'grupo': clean_str(r.get('Grupo empresarial (principal)')),
+        'adic': adic,
+        'adic_igual': _int_o_0(r.get('Adicional igual a principal')),
+        'exc': _int_o_0(r.get('Excepcion de grupo')),
+        'motivo': clean_str(r.get('Motivo de la excepcion')),
+    }
+
+
 new_raw_gestiones = []
 excluidas_por_etapa = 0
 for _, r in g.iterrows():
@@ -520,6 +551,7 @@ for _, r in g.iterrows():
         'comentario': clean_str(r['Descripción del evento (V)']),
         'etapa': etapa,
         'pipeline': clean_str(r.get('Pipeline de la negociación')),
+        **_extra_multiempresa(r),
     })
 if excluidas_por_etapa:
     print(f'  [gestiones.xls] excluidas {excluidas_por_etapa} filas por etapa no valida (planificacion/aplazado/etc.)')
@@ -829,6 +861,128 @@ if YM >= '2026-11':
             _r['meta_mensual'] = META_VENTA_ASESOR_DESDE_NOV26
     DATA['ventas']['meta_asesores_mensual_total'] = sum(
         _r['meta_mensual'] for _r in DATA['ventas']['ranking'] if _r.get('meta_mensual') is not None)
+
+# ============ 5b. Gestion multiempresa (20-nov-2026) ============
+# Una visita = un negocio (como siempre). Empresa gestionada = NIT distinto (principal + adicionales).
+# NO modifica visitas, indicadores por tipo de gestion, metas ni el historico anterior al corte:
+# solo AGREGA 'Empresas gestionadas' y 'Gestiones por empresa' (sin meta, fuera del % global),
+# la lista de control de calidad y los candidatos de revision de noviembre.
+FECHA_CORTE_MULTIEMPRESA = '2026-11-20'
+CAT_GESTION = '24'
+URL_NEGOCIO = 'https://bitrix.cajamag.com.co/crm/deal/details/{}/'
+
+
+def _bloque_multiempresa():
+    filas = [r for r in raw_all if r['fecha'].startswith(YM) and r.get('deal_id')]
+    por_asesor = defaultdict(lambda: {'visitas_presenciales': 0, 'negocios': 0, 'empresas': set(), 'pares': set()})
+    nit_ase = {e.get('nit'): e.get('ase') for e in ef if e.get('nit')}
+    nit_nom = {e.get('nit'): e.get('nom') for e in ef if e.get('nit')}
+    for r in filas:
+        pa = por_asesor[r['asesor']]
+        pa['negocios'] += 1
+        if (r.get('medio') or '').strip() == 'Visita presencial':
+            pa['visitas_presenciales'] += 1
+        nits = [r['nit']] if r.get('nit') else []
+        nits += [x['nit'] for x in r.get('adic', []) if x.get('nit')]
+        for n in dict.fromkeys(nits):       # misma empresa dos veces en el mismo negocio = una
+            pa['empresas'].add(n)
+            pa['pares'].add((r['deal_id'], n))
+
+    resumen = {}
+    for nm, pa in por_asesor.items():
+        emp, par = len(pa['empresas']), len(pa['pares'])
+        resumen[nm] = {'visitas_presenciales': pa['visitas_presenciales'], 'negocios': pa['negocios'],
+                       'empresas_gestionadas': emp, 'pares_negocio_empresa': par,
+                       'gestiones_por_empresa': round(par / emp, 2) if emp else 0,
+                       'empresas_por_visita': round(emp / pa['negocios'], 2) if pa['negocios'] else 0}
+
+    # ---- candidatos a duplicado: visita presencial, mismo asesor, fecha y tipo de evento,
+    # creados con < 30 min entre uno y otro, grupos de 3 o mas (candidatos, NO prueba) ----
+    grupos = defaultdict(list)
+    for r in filas:
+        if (r.get('medio') or '').strip() == 'Visita presencial' and r.get('creado'):
+            grupos[(r['asesor'], r['fecha'], r.get('gestion') or '')].append(r)
+    candidatos = []
+    for (ase, fec, ges), lst in grupos.items():
+        lst.sort(key=lambda x: x['creado'])
+        cluster = [lst[0]]
+        def cerrar(cl):
+            if len(cl) >= 3:
+                candidatos.append(cl)
+        for x in lst[1:]:
+            d = (datetime.strptime(x['creado'], '%Y-%m-%d %H:%M') -
+                 datetime.strptime(cluster[-1]['creado'], '%Y-%m-%d %H:%M')).total_seconds() / 60
+            if d < 30:
+                cluster.append(x)
+            else:
+                cerrar(cluster)
+                cluster = [x]
+        cerrar(cluster)
+    cand_out = []
+    for i, cl in enumerate(sorted(candidatos, key=lambda c: (c[0]['fecha'], c[0]['asesor'])), 1):
+        cand_out.append({
+            'id': f"{cl[0]['fecha']}|{cl[0]['asesor']}|{cl[0]['deal_id']}",
+            'asesor': cl[0]['asesor'], 'fecha': cl[0]['fecha'], 'tipo_evento': cl[0].get('gestion'),
+            'negocios': len(cl), 'empresas_distintas': len({x.get('nit') or x.get('empresa') for x in cl}),
+            'items': [{'deal_id': x['deal_id'], 'empresa': x.get('empresa'), 'nit': x.get('nit'),
+                       'creado': x.get('creado'), 'url': URL_NEGOCIO.format(x['deal_id'])} for x in cl]})
+    ids_cand_corte = {it['deal_id'] for c in cand_out if c['fecha'] >= FECHA_CORTE_MULTIEMPRESA for it in c['items']}
+
+    # ---- control de calidad (solo negocios desde la fecha de corte) ----
+    cal = []
+    def add(regla, r, detalle):
+        cal.append({'regla': regla, 'deal_id': r['deal_id'], 'asesor': r['asesor'], 'fecha': r['fecha'],
+                    'empresa': r.get('empresa'), 'nit': r.get('nit'), 'detalle': detalle,
+                    'url': URL_NEGOCIO.format(r['deal_id'])})
+    for r in filas:
+        if r['fecha'] < FECHA_CORTE_MULTIEMPRESA:
+            continue
+        adic = r.get('adic', [])
+        if r.get('exc') and not (r.get('motivo') or '').strip():
+            add('Excepción sin motivo', r, 'Excepción de grupo = Sí y el motivo está vacío')
+        if r.get('adic_igual'):
+            add('Adicional igual a la principal', r, 'La empresa principal también está en las adicionales')
+        if adic and not r.get('exc'):
+            gp = r.get('grupo')
+            dist = [x['nombre'] for x in adic if gp and x.get('grupo') and x['grupo'] != gp]
+            if dist:
+                add('Distinto grupo sin excepción', r, 'Adicionales de otro grupo: ' + '; '.join(dist[:5]))
+        for x in adic:
+            ase_x = nit_ase.get(x.get('nit'))
+            if ase_x and ase_x != r['asesor']:
+                add('Adicional asignada a otro asesor', r, f"{x.get('nombre')} está asignada a {ase_x}")
+        sin_grupo = [x['nombre'] for x in adic if not x.get('grupo')]
+        if sin_grupo:
+            add('Adicional sin grupo empresarial', r, 'Sin grupo: ' + '; '.join(sin_grupo[:5]))
+        if (adic or r.get('exc')) and r.get('cat') != CAT_GESTION:
+            add('Campo multiempresa fuera del embudo 24', r, f"Categoría {r.get('cat')}")
+        if r['deal_id'] in ids_cand_corte:
+            add('Candidato a duplicado', r, 'Mismo asesor, fecha y tipo de evento creados con menos de 30 min')
+    return resumen, cand_out, cal
+
+
+if YM >= '2026-11':
+    _res, _cand, _cal = _bloque_multiempresa()
+    for a in af:
+        m = a.get('months', {}).get(YM)
+        pa = _res.get(a['name'])
+        if m is not None and pa is not None:
+            m['indicators']['Empresas gestionadas'] = {'meta': None, 'real': pa['empresas_gestionadas'], 'pct': None, 'na': True}
+            m['indicators']['Gestiones por empresa'] = {'meta': None, 'real': pa['gestiones_por_empresa'], 'pct': None, 'na': True}
+            pt = profile_targets.get(m.get('perfil'), {})
+            pa['meta_visitas_presenciales'] = pt.get('Visitas presenciales') if m.get('perfil') != 'IFT' else None
+            pa['perfil'] = m.get('perfil')
+    _M = DATA.get('multiempresa') or {}
+    _M['corte'] = FECHA_CORTE_MULTIEMPRESA
+    _M['nota'] = ('Desde el 20-nov-2026, una visita a varias empresas se registra en un solo negocio. '
+                  'Las visitas anteriores pueden incluir negocios duplicados.')
+    _M['actualizado'] = TODAY.isoformat()
+    _M.setdefault('meses', {})[YM] = {
+        'por_asesor': _res, 'candidatos': _cand, 'calidad': _cal,
+        'resumen_calidad': dict(Counter(x['regla'] for x in _cal)),
+    }
+    DATA['multiempresa'] = _M
+    print(f"  [multiempresa] asesores={len(_res)} candidatos={len(_cand)} alertas_calidad={len(_cal)}")
 
 # ============ 6. Guardar master actualizado ============
 new_data_json = json.dumps(DATA, ensure_ascii=False, separators=(',',':'))
