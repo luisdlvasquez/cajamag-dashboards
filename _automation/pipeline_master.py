@@ -643,6 +643,13 @@ DATA['gestiones']['month_labels'][YM] = MES_NOMBRE if _FORCE_CLOSE_CURRENT else 
 raw_all = DATA['gestiones']['raw_gestiones']
 profile_targets = DATA['gestiones']['profile_targets']
 ef = DATA['empresas_full']
+# 20-nov-2026: refrescar el asesor asignado de cada empresa desde Bitrix (las reasignaciones
+# masivas no llegaban a los dashboards porque empresas_full venia de un export congelado).
+try:
+    import refrescar_empresas_bitrix
+    refrescar_empresas_bitrix.aplicar(DATA)
+except Exception as _e:
+    print('  [empresas] refresco de asignaciones omitido:', _e)
 month_raw = [r for r in raw_all if r['fecha'].startswith(YM)]
 today_str = raw_all[0]['fecha'] if raw_all else None
 
