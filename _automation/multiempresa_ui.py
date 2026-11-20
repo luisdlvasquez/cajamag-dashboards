@@ -107,7 +107,7 @@ JS = r"""
     var cal = datos().calidad, res = datos().resumen_calidad||{}, reglas = Object.keys(res).sort();
     var h = '<div class="me-card"><b>Control de calidad</b> <span class="me-muted">(negocios desde el '+esc(M.corte)+'). Se recalcula cada hora.</span><div style="margin-top:8px">';
     if(!reglas.length) h += '<span class="me-pill ok">Sin alertas</span>';
-    reglas.forEach(function(r){ h+='<span class="me-pill '+(filtroRegla===r?'dup':'pen')+'" data-regla="'+esc(r)+'" style="cursor:pointer;margin:0 6px 6px 0">'+esc(r)+': '+res[r]+'</span>'; });
+    reglas.forEach(function(r){ var info = r.indexOf('Sin grupo conocido')===0; h+='<span class="me-pill '+(filtroRegla===r?'dup':(info?'':'pen'))+'" data-regla="'+esc(r)+'" style="cursor:pointer;margin:0 6px 6px 0">'+esc(r)+': '+res[r]+'</span>'; });
     h += ' <button class="me-btn" id="me-csv-cal">Descargar CSV</button></div></div>';
     var f = cal.filter(function(x){ return !filtroRegla || x.regla===filtroRegla; });
     if(f.length) { h += '<div class="me-card"><div class="me-wrap"><table class="me-table"><thead><tr><th>Regla</th><th>Negocio</th><th>Asesor</th><th>Fecha</th><th>Empresa</th><th>Detalle</th></tr></thead><tbody>';

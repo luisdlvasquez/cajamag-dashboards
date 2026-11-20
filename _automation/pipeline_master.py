@@ -953,7 +953,9 @@ def _bloque_multiempresa():
                 add('Adicional asignada a otro asesor', r, f"{x.get('nombre')} está asignada a {ase_x}")
         sin_grupo = [x['nombre'] for x in adic if not x.get('grupo')]
         if sin_grupo:
-            add('Adicional sin grupo empresarial', r, 'Sin grupo: ' + '; '.join(sin_grupo[:5]))
+            # No es un error: muchas empresas no pertenecen a ningun grupo (hoy no se distingue
+            # "sin grupo" de "grupo no registrado"). Solo informativo.
+            add('Sin grupo conocido (revisar)', r, 'Sin grupo conocido, no se comparan grupos: ' + '; '.join(sin_grupo[:5]))
         if (adic or r.get('exc')) and r.get('cat') != CAT_GESTION:
             add('Campo multiempresa fuera del embudo 24', r, f"Categoría {r.get('cat')}")
         if r['deal_id'] in ids_cand_corte:
@@ -972,11 +974,27 @@ if YM >= '2026-11':
             pt = profile_targets.get(m.get('perfil'), {})
             pa['meta_visitas_presenciales'] = pt.get('Visitas presenciales') if m.get('perfil') != 'IFT' else None
             pa['perfil'] = m.get('perfil')
+    # "Grupo empresarial": prioriza el de Bitrix (API) sobre el cargado a mano y reporta las diferencias.
+    _ef_nit = {e.get('nit'): e for e in ef if e.get('nit')}
+    _dif_grp, _vistos_grp = [], set()
+    for _r in [x for x in raw_all if x['fecha'].startswith(YM) and x.get('deal_id')]:
+        for _n, _nm, _g in [(_r.get('nit'), _r.get('empresa'), _r.get('grupo'))] + \
+                           [(x.get('nit'), x.get('nombre'), x.get('grupo')) for x in _r.get('adic', [])]:
+            _e = _ef_nit.get(_n)
+            if not _e or not _g or _n in _vistos_grp:
+                continue
+            _vistos_grp.add(_n)
+            if _e.get('grp') and _e['grp'] != _g:
+                _dif_grp.append({'nit': _n, 'empresa': _nm, 'manual': _e['grp'], 'bitrix': _g})
+            _e['grp'] = _g
+    print(f"  [multiempresa] grupo empresarial desde Bitrix: {len(_vistos_grp)} empresas, {len(_dif_grp)} difieren del cargado a mano")
     _M = DATA.get('multiempresa') or {}
     _M['corte'] = FECHA_CORTE_MULTIEMPRESA
     _M['nota'] = ('Desde el 20-nov-2026, una visita a varias empresas se registra en un solo negocio. '
                   'Las visitas anteriores pueden incluir negocios duplicados.')
     _M['actualizado'] = TODAY.isoformat()
+    _M['grupo_diferencias'] = _dif_grp[:300]
+    _M['grupo_desde_bitrix'] = len(_vistos_grp)
     _M.setdefault('meses', {})[YM] = {
         'por_asesor': _res, 'candidatos': _cand, 'calidad': _cal,
         'resumen_calidad': dict(Counter(x['regla'] for x in _cal)),
