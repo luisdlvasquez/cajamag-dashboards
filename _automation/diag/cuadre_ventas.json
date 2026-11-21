@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-11-21 07:44 UTC",
+ "generado_utc": "2026-11-21 18:18 UTC",
  "rango": {
   "desde": "2026-11-01",
   "hasta": "2026-11-30",
@@ -9,12 +9,12 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 169,
+   "negocios_contados": 171,
    "otras_etapas_con_fecha_en_el_mes": {
     "NUEVA OPORTUNIDAD": 1
    },
-   "valor_contado": 32055400.0,
-   "ingreso_bitrix_de_esos_negocios": 32055400.0
+   "valor_contado": 32124400.0,
+   "ingreso_bitrix_de_esos_negocios": 32124400.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -155,6 +155,19 @@
    "semantica": "F",
    "ingreso": 2460000.0,
    "titulo": "GRASAS Y DERIVADOS SAGRADESA SA (28489)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "31544",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "CERRADO PERDIDO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-21",
+   "fecha_creacion": "2026-09-05",
+   "semantica": "F",
+   "ingreso": 1288200.0,
+   "titulo": "PLUS OIL SA (31544)",
    "motivo": "No esta en la etapa ganada"
   },
   {
@@ -355,12 +368,12 @@
   {
    "id": "38169",
    "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "PROPUESTA ENVIADA",
+   "etapa": "CERRADO PERDIDO",
    "asesor": "Bienvenida Lopez Hurtado",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-11-18",
+   "fecha_cierre": "2026-11-21",
    "fecha_creacion": "2026-11-18",
-   "semantica": "P",
+   "semantica": "F",
    "ingreso": 16432900.0,
    "titulo": "D1 S A S (38169)",
    "motivo": "No esta en la etapa ganada"
@@ -418,6 +431,32 @@
    "motivo": "No esta en la etapa ganada"
   },
   {
+   "id": "38641",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "CERRADO PERDIDO",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-21",
+   "fecha_creacion": "2026-11-21",
+   "semantica": "F",
+   "ingreso": 18536400.0,
+   "titulo": "AEROPUERTOS DE ORIENTE SAS (38641)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
+   "id": "38649",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "IDENTIFICACIÓN EMPRESA",
+   "asesor": "Bienvenida Lopez Hurtado",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-21",
+   "fecha_creacion": "2026-11-21",
+   "semantica": "P",
+   "ingreso": 2851000.0,
+   "titulo": "SECURITAS COLOMBIA S A (38649)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
    "id": "38068",
    "pipeline": "IFT",
    "etapa": "ASIGNACIÓN",
@@ -434,9 +473,9 @@
  "por_asesor": {
   "Martha Lorena Celedon de la Rosa": {
    "Individual": {
-    "negocios": 31,
-    "valor_contado": 1990200.0,
-    "ingreso_bitrix": 1990200.0
+    "negocios": 32,
+    "valor_contado": 2013200.0,
+    "ingreso_bitrix": 2013200.0
    },
    "Empresarial": {
     "negocios": 3,
@@ -498,9 +537,9 @@
   },
   "Bienvenida Lopez Hurtado": {
    "Individual": {
-    "negocios": 18,
-    "valor_contado": 1781400.0,
-    "ingreso_bitrix": 1781400.0
+    "negocios": 19,
+    "valor_contado": 1827400.0,
+    "ingreso_bitrix": 1827400.0
    },
    "Empresarial": {
     "negocios": 5,
@@ -563,8 +602,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
-     "con_valor": 63
+     "ventas": 171,
+     "con_valor": 65
     },
     "Empresarial": {
      "ventas": 12,
@@ -609,8 +648,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
-     "con_valor": 129
+     "ventas": 171,
+     "con_valor": 131
     },
     "Empresarial": {
      "ventas": 12,
@@ -667,8 +706,8 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
-     "con_valor": 18
+     "ventas": 171,
+     "con_valor": 19
     },
     "Empresarial": {
      "ventas": 12,
@@ -725,7 +764,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
+     "ventas": 171,
      "con_valor": 0
     },
     "Empresarial": {
@@ -755,7 +794,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
+     "ventas": 171,
      "con_valor": 0
     },
     "Empresarial": {
@@ -776,7 +815,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
+     "ventas": 171,
      "con_valor": 0
     },
     "Empresarial": {
@@ -814,7 +853,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
+     "ventas": 171,
      "con_valor": 0
     },
     "Empresarial": {
@@ -835,7 +874,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
+     "ventas": 171,
      "con_valor": 0
     },
     "Empresarial": {
@@ -856,7 +895,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
+     "ventas": 171,
      "con_valor": 0
     },
     "Empresarial": {
@@ -877,7 +916,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
+     "ventas": 171,
      "con_valor": 0
     },
     "Empresarial": {
@@ -898,7 +937,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
+     "ventas": 171,
      "con_valor": 0
     },
     "Empresarial": {
@@ -919,7 +958,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
+     "ventas": 171,
      "con_valor": 0
     },
     "Empresarial": {
@@ -940,7 +979,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
+     "ventas": 171,
      "con_valor": 0
     },
     "Empresarial": {
@@ -961,7 +1000,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
+     "ventas": 171,
      "con_valor": 0
     },
     "Empresarial": {
@@ -982,8 +1021,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
-     "con_valor": 169
+     "ventas": 171,
+     "con_valor": 171
     },
     "Empresarial": {
      "ventas": 12,
@@ -1028,7 +1067,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
+     "ventas": 171,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1049,7 +1088,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
+     "ventas": 171,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1070,7 +1109,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 169,
+     "ventas": 171,
      "con_valor": 0
     },
     "Empresarial": {
