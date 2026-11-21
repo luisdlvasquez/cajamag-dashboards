@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-11 (corrida 2026-11-21 18:18 UTC)
+# Cuadre de ventas 2026-11 (corrida 2026-11-21 23:40 UTC)
 
 Rango: 2026-11-01 a 2026-11-30. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -61,7 +61,7 @@ Ninguno.
 | 31544 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-09-05 | - | 2026-11-21 | $1.288.200 | No esta en la etapa ganada |
 | 38169 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-11-18 | - | 2026-11-21 | $16.432.900 | No esta en la etapa ganada |
 | 38641 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | CERRADO PERDIDO | 2026-11-21 | - | 2026-11-21 | $18.536.400 | No esta en la etapa ganada |
-| 38649 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | IDENTIFICACIÓN EMPRESA | 2026-11-21 | - | 2026-11-21 | $2.851.000 | No esta en la etapa ganada |
+| 38649 | Bienvenida Lopez Hurtado | VENTA EMPRESARIAL | EN ESPERA DE OC | 2026-11-21 | - | 2026-11-21 | $2.851.000 | No esta en la etapa ganada |
 | 37522 | Jessica Luque Garcia | VENTA INDIVIDUAL | NUEVA OPORTUNIDAD | 2026-11-10 | - | 2026-11-10 | $140.900 | No esta en la etapa ganada |
 | 38093 | Jessica Luque Garcia | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-11-18 | - | 2026-11-18 | $1.467.000 | No esta en la etapa ganada |
 | 38124 | Jessica Luque Garcia | VENTA EMPRESARIAL | PROPUESTA ENVIADA | 2026-11-18 | - | 2026-11-18 | $990.000 | No esta en la etapa ganada |

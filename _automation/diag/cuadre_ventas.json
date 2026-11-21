@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-11-21 18:18 UTC",
+ "generado_utc": "2026-11-21 23:40 UTC",
  "rango": {
   "desde": "2026-11-01",
   "hasta": "2026-11-30",
@@ -446,7 +446,7 @@
   {
    "id": "38649",
    "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "IDENTIFICACIÓN EMPRESA",
+   "etapa": "EN ESPERA DE OC",
    "asesor": "Bienvenida Lopez Hurtado",
    "fecha_facturacion": null,
    "fecha_cierre": "2026-11-21",
