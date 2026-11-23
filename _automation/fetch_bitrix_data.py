@@ -1315,7 +1315,12 @@ def fetch_gestiones(fname):
     excluidos = 0
     for d in deals:
         nombre_etapa = stage_name(d['CATEGORY_ID'], d['STAGE_ID'])
-        if _norm_txt(nombre_etapa) not in ETAPAS_OK:
+        # 23-nov-2026: en la categoria 24 la etapa verde "NEGOCIACION" (C24:WON) tambien es
+        # una gestion realizada (ej. 37544 Feria de servicios). Solo en cat. 24: en los demas
+        # pipelines "Negociacion" es una venta en curso y sigue excluida.
+        _ok = _norm_txt(nombre_etapa) in ETAPAS_OK or (
+            str(d['CATEGORY_ID']) == '24' and _norm_txt(nombre_etapa) == 'NEGOCIACION')
+        if not _ok:
             excluidos += 1
             continue
         d['_etapa_nombre'] = nombre_etapa

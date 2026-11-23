@@ -539,7 +539,10 @@ for _, r in g.iterrows():
     fecha = parse_date_ddmmyyyy(r['Fecha y hora evento'])
     if fecha is None or not fecha.startswith(YM): continue
     etapa = clean_str(r.get('Etapa de la negociación'))
-    if etapa is not None and _norm_txt(etapa) not in ETAPAS_OK:
+    # 23-nov-2026: "NEGOCIACION" (verde) solo cuenta en el pipeline de gestiones (cat. 24)
+    _neg_gestion = (_norm_txt(etapa) == 'NEGOCIACION'
+                    and _norm_txt(clean_str(r.get('Pipeline de la negociación')) or '').startswith('PROMOCION'))
+    if etapa is not None and _norm_txt(etapa) not in ETAPAS_OK and not _neg_gestion:
         excluidas_por_etapa += 1
         continue
     new_raw_gestiones.append({
