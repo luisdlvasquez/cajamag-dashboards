@@ -1,5 +1,5 @@
 {
- "generado_utc": "2026-11-25 09:08 UTC",
+ "generado_utc": "2026-11-25 20:44 UTC",
  "rango": {
   "desde": "2026-11-01",
   "hasta": "2026-11-30",
@@ -9,12 +9,12 @@
   "2": {
    "tipo_venta": "Individual",
    "etapa_contada": "CERRADO GANADO",
-   "negocios_contados": 208,
+   "negocios_contados": 211,
    "otras_etapas_con_fecha_en_el_mes": {
     "NUEVA OPORTUNIDAD": 1
    },
-   "valor_contado": 36905000.0,
-   "ingreso_bitrix_de_esos_negocios": 36905000.0
+   "valor_contado": 37243200.0,
+   "ingreso_bitrix_de_esos_negocios": 37243200.0
   },
   "1": {
    "tipo_venta": "Empresarial",
@@ -288,6 +288,19 @@
    "motivo": "No esta en la etapa ganada"
   },
   {
+   "id": "37721",
+   "pipeline": "VENTA EMPRESARIAL",
+   "etapa": "AFINACIÓN PROPUESTA",
+   "asesor": "Jessica Luque Garcia",
+   "fecha_facturacion": null,
+   "fecha_cierre": "2026-11-12",
+   "fecha_creacion": "2026-11-12",
+   "semantica": "P",
+   "ingreso": 3058000.0,
+   "titulo": "AQUAMAG SA ESP (37721)",
+   "motivo": "No esta en la etapa ganada"
+  },
+  {
    "id": "37777",
    "pipeline": "VENTA EMPRESARIAL",
    "etapa": "CERRADO PERDIDO",
@@ -329,12 +342,12 @@
   {
    "id": "38093",
    "pipeline": "VENTA EMPRESARIAL",
-   "etapa": "PROPUESTA ENVIADA",
+   "etapa": "CERRADO PERDIDO",
    "asesor": "Jessica Luque Garcia",
    "fecha_facturacion": null,
-   "fecha_cierre": "2026-11-18",
+   "fecha_cierre": "2026-11-25",
    "fecha_creacion": "2026-11-18",
-   "semantica": "P",
+   "semantica": "F",
    "ingreso": 1467000.0,
    "titulo": "STRABAG S A S (38093)",
    "motivo": "No esta en la etapa ganada"
@@ -544,9 +557,9 @@
   },
   "Karen Liseth Cantillo De la Cruz": {
    "Individual": {
-    "negocios": 14,
-    "valor_contado": 1429500.0,
-    "ingreso_bitrix": 1429500.0
+    "negocios": 15,
+    "valor_contado": 1459400.0,
+    "ingreso_bitrix": 1459400.0
    },
    "Empresarial": {
     "negocios": 1,
@@ -563,9 +576,9 @@
   },
   "Oriana Yadith Felizzola Ortega": {
    "Individual": {
-    "negocios": 74,
-    "valor_contado": 17298000.0,
-    "ingreso_bitrix": 17298000.0
+    "negocios": 75,
+    "valor_contado": 17514300.0,
+    "ingreso_bitrix": 17514300.0
    },
    "Empresarial": {
     "negocios": 1,
@@ -575,9 +588,9 @@
   },
   "Martha Cabrera Montes": {
    "Individual": {
-    "negocios": 14,
-    "valor_contado": 976500.0,
-    "ingreso_bitrix": 976500.0
+    "negocios": 15,
+    "valor_contado": 1068500.0,
+    "ingreso_bitrix": 1068500.0
    },
    "Empresarial": {
     "negocios": 1,
@@ -659,8 +672,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
-     "con_valor": 77
+     "ventas": 211,
+     "con_valor": 78
     },
     "Empresarial": {
      "ventas": 18,
@@ -705,8 +718,8 @@
    "opciones_en_lista": 18,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
-     "con_valor": 167
+     "ventas": 211,
+     "con_valor": 170
     },
     "Empresarial": {
      "ventas": 18,
@@ -763,7 +776,7 @@
    "opciones_en_lista": 28,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 20
     },
     "Empresarial": {
@@ -821,7 +834,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 0
     },
     "Empresarial": {
@@ -859,7 +872,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 0
     },
     "Empresarial": {
@@ -880,7 +893,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 0
     },
     "Empresarial": {
@@ -918,7 +931,7 @@
    "opciones_en_lista": 7,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 0
     },
     "Empresarial": {
@@ -939,7 +952,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 0
     },
     "Empresarial": {
@@ -960,7 +973,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 0
     },
     "Empresarial": {
@@ -981,7 +994,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1002,7 +1015,7 @@
    "opciones_en_lista": 13,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1023,7 +1036,7 @@
    "opciones_en_lista": 2,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1044,7 +1057,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1065,7 +1078,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1086,8 +1099,8 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
-     "con_valor": 208
+     "ventas": 211,
+     "con_valor": 211
     },
     "Empresarial": {
      "ventas": 18,
@@ -1132,7 +1145,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1153,7 +1166,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 0
     },
     "Empresarial": {
@@ -1174,7 +1187,7 @@
    "opciones_en_lista": 0,
    "por_tipo_venta": {
     "Individual": {
-     "ventas": 208,
+     "ventas": 211,
      "con_valor": 0
     },
     "Empresarial": {
