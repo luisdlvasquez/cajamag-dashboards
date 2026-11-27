@@ -1,4 +1,4 @@
-# Cuadre de ventas 2026-11 (corrida 2026-11-26 20:37 UTC)
+# Cuadre de ventas 2026-11 (corrida 2026-11-27 03:22 UTC)
 
 Rango: 2026-11-01 a 2026-11-30. Se cuentan los negocios en la etapa ganada de cada pipeline de ventas con Fecha de facturacion dentro del rango.
 
@@ -13,7 +13,7 @@ Mismo archivo y mismo valor = casi seguro venta duplicada. Mismo archivo con val
 - #37196 Bienvenida Lopez Hurtado $46.000 (2026-11-04); #37507 Bienvenida Lopez Hurtado $54.800 (2026-11-06)
 
 ## Totales contados por pipeline
-- Individual (pipeline 2, etapa CERRADO GANADO): 218 negocios, $38.533.300
+- Individual (pipeline 2, etapa CERRADO GANADO): 224 negocios, $39.748.300
 - Empresarial (pipeline 1, etapa CERRADO GANADO): 20 negocios, $34.928.800
 - IFT (pipeline 4, etapa CERRADO MATRICULARO): 6 negocios, $228.000
 
@@ -28,14 +28,14 @@ Mismo archivo y mismo valor = casi seguro venta duplicada. Mismo archivo con val
 | Holman Marin Romero | Individual | 12 | $3.838.000 | $3.838.000 |
 | Jessica Luque Garcia | Individual | 5 | $251.500 | $251.500 |
 | Karen Liseth Cantillo De la Cruz | Empresarial | 1 | $2.183.300 | $2.183.300 |
-| Karen Liseth Cantillo De la Cruz | Individual | 16 | $1.517.600 | $1.517.600 |
-| Maria Jose Garcia Guaman | Individual | 11 | $8.248.500 | $8.248.500 |
+| Karen Liseth Cantillo De la Cruz | Individual | 17 | $1.632.600 | $1.632.600 |
+| Maria Jose Garcia Guaman | Individual | 14 | $9.222.900 | $9.222.900 |
 | Martha Cabrera Montes | Empresarial | 1 | $1.928.000 | $1.928.000 |
 | Martha Cabrera Montes | Individual | 15 | $1.068.500 | $1.068.500 |
 | Martha Lorena Celedon de la Rosa | Empresarial | 4 | $8.136.300 | $8.136.300 |
 | Martha Lorena Celedon de la Rosa | Individual | 43 | $2.614.600 | $2.614.600 |
 | Oriana Yadith Felizzola Ortega | Empresarial | 1 | $216.300 | $216.300 |
-| Oriana Yadith Felizzola Ortega | Individual | 76 | $17.530.500 | $17.530.500 |
+| Oriana Yadith Felizzola Ortega | Individual | 78 | $17.656.100 | $17.656.100 |
 | Victoria Manjarres Jimenez | IFT | 6 | $228.000 | $228.000 |
 | Victoria Manjarres Jimenez | Individual | 7 | $500.000 | $500.000 |
 
@@ -105,41 +105,41 @@ Ninguno.
 | 30843 | Maria Jose Garcia Guaman | VENTA INDIVIDUAL | CERRADO GANADO | 2026-09-01 | 2026-09-01 | 2026-09-01 | $7.092.700 | Revision puntual [cat 2, stage C2:WON, fact. cruda '2026-08-31T19:00:00-05:00'] |
 
 ## Campos de servicio en Bitrix (cuantas ventas contadas los traen llenos)
-- Fecha de prestación del servicio (UF_CRM_1679953828661, tipo date, multiple=False, 0 opciones): Individual: 80/218, Empresarial: 5/20, IFT: 0/6
+- Fecha de prestación del servicio (UF_CRM_1679953828661, tipo date, multiple=False, 0 opciones): Individual: 82/224, Empresarial: 5/20, IFT: 0/6
     - crudo '2026-11-02T19:00:00-05:00' -> '2026-11-02T19:00:00-05:00'
     - crudo '2026-11-02T19:00:00-05:00' -> '2026-11-02T19:00:00-05:00'
     - crudo '2026-11-02T19:00:00-05:00' -> '2026-11-02T19:00:00-05:00'
-- Servicios a utilizar (UF_CRM_1681146110054, tipo enumeration, multiple=True, 18 opciones): Individual: 174/218, Empresarial: 11/20, IFT: 0/6
+- Servicios a utilizar (UF_CRM_1681146110054, tipo enumeration, multiple=True, 18 opciones): Individual: 178/224, Empresarial: 11/20, IFT: 0/6
     - crudo [97] -> 'Recreación'
     - crudo [100] -> 'Teatro'
     - crudo [100] -> 'Teatro'
-- Servicios a cotizar (UF_CRM_1681146530307, tipo enumeration, multiple=True, 28 opciones): Individual: 20/218, Empresarial: 0/20, IFT: 0/6
+- Servicios a cotizar (UF_CRM_1681146530307, tipo enumeration, multiple=True, 28 opciones): Individual: 20/224, Empresarial: 0/20, IFT: 0/6
     - crudo [8493] -> 'VACUNACION SANTA MARTA'
     - crudo [8506] -> 'RECREACION. STA MTA'
     - crudo [8506] -> 'RECREACION. STA MTA'
-- Lugar de prestación del servicio (UF_CRM_1681147127230, tipo string, multiple=False, 0 opciones): Individual: 0/218, Empresarial: 5/20, IFT: 0/6
+- Lugar de prestación del servicio (UF_CRM_1681147127230, tipo string, multiple=False, 0 opciones): Individual: 0/224, Empresarial: 5/20, IFT: 0/6
     - crudo 'CENTRO RECREACIONAL TEYUNA' -> 'CENTRO RECREACIONAL TEYUNA'
     - crudo 'HOTEL SENDEROS DEL MAR' -> 'HOTEL SENDEROS DEL MAR'
     - crudo 'teyuna' -> 'teyuna'
-- Orden de servicio (UF_CRM_1681148244917, tipo file, multiple=False, 0 opciones): Individual: 0/218, Empresarial: 0/20, IFT: 0/6
-- Cotización servicio (UF_CRM_1698765695579, tipo file, multiple=False, 0 opciones): Individual: 0/218, Empresarial: 2/20, IFT: 0/6
+- Orden de servicio (UF_CRM_1681148244917, tipo file, multiple=False, 0 opciones): Individual: 0/224, Empresarial: 0/20, IFT: 0/6
+- Cotización servicio (UF_CRM_1698765695579, tipo file, multiple=False, 0 opciones): Individual: 0/224, Empresarial: 2/20, IFT: 0/6
     - crudo {'id': 54878, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=35910&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=54878', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=35910&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=54878'} -> "{'id': 54878, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=35910&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=54878', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=35910&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=54878'}"
     - crudo {'id': 56862, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=38179&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=56862', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=38179&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=56862'} -> "{'id': 56862, 'showUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?ownerId=38179&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=56862', 'downloadUrl': '/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&ownerId=38179&fieldName=UF_CRM_1698765695579&dynamic=Y&fileId=56862'}"
-- Servicios (UF_CRM_1743799505479, tipo enumeration, multiple=True, 7 opciones): Individual: 0/218, Empresarial: 0/20, IFT: 0/6
-- Presentación portafolio de servicios (UF_CRM_1746571632920, tipo double, multiple=False, 0 opciones): Individual: 0/218, Empresarial: 0/20, IFT: 0/6
-- Feria de servicios (UF_CRM_1746571663870, tipo double, multiple=False, 0 opciones): Individual: 0/218, Empresarial: 0/20, IFT: 0/6
-- Charla de servicios (UF_CRM_1746571681662, tipo double, multiple=False, 0 opciones): Individual: 0/218, Empresarial: 0/20, IFT: 0/6
-- Servicio o área solicitante (UF_CRM_68B71BBA2BFC7, tipo enumeration, multiple=False, 13 opciones): Individual: 0/218, Empresarial: 0/20, IFT: 0/6
-- En cumplimiento de la Ley 1581 de 2012, autorizo que la información suministrada sea utilizada por Cajamag para realizar inscripción a su Agencia de Empleo y promoción de los servicios y actividades de la Caja.                                  (UF_CRM_1757437583566, tipo enumeration, multiple=False, 2 opciones): Individual: 0/218, Empresarial: 0/20, IFT: 0/6
-- Fecha orden de servicio (UF_CRM_1759868249553, tipo date, multiple=False, 0 opciones): Individual: 0/218, Empresarial: 0/20, IFT: 0/6
-- Orden de Servicio (UF_CRM_1759868270967, tipo file, multiple=False, 0 opciones): Individual: 0/218, Empresarial: 0/20, IFT: 0/6
-- Aprobación Servicios Sociales (P) (UF_CRM_1774136849, tipo boolean, multiple=False, 0 opciones): Individual: 218/218, Empresarial: 20/20, IFT: 6/6
+- Servicios (UF_CRM_1743799505479, tipo enumeration, multiple=True, 7 opciones): Individual: 0/224, Empresarial: 0/20, IFT: 0/6
+- Presentación portafolio de servicios (UF_CRM_1746571632920, tipo double, multiple=False, 0 opciones): Individual: 0/224, Empresarial: 0/20, IFT: 0/6
+- Feria de servicios (UF_CRM_1746571663870, tipo double, multiple=False, 0 opciones): Individual: 0/224, Empresarial: 0/20, IFT: 0/6
+- Charla de servicios (UF_CRM_1746571681662, tipo double, multiple=False, 0 opciones): Individual: 0/224, Empresarial: 0/20, IFT: 0/6
+- Servicio o área solicitante (UF_CRM_68B71BBA2BFC7, tipo enumeration, multiple=False, 13 opciones): Individual: 0/224, Empresarial: 0/20, IFT: 0/6
+- En cumplimiento de la Ley 1581 de 2012, autorizo que la información suministrada sea utilizada por Cajamag para realizar inscripción a su Agencia de Empleo y promoción de los servicios y actividades de la Caja.                                  (UF_CRM_1757437583566, tipo enumeration, multiple=False, 2 opciones): Individual: 0/224, Empresarial: 0/20, IFT: 0/6
+- Fecha orden de servicio (UF_CRM_1759868249553, tipo date, multiple=False, 0 opciones): Individual: 0/224, Empresarial: 0/20, IFT: 0/6
+- Orden de Servicio (UF_CRM_1759868270967, tipo file, multiple=False, 0 opciones): Individual: 0/224, Empresarial: 0/20, IFT: 0/6
+- Aprobación Servicios Sociales (P) (UF_CRM_1774136849, tipo boolean, multiple=False, 0 opciones): Individual: 224/224, Empresarial: 20/20, IFT: 6/6
     - crudo '0' -> '0'
     - crudo '0' -> '0'
     - crudo '0' -> '0'
-- Fecha sugerida por el servicio para iniciar la promoción (p) (UF_CRM_1775067706043, tipo date, multiple=False, 0 opciones): Individual: 0/218, Empresarial: 0/20, IFT: 0/6
-- Fecha de visto bueno del servicio (p) (UF_CRM_1776784114702, tipo date, multiple=False, 0 opciones): Individual: 0/218, Empresarial: 0/20, IFT: 0/6
-- Fecha sugerida por el servicio para iniciar promoción  (UF_CRM_1783756151828, tipo date, multiple=False, 0 opciones): Individual: 0/218, Empresarial: 0/20, IFT: 0/6
+- Fecha sugerida por el servicio para iniciar la promoción (p) (UF_CRM_1775067706043, tipo date, multiple=False, 0 opciones): Individual: 0/224, Empresarial: 0/20, IFT: 0/6
+- Fecha de visto bueno del servicio (p) (UF_CRM_1776784114702, tipo date, multiple=False, 0 opciones): Individual: 0/224, Empresarial: 0/20, IFT: 0/6
+- Fecha sugerida por el servicio para iniciar promoción  (UF_CRM_1783756151828, tipo date, multiple=False, 0 opciones): Individual: 0/224, Empresarial: 0/20, IFT: 0/6
 
 ## Ventas contadas por seccion del catalogo de productos de Bitrix
 Sin datos (las lineas no traen producto del catalogo).
